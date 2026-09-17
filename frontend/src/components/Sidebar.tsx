@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award } from 'lucide-react';
+import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award, ShieldAlert } from 'lucide-react';
 
 interface SidebarProps {
   currentTab: string;
@@ -8,7 +8,6 @@ interface SidebarProps {
   onToggleCollapse: () => void;
 }
 
-// Module status encodes actual data state — not decoration
 type ModuleStatus = 'clear' | 'review' | 'violation' | 'pending';
 
 interface NavItem {
@@ -23,10 +22,10 @@ interface NavItem {
 }
 
 const statusConfig: Record<ModuleStatus, { color: string; bg: string; dot: string }> = {
-  clear:     { color: '#22D3EE', bg: 'rgba(34,211,238,0.12)', dot: '#22D3EE' },
-  review:    { color: '#E8A340', bg: 'rgba(232,163,64,0.12)',  dot: '#E8A340' },
-  violation: { color: '#C55242', bg: 'rgba(197,82,66,0.12)',   dot: '#C55242' },
-  pending:   { color: '#8BA3BE', bg: 'rgba(139,163,190,0.12)', dot: '#8BA3BE' },
+  clear:     { color: '#1A6B5A', bg: 'rgba(26,107,90,0.08)',  dot: '#1A6B5A' },
+  review:    { color: '#D4860A', bg: 'rgba(232,163,64,0.08)', dot: '#E8A340' },
+  violation: { color: '#C55242', bg: 'rgba(197,82,66,0.08)',  dot: '#C55242' },
+  pending:   { color: '#94A3B8', bg: 'rgba(148,163,184,0.08)', dot: '#CBD5E1' },
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -63,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       desc: 'Median, simpangan ±3σ & RCA',
       icon: Activity,
       status: 'clear',
-      statusLabel: 'Semua parameter dalam kendali',
+      statusLabel: 'Semua parameter terkendali',
       metaValue: 'σ ±2.1',
     },
     {
@@ -72,9 +71,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
       shortLabel: 'CMA',
       desc: 'Spesifikasi bahan & CAPA knowledge hub',
       icon: Layers,
-      status: 'pending',
       statusLabel: 'Belum ada data batch aktif',
-      metaValue: '—',
+    },
+    {
+      id: 'rcaCapa',
+      label: 'RCA & CAPA',
+      shortLabel: 'RCA',
+      desc: 'Root Cause Analysis & Corrective Action',
+      icon: ShieldAlert,
+      status: 'review',
+      statusLabel: 'Menunggu investigasi (1)',
+      metaValue: 'Action',
     },
   ];
 
@@ -83,7 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       style={{
         width: collapsed ? '60px' : '248px',
         flexShrink: 0,
-        background: '#0F1C2E',
+        background: '#FFFFFF',
         display: 'flex',
         flexDirection: 'column',
         position: 'fixed',
@@ -93,18 +100,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
         zIndex: 200,
         transition: 'width 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
         overflow: 'hidden',
-        borderRight: '1px solid rgba(255,255,255,0.06)',
+        borderRight: '1px solid #E8ECF1',
       }}
     >
-      {/* ── Logo area ── */}
+      {/* Logo area */}
       <div
         style={{
-          padding: collapsed ? '18px 0' : '18px 18px 14px',
+          padding: collapsed ? '16px 0' : '16px 16px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: collapsed ? 'center' : 'space-between',
-          borderBottom: '1px solid rgba(255,255,255,0.07)',
-          minHeight: '68px',
+          borderBottom: '1px solid #F0F2F5',
+          minHeight: '60px',
           flexShrink: 0,
           gap: '8px',
         }}
@@ -123,11 +130,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
           <img
             src="/rangkai-logo.png"
             alt="rangkAI"
-            style={{ height: '36px', width: 'auto', objectFit: 'contain', flexShrink: 0 }}
+            style={{ height: '40px', width: 'auto', objectFit: 'contain', flexShrink: 0 }}
           />
         </div>
 
-        {/* Collapsed: show icon-only logo */}
         {collapsed && (
           <img
             src="/rangkai-logo.png"
@@ -141,7 +147,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
           />
         )}
 
-        {/* Toggle button */}
         <button
           onClick={onToggleCollapse}
           title={collapsed ? 'Perluas panel navigasi' : 'Ciutkan panel navigasi'}
@@ -151,32 +156,34 @@ export const Sidebar: React.FC<SidebarProps> = ({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            background: 'rgba(255,255,255,0.07)',
-            border: 'none',
-            borderRadius: '7px',
-            color: '#8BA3BE',
+            background: 'transparent',
+            border: '1px solid #E8ECF1',
+            borderRadius: '8px',
+            color: '#94A3B8',
             cursor: 'pointer',
             flexShrink: 0,
-            transition: 'background 0.12s, color 0.12s',
+            transition: 'all 0.15s',
           }}
           onMouseEnter={e => {
-            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)';
-            (e.currentTarget as HTMLElement).style.color = '#E8F0F8';
+            (e.currentTarget as HTMLElement).style.background = '#F5F6F9';
+            (e.currentTarget as HTMLElement).style.color = '#64748B';
+            (e.currentTarget as HTMLElement).style.borderColor = '#CBD5E1';
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)';
-            (e.currentTarget as HTMLElement).style.color = '#8BA3BE';
+            (e.currentTarget as HTMLElement).style.background = 'transparent';
+            (e.currentTarget as HTMLElement).style.color = '#94A3B8';
+            (e.currentTarget as HTMLElement).style.borderColor = '#E8ECF1';
           }}
         >
-          {collapsed ? <ChevronRight size={15} /> : <ChevronLeft size={15} />}
+          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </div>
 
-      {/* ── Nav items ── */}
+      {/* Navigation */}
       <nav
         style={{
           flex: 1,
-          padding: '12px 8px',
+          padding: '8px',
           display: 'flex',
           flexDirection: 'column',
           gap: '2px',
@@ -193,107 +200,106 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              title={collapsed ? `${item.label} — ${item.statusLabel}` : undefined}
+              title={collapsed ? `${item.label}: ${item.statusLabel}` : undefined}
               style={{
                 display: 'flex',
                 alignItems: collapsed ? 'center' : 'flex-start',
                 justifyContent: collapsed ? 'center' : 'flex-start',
-                padding: collapsed ? '12px 0' : '10px 12px',
-                borderRadius: '9px',
+                padding: collapsed ? '10px 0' : '10px 12px',
+                borderRadius: '10px',
                 border: 'none',
-                background: isActive ? 'rgba(34,211,238,0.10)' : 'transparent',
+                background: isActive ? '#F0FAF7' : 'transparent',
                 cursor: 'pointer',
                 textAlign: 'left',
                 width: '100%',
-                transition: 'background 0.12s',
+                transition: 'all 0.15s',
                 position: 'relative',
-                gap: collapsed ? '0' : '12px',
+                gap: collapsed ? '0' : '10px',
                 flexShrink: 0,
               }}
               onMouseEnter={e => {
-                if (!isActive) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
+                if (!isActive) (e.currentTarget as HTMLElement).style.background = '#F8F9FB';
               }}
               onMouseLeave={e => {
                 if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent';
               }}
             >
-              {/* Active indicator line */}
+              {/* Active indicator */}
               {isActive && (
                 <div
                   style={{
                     position: 'absolute',
-                    left: 0,
-                    top: '25%',
-                    bottom: '25%',
-                    width: '2.5px',
-                    borderRadius: '0 2px 2px 0',
-                    background: '#22D3EE',
+                    left: '0',
+                    top: '20%',
+                    bottom: '20%',
+                    width: '3px',
+                    borderRadius: '0 3px 3px 0',
+                    background: '#1A6B5A',
                   }}
                 />
               )}
 
-              {/* Icon with status dot */}
+              {/* Icon */}
               <div style={{ position: 'relative', flexShrink: 0 }}>
                 <Icon
-                  size={20}
+                  size={19}
                   style={{
-                    color: isActive ? '#22D3EE' : '#8BA3BE',
-                    transition: 'color 0.12s',
+                    color: isActive ? '#1A6B5A' : '#94A3B8',
+                    transition: 'color 0.15s',
                     display: 'block',
                   }}
                 />
-                {/* Status dot — encodes module health in collapsed mode */}
                 <span
                   style={{
                     position: 'absolute',
-                    bottom: '-2px',
+                    bottom: '-1px',
                     right: '-3px',
-                    width: '7px',
-                    height: '7px',
+                    width: '6px',
+                    height: '6px',
                     borderRadius: '50%',
                     background: sc.dot,
-                    border: '1.5px solid #0F1C2E',
+                    border: '1.5px solid #FFFFFF',
                   }}
                 />
               </div>
 
-              {/* Label + status (only in expanded mode) */}
+              {/* Label + description */}
               {!collapsed && (
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div
                     style={{
-                      fontSize: '0.875rem',
-                      fontWeight: isActive ? 700 : 500,
-                      color: isActive ? '#E8F0F8' : '#8BA3BE',
+                      fontSize: '0.8125rem',
+                      fontWeight: isActive ? 600 : 500,
+                      color: isActive ? '#0F1C2E' : '#475569',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       lineHeight: 1.3,
-                      transition: 'color 0.12s, font-weight 0.12s',
+                      transition: 'color 0.15s',
                     }}
                   >
                     {item.label}
                   </div>
                   <div
                     style={{
-                      fontSize: '0.7rem',
-                      color: isActive ? '#6BAEC5' : '#3D5166',
+                      fontSize: '0.6875rem',
+                      color: isActive ? '#64748B' : '#94A3B8',
                       whiteSpace: 'nowrap',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
-                      marginTop: '1px',
-                      transition: 'color 0.12s',
+                      marginTop: '2px',
+                      transition: 'color 0.15s',
                     }}
                   >
                     {item.desc}
                   </div>
-                  {/* Status line — encodes real operational state */}
+                  {/* Status badge */}
                   <div
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '5px',
-                      marginTop: '5px',
+                      gap: '6px',
+                      marginTop: '4px',
                     }}
                   >
                     <span
@@ -301,10 +307,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '4px',
-                        padding: '2px 7px',
+                        padding: '1px 7px',
                         borderRadius: '4px',
-                        fontSize: '0.65rem',
-                        fontWeight: 600,
+                        fontSize: '0.625rem',
+                        fontWeight: 500,
                         background: sc.bg,
                         color: sc.color,
                       }}
@@ -315,9 +321,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <span
                         style={{
                           fontFamily: 'var(--font-data)',
-                          fontSize: '0.65rem',
-                          fontWeight: 600,
-                          color: '#3D5166',
+                          fontSize: '0.625rem',
+                          fontWeight: 500,
+                          color: '#94A3B8',
                         }}
                       >
                         {item.metaValue}
@@ -331,11 +337,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </nav>
 
-      {/* ── Footer ── */}
+      {/* Footer */}
       <div
         style={{
-          borderTop: '1px solid rgba(255,255,255,0.07)',
-          padding: collapsed ? '12px 0' : '14px 14px',
+          borderTop: '1px solid #F0F2F5',
+          padding: collapsed ? '12px 0' : '12px 14px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: collapsed ? 'center' : 'flex-start',
@@ -343,22 +349,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
           flexShrink: 0,
         }}
       >
-        <Award size={16} style={{ color: '#3D5166', flexShrink: 0 }} />
+        <Award size={14} style={{ color: '#CBD5E1', flexShrink: 0 }} />
         {!collapsed && (
           <div style={{ overflow: 'hidden' }}>
             <div
               style={{
-                fontSize: '0.72rem',
-                fontWeight: 700,
-                color: '#3D5166',
+                fontSize: '0.6875rem',
+                fontWeight: 600,
+                color: '#94A3B8',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
               }}
             >
-              rangkAI — FindR UI 26
+              rangkAI · FindR UI 26
             </div>
-            <div style={{ fontSize: '0.65rem', color: '#27394F' }}>
+            <div style={{ fontSize: '0.625rem', color: '#CBD5E1' }}>
               Cosmetics R&D Track
             </div>
           </div>

@@ -228,10 +228,16 @@ export const HlbCalculator: React.FC = () => {
               <span className="font-mono-calc" style={{ fontSize: '0.8rem', color: 'var(--emerald-neon)' }}>HLB: {emulsifierAHLB}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <input 
-                type="text" 
+              <select
                 value={emulsifierAName}
-                onChange={(e) => setEmulsifierAName(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setEmulsifierAName(val);
+                  if (val === 'Polysorbate 80 (Tween 80)') setEmulsifierAHLB(15.0);
+                  if (val === 'Polysorbate 20 (Tween 20)') setEmulsifierAHLB(16.7);
+                  if (val === 'PEG-40 Hydrogenated Castor Oil') setEmulsifierAHLB(15.0);
+                  if (val === 'Ceteareth-20') setEmulsifierAHLB(15.2);
+                }}
                 style={{
                   flex: 1,
                   background: '#ffffff',
@@ -241,23 +247,29 @@ export const HlbCalculator: React.FC = () => {
                   padding: '6px 8px',
                   fontSize: '0.8rem'
                 }}
-              />
+              >
+                <option value="Polysorbate 80 (Tween 80)">Polysorbate 80 (Tween 80)</option>
+                <option value="Polysorbate 20 (Tween 20)">Polysorbate 20 (Tween 20)</option>
+                <option value="PEG-40 Hydrogenated Castor Oil">PEG-40 Hydrogenated Castor Oil</option>
+                <option value="Ceteareth-20">Ceteareth-20</option>
+              </select>
               <input 
                 type="number" 
                 step="0.1"
                 min="0"
                 max="40"
                 value={emulsifierAHLB}
-                onChange={(e) => setEmulsifierAHLB(parseFloat(e.target.value) || 0)}
+                readOnly
                 style={{
                   width: '75px',
-                  background: '#ffffff',
+                  background: '#f1f5f9',
                   border: '1px solid #cbd5e1',
                   borderRadius: '6px',
-                  color: '#0f172a',
+                  color: '#64748b',
                   padding: '6px 8px',
                   fontSize: '0.8rem',
-                  fontFamily: 'var(--font-mono)'
+                  fontFamily: 'var(--font-mono)',
+                  cursor: 'not-allowed'
                 }}
               />
             </div>
@@ -270,10 +282,15 @@ export const HlbCalculator: React.FC = () => {
               <span className="font-mono-calc" style={{ fontSize: '0.8rem', color: 'var(--amber-warning)' }}>HLB: {emulsifierBHLB}</span>
             </div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <input 
-                type="text" 
+              <select
                 value={emulsifierBName}
-                onChange={(e) => setEmulsifierBName(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setEmulsifierBName(val);
+                  if (val === 'Sorbitan Stearate (Span 60)') setEmulsifierBHLB(4.7);
+                  if (val === 'Sorbitan Oleate (Span 80)') setEmulsifierBHLB(4.3);
+                  if (val === 'Glyceryl Stearate') setEmulsifierBHLB(3.8);
+                }}
                 style={{
                   flex: 1,
                   background: '#ffffff',
@@ -283,23 +300,28 @@ export const HlbCalculator: React.FC = () => {
                   padding: '6px 8px',
                   fontSize: '0.8rem'
                 }}
-              />
+              >
+                <option value="Sorbitan Stearate (Span 60)">Sorbitan Stearate (Span 60)</option>
+                <option value="Sorbitan Oleate (Span 80)">Sorbitan Oleate (Span 80)</option>
+                <option value="Glyceryl Stearate">Glyceryl Stearate</option>
+              </select>
               <input 
                 type="number" 
                 step="0.1"
                 min="0"
                 max="40"
                 value={emulsifierBHLB}
-                onChange={(e) => setEmulsifierBHLB(parseFloat(e.target.value) || 0)}
+                readOnly
                 style={{
                   width: '75px',
-                  background: '#ffffff',
+                  background: '#f1f5f9',
                   border: '1px solid #cbd5e1',
                   borderRadius: '6px',
-                  color: '#0f172a',
+                  color: '#64748b',
                   padding: '6px 8px',
                   fontSize: '0.8rem',
-                  fontFamily: 'var(--font-mono)'
+                  fontFamily: 'var(--font-mono)',
+                  cursor: 'not-allowed'
                 }}
               />
             </div>

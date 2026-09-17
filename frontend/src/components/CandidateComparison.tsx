@@ -164,7 +164,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                   ) : (
                     <>
                       <XCircle size={14} color="var(--rose-danger)" />
-                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)', textDecoration: 'line-through' }}>BPOM Coret</span>
+                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>BPOM Tidak Lolos</span>
                     </>
                   )}
                 </div>
@@ -187,7 +187,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                   ) : (
                     <>
                       <XCircle size={14} color="var(--rose-danger)" />
-                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>Halal Gagal (✗)</span>
+                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>Halal Tidak Lolos (✗)</span>
                     </>
                   )}
                 </div>
@@ -312,9 +312,9 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                 borderTop: '1px solid #f1f5f9',
                 paddingTop: '10px'
               }}>
-                <span style={{ color: 'var(--text-muted)' }}>COGS Bahan:</span>
-                <span className="font-mono-calc" style={{ fontWeight: 700, color: '#002b5c' }}>
-                  IDR {cand.raw_material_cost_per_kg.toLocaleString('id-ID')}/kg
+                <span style={{ color: 'var(--text-muted)' }}>Status Bahan:</span>
+                <span className="font-mono-calc" style={{ fontWeight: 700, color: cand.bpom_compliant && cand.halal_compliant ? 'var(--emerald-neon)' : 'var(--rose-danger)' }}>
+                  {cand.bpom_compliant && cand.halal_compliant ? 'CoA & BPOM Lolos' : 'Peringatan Regulasi'}
                 </span>
               </div>
 
@@ -359,7 +359,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                         <strong>Substitusi Rekomendasi AI:</strong>
                         <ul style={{ paddingLeft: '16px', marginTop: '4px' }}>
                           {cand.replacement_solution.replacements.map((r, i) => (
-                            <li key={i}>{r.inci_name} ({r.percentage}%) — {r.function}</li>
+                            <li key={i}>{r.inci_name} ({r.percentage}%) - {r.function}</li>
                           ))}
                         </ul>
                       </div>

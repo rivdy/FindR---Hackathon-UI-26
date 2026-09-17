@@ -132,7 +132,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-08-10',
       appearance: 'Serbuk kristal putih tidak berbau',
       assay_purity_pct: 99.6,
-      melting_point_c: '128.5°C — 131.0°C',
+      melting_point_c: '128.5°C - 131.0°C',
       loss_on_drying_pct: 0.12,
       heavy_metals_ppm: '< 10 ppm (Asam nikotinat bebas: 22 ppm)',
       microbial_alt: '< 100 CFU/g',
@@ -214,7 +214,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-05-15',
       appearance: 'Pelet padat putih krem kekuningan halus',
       assay_purity_pct: 99.0,
-      melting_point_c: '62.0°C — 65.0°C',
+      melting_point_c: '62.0°C - 65.0°C',
       loss_on_drying_pct: 0.1,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 100 CFU/g',
@@ -256,7 +256,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2028-04-08',
       appearance: 'Massa lengket lunak kuning kecokelatan',
       assay_purity_pct: 98.8,
-      melting_point_c: '38.0°C — 44.0°C',
+      melting_point_c: '38.0°C - 44.0°C',
       loss_on_drying_pct: 0.2,
       heavy_metals_ppm: '< 10 ppm',
       microbial_alt: '< 100 CFU/g',
@@ -298,7 +298,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2030-03-12',
       appearance: 'Padatan lilin putih semi-transparan',
       assay_purity_pct: 99.5,
-      melting_point_c: '58.0°C — 60.0°C',
+      melting_point_c: '58.0°C - 60.0°C',
       loss_on_drying_pct: 0.05,
       heavy_metals_ppm: '< 2 ppm',
       microbial_alt: '< 10 CFU/g',
@@ -340,7 +340,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2028-08-14',
       appearance: 'Pelet putih berlilin, bau khas lemak lemah',
       assay_purity_pct: 99.1,
-      melting_point_c: '47.0°C — 50.0°C',
+      melting_point_c: '47.0°C - 50.0°C',
       loss_on_drying_pct: 0.08,
       heavy_metals_ppm: '< 3 ppm (Bilangan Asam: 0.04 mg KOH/g)',
       microbial_alt: '< 50 CFU/g',
@@ -421,7 +421,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2028-07-19',
       appearance: 'Pelet lilin berwarna kuning muda krem',
       assay_purity_pct: 98.9,
-      melting_point_c: '51.0°C — 54.0°C',
+      melting_point_c: '51.0°C - 54.0°C',
       loss_on_drying_pct: 1.1,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 100 CFU/g',
@@ -461,7 +461,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-04-25',
       appearance: 'Serbuk putih halus kemurnian tinggi',
       assay_purity_pct: 99.4,
-      melting_point_c: '102.0°C — 106.0°C',
+      melting_point_c: '102.0°C - 106.0°C',
       loss_on_drying_pct: 0.18,
       heavy_metals_ppm: '< 2 ppm',
       microbial_alt: '< 10 CFU/g',
@@ -697,7 +697,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-04-10',
       appearance: 'Serbuk kristal putih tidak berbau',
       assay_purity_pct: 99.5,
-      melting_point_c: '225.0°C — 230.0°C',
+      melting_point_c: '225.0°C - 230.0°C',
       loss_on_drying_pct: 0.1,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 50 CFU/g',
@@ -897,7 +897,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2028-06-01',
       appearance: 'Massa pasta padat mentega putih lembut',
       assay_purity_pct: 99.1,
-      melting_point_c: '31.0°C — 38.0°C',
+      melting_point_c: '31.0°C - 38.0°C',
       loss_on_drying_pct: 0.12,
       heavy_metals_ppm: '< 3 ppm',
       microbial_alt: '< 50 CFU/g',
@@ -939,7 +939,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2028-08-03',
       appearance: 'Pelet putih berlilin, aroma lemak sangat samar',
       assay_purity_pct: 99.2,
-      melting_point_c: '49.0°C — 54.0°C',
+      melting_point_c: '49.0°C - 54.0°C',
       loss_on_drying_pct: 0.1,
       heavy_metals_ppm: '< 2 ppm',
       microbial_alt: '< 50 CFU/g',
@@ -1175,7 +1175,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-04-12',
       appearance: 'Kristal jarum putih halus, rasa manis asam',
       assay_purity_pct: 99.8,
-      melting_point_c: '158.5°C — 161.0°C',
+      melting_point_c: '158.5°C - 161.0°C',
       loss_on_drying_pct: 0.15,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 50 CFU/g',
@@ -1215,7 +1215,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2030-07-18',
       appearance: 'Serbuk kristal putih tidak berbau',
       assay_purity_pct: 99.4,
-      melting_point_c: '228.0°C — 232.0°C (dekomposisi)',
+      melting_point_c: '228.0°C - 232.0°C (dekomposisi)',
       loss_on_drying_pct: 0.2,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 100 CFU/g',
@@ -1452,7 +1452,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-08-22',
       appearance: 'Kristal putih tidak berwarna atau serbuk granul halus',
       assay_purity_pct: 99.8,
-      melting_point_c: '153.0°C — 154.5°C',
+      melting_point_c: '153.0°C - 154.5°C',
       loss_on_drying_pct: 0.15,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 10 CFU/g',
@@ -1960,7 +1960,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2028-06-08',
       appearance: 'Serbuk kristal putih atau kuning sangat pucat tidak berbau',
       assay_purity_pct: 99.7,
-      melting_point_c: '190.0°C — 192.0°C',
+      melting_point_c: '190.0°C - 192.0°C',
       loss_on_drying_pct: 0.1,
       heavy_metals_ppm: '< 3 ppm',
       microbial_alt: '< 50 CFU/g',
@@ -2001,7 +2001,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2030-05-15',
       appearance: 'Kristal putih atau kristal putih krem tidak berbau khas',
       assay_purity_pct: 99.8,
-      melting_point_c: '69.0°C — 71.0°C',
+      melting_point_c: '69.0°C - 71.0°C',
       loss_on_drying_pct: 0.05,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 10 CFU/g',
@@ -2041,7 +2041,7 @@ export const MOCK_INGREDIENTS: Ingredient[] = [
       expiry_date: '2029-07-28',
       appearance: 'Serbuk kristal kuning muda cerah',
       assay_purity_pct: 99.3,
-      melting_point_c: '170.0°C — 172.5°C',
+      melting_point_c: '170.0°C - 172.5°C',
       loss_on_drying_pct: 0.2,
       heavy_metals_ppm: '< 5 ppm',
       microbial_alt: '< 50 CFU/g',
@@ -2105,7 +2105,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-6', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 2.5, calculated_mass_g: 25, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-7', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 2.8, calculated_mass_g: 28, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-8', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 1.9, calculated_mass_g: 19, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-9', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase D (Preservative & Adjuster)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-9', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   },
   {
@@ -2154,8 +2154,8 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-b6', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 3.0, calculated_mass_g: 30, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-b7', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 3.2, calculated_mass_g: 32, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-b8', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 2.3, calculated_mass_g: 23, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-b9', ingredient_id: 'ing-11', inci_name: 'Ceramide NP', trade_name: 'Ceramide III Pure', phase: 'Phase C (Actives & Stabilizer)', percentage: 0.3, calculated_mass_g: 3, cost_per_kg: 18500000, halal_status: 'HALAL_VERIFIED', function: 'Barrier Repair Active' },
-      { id: 'li-b10', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase D (Preservative & Adjuster)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-b9', ingredient_id: 'ing-11', inci_name: 'Ceramide NP', trade_name: 'Ceramide III Pure', phase: 'Phase C (Actives, Stabilizer Phase C (Actives & Stabilizer) Preservative)', percentage: 0.3, calculated_mass_g: 3, cost_per_kg: 18500000, halal_status: 'HALAL_VERIFIED', function: 'Barrier Repair Active' },
+      { id: 'li-b10', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   },
   {
@@ -2186,12 +2186,12 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
     items: [
       { id: 'li-c1', ingredient_id: 'ing-1', inci_name: 'Aqua', trade_name: 'Deionized Water Pure', phase: 'Phase A (Water Phase)', percentage: 78.4, calculated_mass_g: 784, cost_per_kg: 2500, halal_status: 'HALAL_VERIFIED', function: 'Solvent' },
       { id: 'li-c2', ingredient_id: 'ing-2', inci_name: 'Glycerin', trade_name: 'Vegetable Glycerin 99.7%', phase: 'Phase A (Water Phase)', percentage: 4.5, calculated_mass_g: 45, cost_per_kg: 32000, halal_status: 'HALAL_VERIFIED', function: 'Humectant' },
-      { id: 'li-c3', ingredient_id: 'ing-13', inci_name: 'Centella Asiatica Extract', trade_name: 'Madecassoside Cica Powder', phase: 'Phase C (Actives & Stabilizer)', percentage: 1.2, calculated_mass_g: 12, cost_per_kg: 2400000, halal_status: 'HALAL_VERIFIED', function: 'Active Calming' },
+      { id: 'li-c3', ingredient_id: 'ing-13', inci_name: 'Centella Asiatica Extract', trade_name: 'Madecassoside Cica Powder', phase: 'Phase C (Actives, Stabilizer Phase C (Actives & Stabilizer) Preservative)', percentage: 1.2, calculated_mass_g: 12, cost_per_kg: 2400000, halal_status: 'HALAL_VERIFIED', function: 'Active Calming' },
       { id: 'li-c4', ingredient_id: 'ing-4', inci_name: 'Squalane', trade_name: 'Neossance Squalane', phase: 'Phase B (Oil Phase)', percentage: 4.5, calculated_mass_g: 45, cost_per_kg: 680000, halal_status: 'HALAL_VERIFIED', function: 'Emollient' },
       { id: 'li-c5', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-c6', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 2.6, calculated_mass_g: 26, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-c7', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 1.8, calculated_mass_g: 18, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-c8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase D (Preservative & Adjuster)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-c8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   },
   {
@@ -2239,7 +2239,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-d5', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 3.0, calculated_mass_g: 30, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-d6', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 2.5, calculated_mass_g: 25, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-d7', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-d8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol', trade_name: 'Pure Phenoxyethanol Liquid', phase: 'Phase D (Preservative & Adjuster)', percentage: 1.4, calculated_mass_g: 14, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative (BPOM VIOLATION)' }
+      { id: 'li-d8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol', trade_name: 'Pure Phenoxyethanol Liquid', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.4, calculated_mass_g: 14, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative (BPOM VIOLATION)' }
     ]
   },
   {
@@ -2274,7 +2274,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-e4', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-e5', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 3.0, calculated_mass_g: 30, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-e6', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-e7', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase D (Preservative & Adjuster)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-e7', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   }
 ];
@@ -2283,7 +2283,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
 export const MOCK_STABILITY_RESULTS: StabilityTestResult[] = [
   {
     id: 'stab-1',
-    test_name: 'Uji Suhu Kamar (25°C) — Bulan ke-1',
+    test_name: 'Uji Suhu Kamar (25°C) - Bulan ke-1',
     condition: '25°C ± 2°C / 60% RH',
     duration_text: '30 Hari',
     initial_viscosity_cps: 21500,
@@ -2296,7 +2296,7 @@ export const MOCK_STABILITY_RESULTS: StabilityTestResult[] = [
   },
   {
     id: 'stab-2',
-    test_name: 'Uji Suhu Kamar (25°C) — Bulan ke-2',
+    test_name: 'Uji Suhu Kamar (25°C) - Bulan ke-2',
     condition: '25°C ± 2°C / 60% RH',
     duration_text: '60 Hari',
     initial_viscosity_cps: 21500,
@@ -2309,7 +2309,7 @@ export const MOCK_STABILITY_RESULTS: StabilityTestResult[] = [
   },
   {
     id: 'stab-3',
-    test_name: 'Uji Suhu Kamar (25°C) — Bulan ke-3 (Evaluasi Kritis)',
+    test_name: 'Uji Suhu Kamar (25°C) - Bulan ke-3 (Evaluasi Kritis)',
     condition: '25°C ± 2°C / 60% RH',
     duration_text: '90 Hari',
     initial_viscosity_cps: 21500,
@@ -2322,7 +2322,7 @@ export const MOCK_STABILITY_RESULTS: StabilityTestResult[] = [
   },
   {
     id: 'stab-4',
-    test_name: 'Uji Suhu Hangat (40°C) — Bulan ke-3 (Accelerated Standard)',
+    test_name: 'Uji Suhu Hangat (40°C) - Bulan ke-3 (Accelerated Standard)',
     condition: '40°C ± 2°C / 75% RH (Chamber)',
     duration_text: '90 Hari',
     initial_viscosity_cps: 21500,
@@ -2335,7 +2335,7 @@ export const MOCK_STABILITY_RESULTS: StabilityTestResult[] = [
   },
   {
     id: 'stab-5',
-    test_name: 'Uji Suhu Ekstrem Akselerasi (45°C) — 24 Jam (Stress Test)',
+    test_name: 'Uji Suhu Ekstrem Akselerasi (45°C) - 24 Jam (Stress Test)',
     condition: '45°C Oven Thermal Stress',
     duration_text: '24 Jam',
     initial_viscosity_cps: 21500,
@@ -2654,7 +2654,7 @@ export const MOCK_CPP_ACTUAL_STEPS: CppActualStep[] = [
 export const MOCK_CPP_FINAL_OBSERVATIONS: CppFinalObservation[] = [
   {
     parameter: 'pH',
-    target: '5.50 — 6.00',
+    target: '5.50 - 6.00',
     result_t0: '5.74',
     result_t24: '5.75',
     status: 'OK',
@@ -2662,7 +2662,7 @@ export const MOCK_CPP_FINAL_OBSERVATIONS: CppFinalObservation[] = [
   },
   {
     parameter: 'Viskositas',
-    target: '18.000 — 24.000 cPs (Brookfield Sp.4, 20 rpm)',
+    target: '18.000 - 24.000 cPs (Brookfield Sp.4, 20 rpm)',
     result_t0: '21.500 cPs',
     result_t24: '21.800 cPs',
     status: 'OK',
@@ -2679,7 +2679,7 @@ export const MOCK_CPP_FINAL_OBSERVATIONS: CppFinalObservation[] = [
   {
     parameter: 'Homogenitas',
     target: 'Homogen stabil tanpa pemisahan fase/creaming, droplet seragam d(0.9) < 2.5 µm',
-    result_t0: 'Homogen 100%, ukuran droplet 1.8 — 2.4 µm di bawah mikroskop',
+    result_t0: 'Homogen 100%, ukuran droplet 1.8 - 2.4 µm di bawah mikroskop',
     result_t24: 'Tetap homogen stabil; bebas dari creaming, sedimentasi, maupun oil-ring separation',
     status: 'OK',
     evaluation_note: 'Keseimbangan rasio HLB Tween 80 & Span 60 terhadap Neossance Squalane terbukti optimal.'
@@ -2709,8 +2709,8 @@ export const BLANK_CPP_ACTUAL_STEPS: CppActualStep[] = [
 ];
 
 export const BLANK_CPP_FINAL_OBSERVATIONS: CppFinalObservation[] = [
-  { parameter: 'pH', target: '5.50 — 6.00', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu pengujian elektroda pH meter laboratorium' },
-  { parameter: 'Viskositas', target: '18.000 — 24.000 cPs (Brookfield Sp.4, 20 rpm)', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu uji viskometer Brookfield' },
+  { parameter: 'pH', target: '5.50 - 6.00', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu pengujian elektroda pH meter laboratorium' },
+  { parameter: 'Viskositas', target: '18.000 - 24.000 cPs (Brookfield Sp.4, 20 rpm)', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu uji viskometer Brookfield' },
   { parameter: 'Organoleptik', target: 'Putih lembut berkilau, tekstur gel-cream segar, cepat meresap, non-greasy', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu evaluasi sensori panelis R&D' },
   { parameter: 'Homogenitas', target: 'Homogen stabil tanpa pemisahan fase/creaming, droplet seragam d(0.9) < 2.5 µm', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu uji mikroskopik dispersi droplet & uji sentrifugasi' },
   { parameter: 'Filling & Integritas Kemasan', target: 'Netto 30.0 ± 0.5 g, bebas microbubble, sealing kedap udara rapat', result_t0: '', result_t24: '', status: 'Perlu Perhatian', evaluation_note: 'Menunggu penimbangan bobot sediaan terisi & uji kebocoran vacuum' }
@@ -2822,7 +2822,7 @@ export const MOCK_CPP_DEVIATION_ACTUAL_STEPS: CppActualStep[] = [
 export const MOCK_CPP_DEVIATION_FINAL_OBSERVATIONS: CppFinalObservation[] = [
   {
     parameter: 'pH',
-    target: '5.50 — 6.00',
+    target: '5.50 - 6.00',
     result_t0: '5.40',
     result_t24: '5.42',
     status: 'Perlu Perhatian',
@@ -2830,7 +2830,7 @@ export const MOCK_CPP_DEVIATION_FINAL_OBSERVATIONS: CppFinalObservation[] = [
   },
   {
     parameter: 'Viskositas',
-    target: '18.000 — 24.000 cPs',
+    target: '18.000 - 24.000 cPs',
     result_t0: '16.500 cPs',
     result_t24: '16.800 cPs',
     status: 'Perlu Perhatian',
@@ -2886,7 +2886,7 @@ export const MOCK_CMA_ATTRIBUTES: CmaAttribute[] = [
     id: 'cma-3',
     material_name: 'Beeswax (Cera Alba)',
     attribute_name: 'Titik Leleh (Melting Point Range)',
-    target_spec: '61.0°C — 65.0°C',
+    target_spec: '61.0°C - 65.0°C',
     actual_measured: '63.4°C (USP Method)',
     status: 'COMPLIANT',
     impact_to_cqa: 'Membentuk jaringan gel kristalin untuk viskositas dan barrier oklusif.'
@@ -2908,6 +2908,33 @@ export const MOCK_CMA_ATTRIBUTES: CmaAttribute[] = [
     actual_measured: '0.04 mg KOH/g',
     status: 'COMPLIANT',
     impact_to_cqa: 'Mencegah hidrolisis lemak dan bau tengik selama penyimpanan.'
+  },
+  {
+    id: 'cma-6',
+    material_name: 'Pengawet (Euxyl PE 9010)',
+    attribute_name: 'Kadar Phenoxyethanol',
+    target_spec: '90.0% - 91.0%',
+    actual_measured: '90.4%',
+    status: 'COMPLIANT',
+    impact_to_cqa: 'Menjamin proteksi spektrum luas terhadap bakteri Gram-negatif dan Gram-positif.'
+  },
+  {
+    id: 'cma-7',
+    material_name: 'pH Adjuster (Citric Acid)',
+    attribute_name: 'Kapasitas Buffering pH',
+    target_spec: 'Mampu menahan pH bulk di 5.5 - 6.0',
+    actual_measured: 'Titik Ekuivalen pH 5.75',
+    status: 'COMPLIANT',
+    impact_to_cqa: 'Menjaga stabilitas struktur carbomer dan kompatibilitas dengan acid mantle kulit.'
+  },
+  {
+    id: 'cma-8',
+    material_name: 'UV Filter (TiO2 Dispersion)',
+    attribute_name: 'Ukuran Partikel UV (D50)',
+    target_spec: '10 - 20 nm',
+    actual_measured: '15 nm',
+    status: 'COMPLIANT',
+    impact_to_cqa: 'Menghindari efek whitecast berlebih sambil memberikan proteksi SPF yang optimal.'
   }
 ];
 

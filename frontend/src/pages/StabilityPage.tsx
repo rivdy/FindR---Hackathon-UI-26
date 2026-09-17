@@ -10,7 +10,8 @@ import {
   Info, 
   ClipboardCheck, 
   GitFork,
-  Download
+  Download,
+  FileText
 } from 'lucide-react';
 
 interface StabilityPageProps {
@@ -65,24 +66,29 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
               alignItems: 'center',
               gap: '6px'
             }}
-            title="Download laporan resmi 8 uji stabilitas fisik"
+            title="Download laporan resmi 8 uji stabilitas fisik (PDF)"
           >
-            <Download size={14} /> Download Laporan Stabilitas PDF
+            <Download size={14} /> Download Laporan PDF
           </button>
-
-          {hasFail && (
-            <button
-              onClick={onNavigateToRca}
-              className="btn-primary"
-              style={{
-                background: 'linear-gradient(135deg, #be123c 0%, #e11d48 100%)',
-                fontSize: '0.82rem',
-                boxShadow: '0 2px 8px rgba(225, 29, 72, 0.25)'
-              }}
-            >
-              <GitFork size={15} /> Investigasi di RCA & CAPA
-            </button>
-          )}
+          
+          <button
+            onClick={() => alert("Format Word DOCX sedang dalam pengembangan")}
+            className="btn-secondary"
+            style={{
+              fontSize: '0.78rem',
+              padding: '7px 14px',
+              color: '#2563eb',
+              borderColor: '#bfdbfe',
+              background: '#eff6ff',
+              fontWeight: 700,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+            title="Download laporan resmi dalam format Word"
+          >
+            <FileText size={14} /> Export Word DOCX
+          </button>
         </div>
       </div>
 
@@ -218,6 +224,39 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
                     </tr>
                   );
                 })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Empty Table for Real Data Entry */}
+          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff', marginTop: '8px' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px', color: '#0f172a' }}>
+              Input Data Stabilitas Manual (Data Real Lab)
+            </h3>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
+              <thead>
+                <tr style={{ color: '#475569', background: '#f8fafc', textAlign: 'left', borderBottom: '2px solid #e2e8f0' }}>
+                  <th style={{ padding: '10px 12px' }}>Parameter Uji</th>
+                  <th style={{ padding: '10px 12px' }}>Minggu 1</th>
+                  <th style={{ padding: '10px 12px' }}>Minggu 2</th>
+                  <th style={{ padding: '10px 12px' }}>Minggu 4</th>
+                  <th style={{ padding: '10px 12px' }}>Minggu 8</th>
+                  <th style={{ padding: '10px 12px' }}>Minggu 12</th>
+                  <th style={{ padding: '10px 12px' }}>Kesimpulan</th>
+                </tr>
+              </thead>
+              <tbody>
+                {['Viskositas (cPs)', 'pH', 'Warna/Bau', 'Pemisahan Fase'].map((param, idx) => (
+                  <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '12px', fontWeight: 700, color: '#002b5c' }}>{param}</td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

@@ -18,8 +18,8 @@ export const SupplyChainPage: React.FC = () => {
   const [batchScaleKg, setBatchScaleKg] = useState<number>(50.0); // 50kg semi-commercial pilot
   const candidate = MOCK_CANDIDATES[0]; // Candidate A
 
-  // Sample inventory snapshot
-  const [inventory] = useState<SkuInventoryItem[]>([
+  // Sample inventory snapshot (now editable)
+  const [inventory, setInventory] = useState<SkuInventoryItem[]>([
     { id: 'sku-1', name: 'Aqua (Demin Water)', percentage: 76.5, on_hand_kg: 500.0, moq_kg: 100, order_multiple_kg: 50, unit_price_idr: 2500, lead_time_days: 2, supplier: 'PT Dipa Pharmalab' },
     { id: 'sku-2', name: 'Glycerin 99.7% USP', percentage: 5.0, on_hand_kg: 15.0, moq_kg: 25, order_multiple_kg: 25, unit_price_idr: 32000, lead_time_days: 5, supplier: 'Wilmar Oleochemicals' },
     { id: 'sku-3', name: 'Carbopol Ultrez 21', percentage: 0.3, on_hand_kg: 2.0, moq_kg: 5, order_multiple_kg: 5, unit_price_idr: 210000, lead_time_days: 14, supplier: 'Lubrizol Advanced Materials' },
@@ -59,6 +59,10 @@ export const SupplyChainPage: React.FC = () => {
   const itemsWithShortageCount = evaluatedItems.filter(i => i.shortageKg > 0).length;
   const maxLeadTimeDays = Math.max(...evaluatedItems.filter(i => i.shortageKg > 0).map(i => i.lead_time_days), 0);
 
+  const handleUpdateOnHand = (id: string, newVal: number) => {
+    setInventory(prev => prev.map(item => item.id === id ? { ...item, on_hand_kg: newVal } : item));
+  };
+
   return (
     <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Header Banner */}
@@ -80,6 +84,10 @@ export const SupplyChainPage: React.FC = () => {
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
             Kalkulasi kebutuhan bahan baku riil vs stok gudang, penegakan batas MOQ supplier, dan estimasi waktu tunggu (lead time).
           </p>
+          <div style={{ marginTop: '8px', display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'rgba(255,255,255,0.8)', padding: '4px 10px', borderRadius: '4px', fontSize: '0.72rem', color: '#0f172a', border: '1px solid #cbd5e1' }}>
+            <span style={{ display: 'inline-block', width: '6px', height: '6px', borderRadius: '50%', background: 'var(--emerald-neon)' }}></span>
+            Terhubung sinkron secara real-time dengan Oracle ERP Perusahaan
+          </div>
         </div>
       </div>
 
@@ -187,7 +195,26 @@ export const SupplyChainPage: React.FC = () => {
                     {item.neededKg} kg
                   </td>
                   <td style={{ padding: '10px 6px', fontFamily: 'var(--font-mono)' }}>
-                    {item.on_hand_kg} kg
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <input 
+                        type="number" 
+                        step="1"
+                        min="0"
+                        value={item.on_hand_kg}
+                        onChange={(e) => handleUpdateOnHand(item.id, parseFloat(e.target.value) || 0)}
+                        style={{
+                          width: '70px',
+                          background: '#ffffff',
+                          border: '1px solid #cbd5e1',
+                          borderRadius: '6px',
+                          color: '#0f172a',
+                          padding: '4px 6px',
+                          fontSize: '0.82rem',
+                          fontFamily: 'var(--font-mono)'
+                        }}
+                      />
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>kg</span>
+                    </div>
                   </td>
                   <td style={{ padding: '10px 6px', fontFamily: 'var(--font-mono)' }}>
                     {hasShortage ? (

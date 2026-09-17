@@ -151,7 +151,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
                     </span>
                   ) : (
                     <span className="badge-pill badge-emerald">
-                      <CheckCircle2 size={11} /> Completed
+                      <CheckCircle2 size={11} /> Tervalidasi Lab
                     </span>
                   )}
                 </div>

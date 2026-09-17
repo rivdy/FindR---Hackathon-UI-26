@@ -3,7 +3,6 @@ import { CandidateComparison } from '../components/CandidateComparison';
 import { HlbCalculator } from '../components/HlbCalculator';
 import { FormulaEditor } from '../components/FormulaEditor';
 import { IngredientPage } from './IngredientPage';
-import { SupplyChainPage } from './SupplyChainPage';
 import { FormulaCandidate } from '../types';
 import { MOCK_CANDIDATES } from '../data/mockData';
 import { exportFormulationPdf } from '../utils/pdfGenerator';
@@ -18,7 +17,7 @@ export const FormulationPage: React.FC<FormulationPageProps> = ({
   onSelectForTrial,
   onNavigateToRca 
 }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'candidates' | 'hlb' | 'editor' | 'ingredients' | 'supply'>('candidates');
+  const [activeSubTab, setActiveSubTab] = useState<'candidates' | 'hlb' | 'editor' | 'ingredients'>('candidates');
   const [selectedCandidate, setSelectedCandidate] = useState<FormulaCandidate>(MOCK_CANDIDATES[0]);
 
   const handleDownloadPdf = () => {
@@ -70,13 +69,6 @@ export const FormulationPage: React.FC<FormulationPageProps> = ({
             <Database size={14} /> Katalog Bahan & CoA atau MSDS
           </button>
 
-          <button
-            onClick={() => setActiveSubTab('supply')}
-            className={activeSubTab === 'supply' ? 'btn-primary' : 'btn-secondary'}
-            style={{ fontSize: '0.8rem', padding: '8px 14px', whiteSpace: 'nowrap' }}
-          >
-            <TrendingUp size={14} /> Biaya COGS & MOQ
-          </button>
         </div>
 
         {/* PDF Download Button */}
@@ -125,11 +117,6 @@ export const FormulationPage: React.FC<FormulationPageProps> = ({
         </div>
       )}
 
-      {activeSubTab === 'supply' && (
-        <div style={{ marginTop: '-12px' }}>
-          <SupplyChainPage />
-        </div>
-      )}
     </div>
   );
 };

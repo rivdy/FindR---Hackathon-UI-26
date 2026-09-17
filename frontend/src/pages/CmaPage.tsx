@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { MOCK_CMA_ATTRIBUTES } from '../data/mockData';
-import { CapaPage } from './CapaPage';
+import { SupplyChainPage } from './SupplyChainPage';
 import { exportCmaPdf } from '../utils/pdfGenerator';
 import { 
   FlaskConical, 
   Info, 
-  ShieldAlert, 
   CheckCircle2,
-  Download 
+  Download,
+  FileText,
+  TrendingUp
 } from 'lucide-react';
 
 export const CmaPage: React.FC = () => {
-  const [activeSubTab, setActiveSubTab] = useState<'attributes' | 'capa'>('attributes');
+  const [activeSubTab, setActiveSubTab] = useState<'attributes' | 'cogs'>('attributes');
   const cmaAttributes = MOCK_CMA_ATTRIBUTES;
 
   const handleDownloadPdf = () => {
@@ -38,7 +39,7 @@ export const CmaPage: React.FC = () => {
             </h2>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-            Evaluasi kepatuhan atribut kritis bahan baku (droplet size, kemurnian HPLC, offset HLB) dan preseden solusi CAPA historis.
+            Evaluasi kepatuhan atribut kritis bahan baku (droplet size, kemurnian HPLC, offset HLB) dan kalkulasi biaya operasional.
           </p>
         </div>
 
@@ -57,17 +58,28 @@ export const CmaPage: React.FC = () => {
               alignItems: 'center',
               gap: '6px'
             }}
-            title="Download laporan spesifikasi atribut kritis material (CMA)"
+            title="Download laporan spesifikasi atribut kritis material (CMA) format PDF"
           >
-            <Download size={14} /> Download Laporan CMA PDF
+            <Download size={14} /> Download Laporan PDF
           </button>
-
+          
           <button
-            onClick={() => setActiveSubTab(activeSubTab === 'capa' ? 'attributes' : 'capa')}
+            onClick={() => alert("Format Word DOCX sedang dalam pengembangan")}
             className="btn-secondary"
-            style={{ fontSize: '0.78rem', borderColor: '#cbd5e1' }}
+            style={{
+              fontSize: '0.78rem',
+              padding: '7px 14px',
+              color: '#2563eb',
+              borderColor: '#bfdbfe',
+              background: '#eff6ff',
+              fontWeight: 700,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}
+            title="Download laporan resmi dalam format Word"
           >
-            <ShieldAlert size={13} /> {activeSubTab === 'capa' ? 'Lihat Spesifikasi CMA' : 'Buka CAPA Knowledge Hub'}
+            <FileText size={14} /> Export Word DOCX
           </button>
         </div>
       </div>
@@ -88,11 +100,11 @@ export const CmaPage: React.FC = () => {
         </button>
 
         <button
-          onClick={() => setActiveSubTab('capa')}
-          className={activeSubTab === 'capa' ? 'btn-primary' : 'btn-secondary'}
+          onClick={() => setActiveSubTab('cogs')}
+          className={activeSubTab === 'cogs' ? 'btn-primary' : 'btn-secondary'}
           style={{ fontSize: '0.8rem', padding: '8px 14px' }}
         >
-          <ShieldAlert size={14} /> CAPA Knowledge Base (100 Kasus Preseden)
+          <TrendingUp size={14} /> Biaya COGS & MOCS
         </button>
       </div>
 
@@ -156,13 +168,42 @@ export const CmaPage: React.FC = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Empty Table for Real Data Entry */}
+          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff', marginTop: '8px' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px', color: '#0f172a' }}>
+              Input Data CMA Manual (Hasil Uji Lab Analitik Aktual)
+            </h3>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
+              <thead>
+                <tr style={{ color: '#475569', background: '#f8fafc', textAlign: 'left', borderBottom: '2px solid #e2e8f0' }}>
+                  <th style={{ padding: '10px 12px' }}>Nama Material</th>
+                  <th style={{ padding: '10px 12px' }}>Atribut Kritis (CMA)</th>
+                  <th style={{ padding: '10px 12px' }}>Hasil Uji (Batch A)</th>
+                  <th style={{ padding: '10px 12px' }}>Hasil Uji (Batch B)</th>
+                  <th style={{ padding: '10px 12px' }}>Kesimpulan Mutu</th>
+                </tr>
+              </thead>
+              <tbody>
+                {['Minyak Sawit Terhidrogenasi', 'Pewarna (Pigment Red)', 'Pengawet (Phenoxyethanol)', 'Pengemulsi (Polysorbate)'].map((param, idx) => (
+                  <tr key={idx} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '12px', fontWeight: 700, color: '#002b5c' }}>{param}</td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="Atribut..." style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                    <td style={{ padding: '8px 12px' }}><input type="text" placeholder="-" style={{ width: '100%', padding: '4px', border: '1px solid #cbd5e1', borderRadius: '4px' }} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
-      {/* Subtab 2: CAPA Knowledge Base */}
-      {activeSubTab === 'capa' && (
+      {/* Subtab 2: COGS & MOCS (Supply Chain) */}
+      {activeSubTab === 'cogs' && (
         <div style={{ marginTop: '-12px' }}>
-          <CapaPage />
+          <SupplyChainPage />
         </div>
       )}
     </div>

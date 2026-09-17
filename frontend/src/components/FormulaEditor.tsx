@@ -22,8 +22,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
   const phases: PhaseCategory[] = [
     'Phase A (Water Phase)',
     'Phase B (Oil Phase)',
-    'Phase C (Actives & Stabilizer)',
-    'Phase D (Preservative & Adjuster)'
+    'Phase C (Actives, Stabilizer & Preservative)'
   ];
 
   const handlePercentageChange = (id: string, newPct: number) => {
@@ -170,6 +169,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
                       <th style={{ padding: '8px 10px', width: '110px' }}>Berat ({batchMassKg}kg)</th>
                       <th style={{ padding: '8px 10px', width: '120px' }}>Harga / kg</th>
                       <th style={{ padding: '8px 10px', width: '120px' }}>Status Halal</th>
+                      <th style={{ padding: '8px 10px', width: '120px' }}>Status BPOM</th>
                       <th style={{ padding: '8px 10px', width: '32px' }}></th>
                     </tr>
                   </thead>
@@ -218,9 +218,24 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
                             <span className="badge-pill badge-neutral" style={{ fontSize: '0.65rem' }}>
                               Exempt
                             </span>
+                          ) : item.halal_status === 'HIGH_RISK_HARAM' ? (
+                            <span className="badge-pill badge-rose" style={{ fontSize: '0.65rem' }}>
+                              <ShieldAlert size={10} /> Haram
+                            </span>
                           ) : (
                             <span className="badge-pill badge-amber" style={{ fontSize: '0.65rem' }}>
-                              <ShieldAlert size={10} /> Review Gate
+                              Review Req
+                            </span>
+                          )}
+                        </td>
+                        <td style={{ padding: '8px 4px' }}>
+                          {!item.function.includes('BPOM VIOLATION') ? (
+                            <span className="badge-pill badge-emerald" style={{ fontSize: '0.65rem' }}>
+                              <ShieldCheck size={10} /> Lolos
+                            </span>
+                          ) : (
+                            <span className="badge-pill badge-rose" style={{ fontSize: '0.65rem' }}>
+                              <ShieldAlert size={10} /> Violation
                             </span>
                           )}
                         </td>

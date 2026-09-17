@@ -10,7 +10,6 @@ import {
   BLANK_CPP_FINAL_OBSERVATIONS
 } from '../data/mockData';
 import { CppActualStep, CppFinalObservation } from '../types';
-import { RcaPage } from './RcaPage';
 import { exportCppPdf } from '../utils/pdfGenerator';
 import { exportCppDocs } from '../utils/docGenerator';
 import { 
@@ -38,7 +37,7 @@ interface CppPageProps {
 }
 
 export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
-  const [activeSubTab, setActiveSubTab] = useState<'protocol' | 'median_runs' | 'rca'>('protocol');
+  const [activeSubTab, setActiveSubTab] = useState<'protocol' | 'median_runs'>('protocol');
   const [batchStatus, setBatchStatus] = useState<'blank' | 'optimized' | 'deviation'>('blank');
   
   // Interactive research execution states (Blank by default per CPKB SOP!)
@@ -190,13 +189,6 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
             </button>
           </div>
 
-          <button
-            onClick={() => setActiveSubTab(activeSubTab === 'rca' ? 'protocol' : 'rca')}
-            className="btn-secondary"
-            style={{ fontSize: '0.78rem', borderColor: '#cbd5e1', padding: '7px 14px', color: '#002b5c', fontWeight: 600 }}
-          >
-            <GitFork size={13} /> {activeSubTab === 'rca' ? 'Lihat Lembar Protokol' : 'Buka 6M Fishbone RCA'}
-          </button>
         </div>
       </div>
 
@@ -224,13 +216,6 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
           <Activity size={14} /> Analisis Replikasi (Median ±3)
         </button>
 
-        <button
-          onClick={() => setActiveSubTab('rca')}
-          className={activeSubTab === 'rca' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
-          <GitFork size={14} /> Investigasi Deviasi (6M Fishbone & 5-Whys)
-        </button>
       </div>
 
       {/* SUBTAB 1: PROTOCOL BATCH (SECTION C, D, E MATCHING USER SPECIFICATION) */}
@@ -741,12 +726,6 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
         </div>
       )}
 
-      {/* SUBTAB 3: RCA 6M FISHBONE */}
-      {activeSubTab === 'rca' && (
-        <div style={{ marginTop: '-12px' }}>
-          <RcaPage onNavigateToCapa={onNavigateToCapa} />
-        </div>
-      )}
     </div>
   );
 };

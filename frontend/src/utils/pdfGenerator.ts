@@ -92,12 +92,12 @@ export function exportFormulationPdf(candidate: FormulaCandidate) {
     `${item.percentage.toFixed(2)}%`,
     item.function,
     item.halal_status === 'HALAL_VERIFIED' ? 'Halal ✓' : item.halal_status === 'HALAL_EXEMPT' ? 'Exempt' : 'Review ✗',
-    `IDR ${item.cost_per_kg.toLocaleString('id-ID')}`
+    item.bpom_compliant !== false ? 'Lolos ✓' : 'Peringatan ✗'
   ]);
 
   autoTable(doc, {
     startY: 68,
-    head: [['No', 'Fase', 'Nama INCI', 'Nama Dagang', 'Dosis (%)', 'Fungsi / Peran', 'Halal', 'Harga / kg']],
+    head: [['No', 'Fase', 'Nama INCI', 'Nama Dagang', 'Dosis (%)', 'Fungsi / Peran', 'Halal', 'CoA/BPOM']],
     body: tableRows,
     theme: 'striped',
     headStyles: { fillColor: [16, 185, 129], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.5 },

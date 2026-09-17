@@ -89,7 +89,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
 
       {/* Right: status indicators + actions */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-        {/* Halal Gate — structural indicator, not decoration */}
+        {/* Halal Gate - structural indicator, not decoration */}
         <div
           style={{
             display: 'flex',
@@ -113,7 +113,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
           </span>
         </div>
 
-        {/* Demo mode notice — amber because it's a real constraint */}
+        {/* Demo mode notice - amber because it's a real constraint */}
         <div
           style={{
             display: 'flex',

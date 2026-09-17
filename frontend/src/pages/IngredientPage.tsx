@@ -547,7 +547,7 @@ export const IngredientPage: React.FC = () => {
                   <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 10px', borderRadius: '6px' }}>
                     <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Rentang Tipikal Formulasi:</div>
                     <div className="font-mono-calc" style={{ fontWeight: 600, color: 'var(--cyan-neon)' }}>
-                      {activeIngredient.typical_min_pct}% — {activeIngredient.typical_max_pct}%
+                      {activeIngredient.typical_min_pct}% - {activeIngredient.typical_max_pct}%
                     </div>
                   </div>
 

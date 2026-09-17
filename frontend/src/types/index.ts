@@ -1,8 +1,7 @@
 export type PhaseCategory = 
   | 'Phase A (Water Phase)' 
   | 'Phase B (Oil Phase)' 
-  | 'Phase C (Actives & Stabilizer)' 
-  | 'Phase D (Preservative & Adjuster)';
+  | 'Phase C (Actives, Stabilizer & Preservative)';
 
 export type HalalStatus = 
   | 'HALAL_VERIFIED' 
@@ -75,6 +74,7 @@ export interface FormulaLineItem {
   calculated_mass_g: number;
   cost_per_kg: number;
   halal_status: HalalStatus;
+  bpom_compliant?: boolean;
   is_active?: boolean;
   function: string;
 }

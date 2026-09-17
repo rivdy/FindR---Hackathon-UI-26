@@ -7,6 +7,7 @@ import { CppPage } from './pages/CppPage';
 import { CmaPage } from './pages/CmaPage';
 import { QtppModal } from './components/QtppModal';
 import { InitialDataInputView } from './components/InitialDataInputView';
+import { RcaCapaPage } from './pages/RcaCapaPage';
 import { FormulaCandidate, QtppProfile } from './types';
 import { DEFAULT_QTPP } from './data/mockData';
 
@@ -31,12 +32,8 @@ export const App: React.FC = () => {
     setCurrentTab('stabilitas');
   };
 
-  const handleNavigateToRca = () => {
-    setCurrentTab('cpp');
-  };
-
-  const handleNavigateToCapa = () => {
-    setCurrentTab('cma');
+  const handleNavigateToRcaCapa = () => {
+    setCurrentTab('rcaCapa');
   };
 
   if (!isGenerated) {
@@ -63,7 +60,7 @@ export const App: React.FC = () => {
         onToggleCollapse={() => setSidebarCollapsed(c => !c)}
       />
 
-      {/* Main content — offset by sidebar width, transitions with it */}
+      {/* Main content - offset by sidebar width, transitions with it */}
       <div
         style={{
           marginLeft: `${SIDEBAR_WIDTH}px`,
@@ -85,16 +82,17 @@ export const App: React.FC = () => {
           {currentTab === 'formulasi' && (
             <FormulationPage
               onSelectForTrial={handleSelectCandidateForTrial}
-              onNavigateToRca={handleNavigateToRca}
+              onNavigateToRca={handleNavigateToRcaCapa}
             />
           )}
           {currentTab === 'stabilitas' && (
-            <StabilityPage onNavigateToRca={handleNavigateToRca} />
+            <StabilityPage onNavigateToRca={handleNavigateToRcaCapa} />
           )}
           {currentTab === 'cpp' && (
-            <CppPage onNavigateToCapa={handleNavigateToCapa} />
+            <CppPage onNavigateToCapa={handleNavigateToRcaCapa} />
           )}
           {currentTab === 'cma' && <CmaPage />}
+          {currentTab === 'rcaCapa' && <RcaCapaPage />}
         </main>
       </div>
     </div>

@@ -246,7 +246,7 @@ export function exportCppDocs(
       <table class="header-table">
         <tr>
           <td>
-            <div class="header-title">rangkAI — Cosmetics AI Formulation Studio</div>
+            <div class="header-title">rangkAI - Cosmetics AI Formulation Studio</div>
             <div class="header-subtitle">Standar Dokumen: CPKB BPOM / ISO 22716 Cosmetics Good Manufacturing Practice</div>
           </td>
           <td style="text-align: right; font-size: 8.5pt; color: #cbd5e1;">
