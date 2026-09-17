@@ -91,7 +91,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
         {/* Halal Gate - structural indicator, not decoration */}
         <div
-          style={{
+          style={{ '--badge-color': '#15803d',
             display: 'flex',
             alignItems: 'center',
             gap: '5px',
@@ -99,8 +99,8 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
             borderRadius: '6px',
             background: 'var(--status-clear-bg)',
             border: '1px solid var(--status-clear-border)',
-          }}
-        >
+          } as React.CSSProperties}
+         className="badge-pill" data-status="true">
           <ShieldCheck size={13} style={{ color: 'var(--status-clear)', flexShrink: 0 }} />
           <span
             style={{
@@ -115,7 +115,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
 
         {/* Demo mode notice - amber because it's a real constraint */}
         <div
-          style={{
+          style={{ '--badge-color': '#b45309',
             display: 'flex',
             alignItems: 'center',
             gap: '5px',
@@ -123,8 +123,8 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
             borderRadius: '6px',
             background: 'var(--status-review-bg)',
             border: '1px solid var(--status-review-border)',
-          }}
-        >
+          } as React.CSSProperties}
+         className="badge-pill" data-status="true">
           <AlertTriangle size={13} style={{ color: 'var(--status-review)', flexShrink: 0 }} />
           <span
             style={{

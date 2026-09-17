@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { 
-  MOCK_CPP_PARAMETERS, 
-  MOCK_CPP_TARGET_STEPS, 
-  MOCK_CPP_ACTUAL_STEPS, 
+import {
+  MOCK_CPP_PARAMETERS,
+  MOCK_CPP_TARGET_STEPS,
+  MOCK_CPP_ACTUAL_STEPS,
   MOCK_CPP_FINAL_OBSERVATIONS,
   MOCK_CPP_DEVIATION_ACTUAL_STEPS,
   MOCK_CPP_DEVIATION_FINAL_OBSERVATIONS,
@@ -12,11 +12,11 @@ import {
 import { CppActualStep, CppFinalObservation } from '../types';
 import { exportCppPdf } from '../utils/pdfGenerator';
 import { exportCppDocs } from '../utils/docGenerator';
-import { 
-  Activity, 
-  Info, 
-  GitFork, 
-  CheckCircle2, 
+import {
+  Activity,
+  Info,
+  GitFork,
+  CheckCircle2,
   AlertCircle,
   Clock,
   Gauge,
@@ -24,7 +24,6 @@ import {
   Sliders,
   Download,
   FileSpreadsheet,
-  FileText,
   Layers,
   Sparkles,
   RotateCcw,
@@ -39,7 +38,7 @@ interface CppPageProps {
 export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
   const [activeSubTab, setActiveSubTab] = useState<'protocol' | 'median_runs'>('protocol');
   const [batchStatus, setBatchStatus] = useState<'blank' | 'optimized' | 'deviation'>('blank');
-  
+
   // Interactive research execution states (Blank by default per CPKB SOP!)
   const [actualSteps, setActualSteps] = useState<CppActualStep[]>(BLANK_CPP_ACTUAL_STEPS);
   const [finalObs, setFinalObs] = useState<CppFinalObservation[]>(BLANK_CPP_FINAL_OBSERVATIONS);
@@ -89,15 +88,15 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
   };
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Top Banner */}
       <div className="glass-panel" style={{
         padding: '18px 22px',
         borderLeft: `4px solid ${
-          batchStatus === 'deviation' 
-            ? 'var(--rose-warning)' 
-            : batchStatus === 'optimized' 
-              ? 'var(--emerald-neon)' 
+          batchStatus === 'deviation'
+            ? 'var(--rose-warning)'
+            : batchStatus === 'optimized'
+              ? 'var(--emerald-neon)'
               : 'var(--cyan-neon)'
         }`,
         display: 'flex',
@@ -113,20 +112,20 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               CPP (Critical Process Parameters) & Lembar Protokol Batch
             </h2>
             <span className={`badge-pill ${
-              batchStatus === 'deviation' 
-                ? 'badge-rose' 
-                : batchStatus === 'optimized' 
-                  ? 'badge-emerald' 
+              batchStatus === 'deviation'
+                ? 'badge-rose'
+                : batchStatus === 'optimized'
+                  ? 'badge-emerald'
                   : 'badge-cyan'
             }`}>
               {currentLotNumber}
             </span>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-              ({batchStatus === 'blank' 
-                ? '⏳ Lembar Kerja Kosong - Menunggu Penelitian Lab' 
-                : batchStatus === 'optimized' 
-                  ? '✓ Batch Faktual Teroptimasi' 
-                  : '⚠️ Trial Deviasi Pilot'})
+              ({batchStatus === 'blank'
+                ? ' Lembar Kerja Kosong - Menunggu Penelitian Lab'
+                : batchStatus === 'optimized'
+                  ? ' Batch Faktual Teroptimasi'
+                  : ' Trial Deviasi Pilot'})
             </span>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
@@ -146,46 +145,20 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
             gap: '4px',
             boxShadow: 'var(--shadow-xs)'
           }}>
-            <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600, paddingLeft: '8px', paddingRight: '4px' }}>
-              Unduh:
-            </span>
+
             <button
               onClick={handleDownloadPdf}
-              className="btn-secondary"
-              style={{
-                fontSize: '0.75rem',
-                padding: '5px 12px',
-                color: '#0369a1',
-                borderColor: '#bfdbfe',
-                background: '#eff6ff',
-                fontWeight: 700,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                borderRadius: '6px'
-              }}
+              className="ui-download"
               title={batchStatus === 'blank' ? 'Download lembar kerja batch kosong untuk cetak langsung (PDF)' : `Download laporan lengkap hasil trial CPP (${currentLotNumber}.pdf)`}
             >
-              <Download size={13} /> PDF
+              <Download size={13} /> Unduh PDF
             </button>
             <button
               onClick={handleDownloadDocs}
-              className="btn-secondary"
-              style={{
-                fontSize: '0.75rem',
-                padding: '5px 12px',
-                color: '#1e40af',
-                borderColor: '#bfdbfe',
-                background: '#eff6ff',
-                fontWeight: 700,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '5px',
-                borderRadius: '6px'
-              }}
+              className="ui-download"
               title={batchStatus === 'blank' ? 'Download lembar kerja batch kosong format DOCS (Word / Google Docs) untuk disunting' : `Download laporan CPP format Word / Google Docs (${currentLotNumber}.doc)`}
             >
-              <FileText size={13} /> DOCS (Word)
+              <Download size={13} /> Unduh Word
             </button>
           </div>
 
@@ -193,26 +166,18 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
       </div>
 
       {/* Sub navigation bar */}
-      <div style={{
-        display: 'flex',
-        gap: '8px',
-        borderBottom: '1px solid var(--border-subtle)',
-        paddingBottom: '12px',
-        flexWrap: 'wrap'
-      }}>
+      <div className="ui-tabs">
         <button
           onClick={() => setActiveSubTab('protocol')}
-          className={activeSubTab === 'protocol' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeSubTab === 'protocol'}>
           <FileSpreadsheet size={14} /> Protokol Batch: Target vs Aktual vs Pengamatan Akhir
         </button>
 
         <button
           onClick={() => setActiveSubTab('median_runs')}
-          className={activeSubTab === 'median_runs' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeSubTab === 'median_runs'}>
           <Activity size={14} /> Analisis Replikasi (Median ±3)
         </button>
 
@@ -221,7 +186,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
       {/* SUBTAB 1: PROTOCOL BATCH (SECTION C, D, E MATCHING USER SPECIFICATION) */}
       {activeSubTab === 'protocol' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          
+
           {/* SECTION C: TARGET PARAMETER PROSES */}
           <div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px', background: '#ffffff' }}>
             <div style={{
@@ -255,9 +220,9 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                 </thead>
                 <tbody>
                   {MOCK_CPP_TARGET_STEPS.map((t, idx) => (
-                    <tr 
-                      key={t.no} 
-                      style={{ 
+                    <tr
+                      key={t.no}
+                      style={{
                         background: idx % 2 === 1 ? '#f8fafc' : '#ffffff',
                         borderBottom: '1px solid #f1f5f9'
                       }}
@@ -294,13 +259,13 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span>D. Data Aktual Trial Batch</span>
-                <span style={{ 
-                  fontSize: '0.72rem', 
-                  padding: '3px 10px', 
+                <span style={{
+                  fontSize: '0.72rem',
+                  padding: '3px 10px',
                   borderRadius: '6px',
                   background: batchStatus === 'blank' ? 'rgba(255,255,255,0.2)' : batchStatus === 'deviation' ? '#f43f5e' : '#10b981',
                   color: '#ffffff',
-                  fontWeight: 700 
+                  fontWeight: 700
                 }}>
                   {batchStatus === 'blank' ? 'LEMBAR KOSONG (Siap Diisi Tim Peneliti)' : `Batch No: ${currentLotNumber}`}
                 </span>
@@ -325,7 +290,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                   }}
                   title="Isi otomatis dengan data trial aktual dari eksperimen pilot plant"
                 >
-                  <Sparkles size={13} /> ⚡ Isi Data Trial Lab
+                  <Sparkles size={13} />  Isi Data Trial Lab
                 </button>
 
                 <button
@@ -345,7 +310,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                   }}
                   title="Simulasikan deviasi proses (overshoot 82°C) untuk menguji modul 6M RCA"
                 >
-                  <AlertCircle size={13} /> ⚠️ Simulasi Deviasi
+                  <AlertCircle size={13} />  Simulasi Deviasi
                 </button>
 
                 <button
@@ -365,7 +330,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                   }}
                   title="Kosongkan kembali seluruh tabel untuk persiapan batch penelitian baru"
                 >
-                  <RotateCcw size={13} /> 🔄 Kosongkan
+                  <RotateCcw size={13} />  Kosongkan
                 </button>
               </div>
             </div>
@@ -387,11 +352,11 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                   {actualSteps.map((a, idx) => {
                     const isOvershoot = a.temp_actual.includes('82°C') || a.speed_actual.includes('3200 rpm');
                     return (
-                      <tr 
-                        key={a.no} 
-                        style={{ 
-                          background: isOvershoot 
-                            ? '#fff1f2' 
+                      <tr
+                        key={a.no}
+                        style={{
+                          background: isOvershoot
+                            ? '#fff1f2'
                             : idx % 2 === 1 ? '#f8fafc' : '#ffffff',
                           borderBottom: '1px solid #f1f5f9'
                         }}
@@ -514,9 +479,9 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                 </thead>
                 <tbody>
                   {finalObs.map((o, idx) => (
-                    <tr 
-                      key={o.parameter} 
-                      style={{ 
+                    <tr
+                      key={o.parameter}
+                      style={{
                         background: idx % 2 === 1 ? '#f8fafc' : '#ffffff',
                         borderBottom: '1px solid #f1f5f9'
                       }}
@@ -615,11 +580,11 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               }}>
                 <FlaskConical size={20} color="#0284c7" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
-                  <strong style={{ color: '#002b5c' }}>📋 Lembar Kerja Kosong Siap Diisi:</strong> Sesuai SOP CPKB industri kosmetik, tabel <strong>Data Aktual Trial (D)</strong> dan <strong>Data Pengamatan Akhir (E)</strong> disiapkan kosong sebelum proses compounding dimulai.
+                  <strong style={{ color: '#002b5c' }}> Lembar Kerja Kosong Siap Diisi:</strong> Sesuai SOP CPKB industri kosmetik, tabel <strong>Data Aktual Trial (D)</strong> dan <strong>Data Pengamatan Akhir (E)</strong> disiapkan kosong sebelum proses compounding dimulai.
                   <ul style={{ margin: '6px 0 0 16px', padding: 0 }}>
                     <li>Peneliti atau operator compounding dapat <strong>mengetik langsung</strong> nilai suhu aktual, waktu, kecepatan, serta hasil pH dan viskositas di kolom atas.</li>
-                    <li>Atau klik tombol <strong>'⚡ Isi Data Trial Lab'</strong> di atas untuk memuat simulasi data riil batch teroptimasi secara instan.</li>
-                    <li>Tombol <strong>'PDF'</strong> atau <strong>'DOCS (Word)'</strong> di kanan atas dapat digunakan untuk mencetak formulir SOP resmi atau mengunduh berkas Word/Docs yang dapat disunting langsung.</li>
+                    <li>Atau klik tombol <strong>'Isi Data Trial Lab'</strong> di atas untuk memuat simulasi data riil batch teroptimasi secara instan.</li>
+                    <li>Tombol <strong>'Unduh PDF'</strong> atau <strong>'Unduh Word'</strong> di kanan atas dapat digunakan untuk mencetak formulir SOP resmi atau mengunduh berkas Word/Docs yang dapat disunting langsung.</li>
                   </ul>
                 </div>
               </div>
@@ -633,7 +598,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                 color: '#9f1239',
                 lineHeight: 1.5
               }}>
-                <strong>⚠️ Temuan Deviasi Proses (Batch LOT-MOIST-26-04A):</strong> Suhu pemanasan fase A overshoot (82°C vs target 70-75°C) dan kecepatan homogenizer 3200 rpm memicu timbulnya gelembung mikro dan viskositas awal rendah (16.500 cPs). Silakan klik tombol <strong>'Buka 6M Fishbone RCA'</strong> di kanan atas untuk menganalisis akar masalah dan menyusun tindakan korektif (CAPA).
+                <strong> Temuan Deviasi Proses (Batch LOT-MOIST-26-04A):</strong> Suhu pemanasan fase A overshoot (82°C vs target 70-75°C) dan kecepatan homogenizer 3200 rpm memicu timbulnya gelembung mikro dan viskositas awal rendah (16.500 cPs). Silakan klik tombol <strong>'Buka 6M Fishbone RCA'</strong> di kanan atas untuk menganalisis akar masalah dan menyusun tindakan korektif (CAPA).
               </div>
             ) : (
               <div style={{
@@ -645,7 +610,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                 color: '#065f46',
                 lineHeight: 1.5
               }}>
-                <strong>✓ Batch Faktual Teroptimasi (Batch LOT-MOIST-26-04B):</strong> Seluruh tahapan compounding (suhu, waktu, kecepatan rotasi) mematuhi batas kritis target R&D. Nilai pH 5.74 stabil di rentang fisiologis (5.5-6.0), viskositas 21.500 cPs sesuai target, dan 3x replikasi membuktikan reprodusibilitas proses formula siap scale-up.
+                <strong> Batch Faktual Teroptimasi (Batch LOT-MOIST-26-04B):</strong> Seluruh tahapan compounding (suhu, waktu, kecepatan rotasi) mematuhi batas kritis target R&D. Nilai pH 5.74 stabil di rentang fisiologis (5.5-6.0), viskositas 21.500 cPs sesuai target, dan 3x replikasi membuktikan reprodusibilitas proses formula siap scale-up.
               </div>
             )}
           </div>

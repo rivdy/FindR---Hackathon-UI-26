@@ -50,7 +50,7 @@ export const HlbCalculator: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Header Banner */}
-      <div className="glass-panel" style={{
+      <div className="glass-panel module-header" style={{
         padding: '20px',
         borderLeft: '4px solid var(--cyan-neon)',
         display: 'flex',

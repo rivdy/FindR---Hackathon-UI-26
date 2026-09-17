@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { 
-  MOCK_STABILITY_RESULTS, 
-  MOCK_CPP_PARAMETERS, 
-  MOCK_CMA_ATTRIBUTES 
+import {
+  MOCK_STABILITY_RESULTS,
+  MOCK_CPP_PARAMETERS,
+  MOCK_CMA_ATTRIBUTES
 } from '../data/mockData';
-import { 
-  Thermometer, 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  GitFork, 
-  Activity, 
-  FlaskConical, 
-  Layers, 
+import {
+  Thermometer,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  GitFork,
+  Activity,
+  FlaskConical,
+  Layers,
   ArrowRight,
   TrendingDown,
   Info
@@ -32,7 +32,7 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
   const hasStabilityFailure = stabilityResults.some(r => !r.is_stable);
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '22px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '22px' }}>
       {/* Top Banner */}
       <div className="glass-panel" style={{
         padding: '18px 22px',
@@ -71,28 +71,25 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
       </div>
 
       {/* Sub Tabs Navigation */}
-      <div style={{ display: 'flex', gap: '10px', borderBottom: '1px solid var(--border-subtle)', paddingBottom: '12px' }}>
+      <div className="ui-tabs">
         <button
           onClick={() => setSubTab('stability')}
-          className={subTab === 'stability' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.82rem', padding: '8px 16px' }}
-        >
+          className="ui-tab"
+         aria-pressed={subTab === 'stability'}>
           <Thermometer size={15} /> 8 Uji Stabilitas Fisik
         </button>
 
         <button
           onClick={() => setSubTab('cpp')}
-          className={subTab === 'cpp' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.82rem', padding: '8px 16px' }}
-        >
+          className="ui-tab"
+         aria-pressed={subTab === 'cpp'}>
           <Activity size={15} /> CPP (Critical Process Parameters)
         </button>
 
         <button
           onClick={() => setSubTab('cma')}
-          className={subTab === 'cma' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.82rem', padding: '8px 16px' }}
-        >
+          className="ui-tab"
+         aria-pressed={subTab === 'cma'}>
           <FlaskConical size={15} /> CMA (Critical Material Attributes)
         </button>
       </div>
@@ -113,7 +110,7 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
           }}>
             <Info size={18} color="var(--cyan-neon)" style={{ flexShrink: 0 }} />
             <div>
-              <strong>Kriteria Stabilitas rangkAI:</strong> Emulsi dinyatakan <span style={{ color: 'var(--emerald-neon)', fontWeight: 700 }}>STABIL (✓)</span> apabila penurunan viskositas <strong>kurang dari 20% (&lt;20%)</strong> pada bulan ke-3. Jika penurunan viskositas <span style={{ color: 'var(--rose-danger)', fontWeight: 700 }}>≥20% (✗)</span>, AI otomatis memicu investigasi RCA dan CAPA.
+              <strong>Kriteria Stabilitas rangkAI:</strong> Emulsi dinyatakan <span style={{ color: 'var(--emerald-neon)', fontWeight: 700 }}>STABIL</span> apabila penurunan viskositas <strong>kurang dari 20% (&lt;20%)</strong> pada bulan ke-3. Jika penurunan viskositas <span style={{ color: 'var(--rose-danger)', fontWeight: 700 }}>≥20%</span>, AI otomatis memicu investigasi RCA dan CAPA.
             </div>
           </div>
 
@@ -134,7 +131,7 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
                 {stabilityResults.map(item => {
                   const isFail = !item.is_stable;
                   return (
-                    <tr 
+                    <tr
                       key={item.id}
                       style={{
                         borderBottom: '1px solid rgba(255,255,255,0.03)',

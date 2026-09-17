@@ -45,7 +45,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Top Banner with Total Mass Check & COGS */}
-      <div className="glass-panel" style={{
+      <div className="glass-panel module-header" style={{
         padding: '16px 20px',
         display: 'flex',
         flexWrap: 'wrap',

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { FormulaCandidate, FormulaReplacementSolution } from '../types';
 import { MOCK_CANDIDATES } from '../data/mockData';
-import { 
-  Sparkles, 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  ArrowRight, 
-  ShieldCheck, 
-  ShieldAlert, 
-  RefreshCw, 
-  GitFork, 
-  Activity, 
-  TrendingUp, 
+import {
+  Sparkles,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  ArrowRight,
+  ShieldCheck,
+  ShieldAlert,
+  RefreshCw,
+  GitFork,
+  Activity,
+  TrendingUp,
   BarChart2,
   ChevronDown,
   ChevronUp
@@ -23,9 +23,9 @@ interface CandidateComparisonProps {
   onNavigateToRca?: () => void;
 }
 
-export const CandidateComparison: React.FC<CandidateComparisonProps> = ({ 
+export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
   onSelectForTrial,
-  onNavigateToRca 
+  onNavigateToRca
 }) => {
   const candidates = MOCK_CANDIDATES;
   const [activeSolutionCandidate, setActiveSolutionCandidate] = useState<FormulaCandidate | null>(null);
@@ -37,7 +37,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Header Banner */}
-      <div className="glass-panel" style={{
+      <div className="glass-panel module-header" style={{
         padding: '18px 22px',
         borderLeft: '4px solid var(--emerald-neon)',
         display: 'flex',
@@ -82,7 +82,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
           const hasViolation = isBpomViolated || isHalalViolated;
 
           return (
-            <div 
+            <div
               key={cand.id}
               className={`glass-panel ${isRankOne ? 'glass-panel-elevated' : ''}`}
               style={{
@@ -91,10 +91,10 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                 flexDirection: 'column',
                 gap: '16px',
                 background: '#ffffff',
-                border: isRankOne 
-                  ? '2px solid #0284c7' 
-                  : hasViolation 
-                  ? '1px solid #fecdd3' 
+                border: isRankOne
+                  ? '2px solid #0284c7'
+                  : hasViolation
+                  ? '1px solid #fecdd3'
                   : '1px solid #e2e8f0',
                 position: 'relative',
                 boxShadow: isRankOne ? '0 8px 24px -4px rgba(2, 132, 199, 0.12)' : 'var(--shadow-card)'
@@ -155,7 +155,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
-                }}>
+                }} className={cand.bpom_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'}>
                   {cand.bpom_compliant ? (
                     <>
                       <CheckCircle2 size={14} color="var(--emerald-neon)" />
@@ -178,16 +178,16 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
-                }}>
+                }} className={cand.halal_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'}>
                   {cand.halal_compliant ? (
                     <>
                       <CheckCircle2 size={14} color="var(--emerald-neon)" />
-                      <span style={{ fontWeight: 700, color: 'var(--emerald-neon)' }}>Halal Aman (✓)</span>
+                      <span style={{ fontWeight: 700, color: 'var(--emerald-neon)' }}>Halal Aman</span>
                     </>
                   ) : (
                     <>
                       <XCircle size={14} color="var(--rose-danger)" />
-                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>Halal Tidak Lolos (✗)</span>
+                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>Halal Tidak Lolos</span>
                     </>
                   )}
                 </div>
@@ -364,7 +364,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                         </ul>
                       </div>
                       <div style={{ color: 'var(--emerald-neon)', marginTop: '2px' }}>
-                        ✓ {cand.replacement_solution.regulatory_gain}
+                         {cand.replacement_solution.regulatory_gain}
                       </div>
                     </div>
                   )}

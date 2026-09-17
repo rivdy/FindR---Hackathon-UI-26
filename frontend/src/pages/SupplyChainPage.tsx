@@ -35,7 +35,7 @@ export const SupplyChainPage: React.FC = () => {
   const evaluatedItems = inventory.map(item => {
     const neededKg = (item.percentage / 100) * batchScaleKg;
     const shortageKg = Math.max(0, neededKg - item.on_hand_kg);
-    
+
     // Purchasing quantity: must be at least MOQ, and a multiple of order_multiple
     let orderQuantityKg = 0;
     if (shortageKg > 0) {
@@ -64,7 +64,7 @@ export const SupplyChainPage: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Header Banner */}
       <div className="glass-panel" style={{
         padding: '16px 20px',
@@ -101,7 +101,7 @@ export const SupplyChainPage: React.FC = () => {
         <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Skala Batch Target:</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <input 
+            <input
               type="number"
               step="5"
               min="1"
@@ -196,8 +196,8 @@ export const SupplyChainPage: React.FC = () => {
                   </td>
                   <td style={{ padding: '10px 6px', fontFamily: 'var(--font-mono)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <input 
-                        type="number" 
+                      <input
+                        type="number"
                         step="1"
                         min="0"
                         value={item.on_hand_kg}

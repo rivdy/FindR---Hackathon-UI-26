@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import { MOCK_STABILITY_RESULTS } from '../data/mockData';
 import { TrialBatchPage } from './TrialBatchPage';
 import { exportStabilityPdf } from '../utils/pdfGenerator';
-import { 
-  Thermometer, 
-  CheckCircle2, 
-  XCircle, 
-  TrendingDown, 
-  Info, 
-  ClipboardCheck, 
+import {
+  Thermometer,
+  CheckCircle2,
+  XCircle,
+  TrendingDown,
+  Info,
+  ClipboardCheck,
   GitFork,
   Download,
-  FileText
-} from 'lucide-react';
+  } from 'lucide-react';
 
 interface StabilityPageProps {
   onNavigateToRca: () => void;
@@ -28,7 +27,7 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
   };
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Top Banner */}
       <div className="glass-panel" style={{
         padding: '18px 22px',
@@ -47,71 +46,42 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
             </h2>
           </div>
           <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '4px' }}>
-            Kaidah Evaluasi: Emulsi dinyatakan stabil (✓) jika penurunan viskositas &lt;20% pada bulan ketiga. Dilengkapi eksekusi SOP trial tertutup.
+            Kaidah Evaluasi: Emulsi dinyatakan stabil jika penurunan viskositas &lt;20% pada bulan ketiga. Dilengkapi eksekusi SOP trial tertutup.
           </p>
         </div>
 
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <button
             onClick={handleDownloadPdf}
-            className="btn-secondary"
-            style={{
-              fontSize: '0.78rem',
-              padding: '7px 14px',
-              color: '#0284c7',
-              borderColor: '#bfdbfe',
-              background: '#eff6ff',
-              fontWeight: 700,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            className="ui-download"
             title="Download laporan resmi 8 uji stabilitas fisik (PDF)"
           >
-            <Download size={14} /> Download Laporan PDF
+            <Download size={14} /> Unduh PDF
           </button>
-          
+
           <button
             onClick={() => alert("Format Word DOCX sedang dalam pengembangan")}
-            className="btn-secondary"
-            style={{
-              fontSize: '0.78rem',
-              padding: '7px 14px',
-              color: '#2563eb',
-              borderColor: '#bfdbfe',
-              background: '#eff6ff',
-              fontWeight: 700,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            className="ui-download"
             title="Download laporan resmi dalam format Word"
           >
-            <FileText size={14} /> Export Word DOCX
+            <Download size={14} /> Unduh Word
           </button>
         </div>
       </div>
 
       {/* Sub navigation bar */}
-      <div style={{
-        display: 'flex',
-        gap: '8px',
-        borderBottom: '1px solid var(--border-subtle)',
-        paddingBottom: '12px'
-      }}>
+      <div className="ui-tabs">
         <button
           onClick={() => setActiveSubTab('results')}
-          className={activeSubTab === 'results' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeSubTab === 'results'}>
           <Thermometer size={14} /> 8 Hasil Uji Stabilitas Fisik
         </button>
 
         <button
           onClick={() => setActiveSubTab('trial')}
-          className={activeSubTab === 'trial' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeSubTab === 'trial'}>
           <ClipboardCheck size={14} /> Eksekusi Batch Trial & SOP (Target vs Actual)
         </button>
       </div>
@@ -132,7 +102,7 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
           }}>
             <Info size={20} color="#0284c7" style={{ flexShrink: 0 }} />
             <div>
-              <strong>Kriteria Stabilitas rangkAI:</strong> Emulsi dinyatakan <span style={{ color: '#059669', fontWeight: 700 }}>STABIL (✓)</span> apabila penurunan viskositas <strong>kurang dari 20% (&lt;20%)</strong> pada bulan ke-3. Jika penurunan viskositas <span style={{ color: '#e11d48', fontWeight: 700 }}>≥20% (✗)</span>, AI otomatis memicu investigasi RCA dan CAPA.
+              <strong>Kriteria Stabilitas rangkAI:</strong> Emulsi dinyatakan <span style={{ color: '#059669', fontWeight: 700 }}>STABIL</span> apabila penurunan viskositas <strong>kurang dari 20% (&lt;20%)</strong> pada bulan ke-3. Jika penurunan viskositas <span style={{ color: '#e11d48', fontWeight: 700 }}>≥20%</span>, AI otomatis memicu investigasi RCA dan CAPA.
             </div>
           </div>
 
@@ -153,7 +123,7 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
                 {stabilityResults.map(item => {
                   const isFail = !item.is_stable;
                   return (
-                    <tr 
+                    <tr
                       key={item.id}
                       style={{
                         borderBottom: '1px solid #f1f5f9',
@@ -265,7 +235,7 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
 
       {/* Subtab 2: Trial Batch SOP */}
       {activeSubTab === 'trial' && (
-        <div style={{ marginTop: '-12px' }}>
+        <div>
           <TrialBatchPage onNavigateToRCA={onNavigateToRca} />
         </div>
       )}

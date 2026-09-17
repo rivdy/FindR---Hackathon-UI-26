@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { TrialBatch, ProcessStep } from '../types';
 import { MOCK_TRIAL_BATCH } from '../data/mockData';
-import { 
-  ClipboardCheck, 
-  AlertTriangle, 
-  CheckCircle2, 
-  ArrowRight, 
-  Play, 
-  RotateCcw, 
-  Thermometer, 
-  Activity, 
-  Clock, 
-  ShieldAlert 
+import {
+  ClipboardCheck,
+  AlertTriangle,
+  CheckCircle2,
+  ArrowRight,
+  Play,
+  RotateCcw,
+  Thermometer,
+  Activity,
+  Clock,
+  ShieldAlert
 } from 'lucide-react';
 
 interface TrialBatchPageProps {
@@ -25,7 +25,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
   const deviationStepsCount = batch.steps.filter(s => s.status === 'DEVIATION').length;
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Batch Header & Summary */}
       <div className="glass-panel" style={{
         padding: '20px',
@@ -53,7 +53,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
 
         {/* Action button to RCA */}
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-          <button 
+          <button
             onClick={onNavigateToRCA}
             className="btn-primary"
             style={{
@@ -109,8 +109,8 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
         {batch.steps.map((step) => {
           const isDeviation = step.status === 'DEVIATION';
           return (
-            <div 
-              key={step.id} 
+            <div
+              key={step.id}
               className="glass-panel"
               style={{
                 padding: '16px 20px',

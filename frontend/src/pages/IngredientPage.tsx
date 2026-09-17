@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Ingredient, HalalStatus } from '../types';
 import { MOCK_INGREDIENTS } from '../data/mockData';
 import { exportIngredientCoaPdf } from '../utils/pdfGenerator';
-import { 
-  Search, 
-  Database, 
-  ShieldCheck, 
-  ShieldAlert, 
-  Filter, 
-  CheckCircle2, 
-  Info, 
+import {
+  Search,
+  Database,
+  ShieldCheck,
+  ShieldAlert,
+  Filter,
+  CheckCircle2,
+  Info,
   Download,
   FileText,
   AlertTriangle,
@@ -27,28 +27,28 @@ export const IngredientPage: React.FC = () => {
   const [detailTab, setDetailTab] = useState<'summary' | 'coa' | 'msds'>('coa'); // Default to CoA as requested
 
   const functionOptions = [
-    'ALL', 
+    'ALL',
     'pH adjuster',
-    'Viscosity', 
+    'Viscosity',
     'Antioxidant',
     'Solvent',
     'Anti-foaming',
     'Pigment',
     'Flavoring',
-    'Active', 
-    'Emollient', 
-    'Humectant', 
-    'Emulsifying', 
+    'Active',
+    'Emollient',
+    'Humectant',
+    'Emulsifying',
     'Preservative'
   ];
 
   const filtered = MOCK_INGREDIENTS.filter(ing => {
-    const matchesSearch = 
+    const matchesSearch =
       ing.inci_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (ing.trade_name && ing.trade_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
       (ing.cas_number && ing.cas_number.includes(searchQuery));
-    
-    const matchesFunction = selectedFunction === 'ALL' || 
+
+    const matchesFunction = selectedFunction === 'ALL' ||
       ing.functions.some(f => f.toLowerCase().includes(selectedFunction.toLowerCase()));
 
     const matchesHalal = selectedHalal === 'ALL' || ing.halal_status === selectedHalal;
@@ -63,7 +63,7 @@ export const IngredientPage: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Top Header */}
       <div className="glass-panel" style={{
         padding: '16px 20px',
@@ -90,21 +90,10 @@ export const IngredientPage: React.FC = () => {
         {activeIngredient && (
           <button
             onClick={handleDownloadCoaPdf}
-            className="btn-secondary"
-            style={{
-              fontSize: '0.78rem',
-              padding: '7px 14px',
-              color: 'var(--emerald-neon)',
-              borderColor: 'rgba(16, 185, 129, 0.35)',
-              background: 'rgba(16, 185, 129, 0.08)',
-              fontWeight: 700,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            className="ui-download"
             title="Download dokumen CoA & lembar spesifikasi resmi format CPKB BPOM"
           >
-            <Download size={14} /> Download CoA atau MSDS (PDF)
+            <Download size={14} /> Unduh PDF
           </button>
         )}
       </div>
@@ -122,7 +111,7 @@ export const IngredientPage: React.FC = () => {
           padding: '8px 12px'
         }}>
           <Search size={16} color="var(--text-muted)" />
-          <input 
+          <input
             type="text"
             placeholder="Cari INCI, Nama Dagang, CAS (misal: Niacinamide, Glycerin, Sodium Hyaluronate, Salicylic Acid)..."
             value={searchQuery}
@@ -175,7 +164,7 @@ export const IngredientPage: React.FC = () => {
           }}
         >
           <option value="ALL">Semua Status Halal</option>
-          <option value="HALAL_VERIFIED">Halal Verified (✓)</option>
+          <option value="HALAL_VERIFIED">Halal Verified</option>
           <option value="HALAL_EXEMPT">Halal Exempt (Mineral)</option>
           <option value="HALAL_REVIEW_REQUIRED">Review Required (?)</option>
         </select>
@@ -205,7 +194,7 @@ export const IngredientPage: React.FC = () => {
               {filtered.map(ing => {
                 const isSelected = activeIngredient?.id === ing.id;
                 return (
-                  <tr 
+                  <tr
                     key={ing.id}
                     onClick={() => setActiveIngredient(ing)}
                     style={{
@@ -245,7 +234,7 @@ export const IngredientPage: React.FC = () => {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                         {ing.halal_status === 'HALAL_VERIFIED' ? (
                           <span className="badge-pill badge-emerald" style={{ fontSize: '0.62rem', padding: '1px 5px' }}>
-                            <ShieldCheck size={10} /> Halal ✓
+                            <ShieldCheck size={10} /> Halal
                           </span>
                         ) : ing.halal_status === 'HALAL_EXEMPT' ? (
                           <span className="badge-pill badge-neutral" style={{ fontSize: '0.62rem', padding: '1px 5px' }}>
@@ -294,66 +283,22 @@ export const IngredientPage: React.FC = () => {
             </div>
 
             {/* Tab Switcher: Summary vs CoA vs MSDS */}
-            <div style={{
-              display: 'flex',
-              gap: '6px',
-              borderBottom: '1px solid var(--border-subtle)',
-              paddingBottom: '8px'
-            }}>
+            <div className="ui-tabs">
               <button
                 onClick={() => setDetailTab('coa')}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: detailTab === 'coa' ? '1px solid #0284c7' : '1px solid transparent',
-                  background: detailTab === 'coa' ? '#eff6ff' : 'transparent',
-                  color: detailTab === 'coa' ? '#0284c7' : 'var(--text-secondary)',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
+               aria-pressed={detailTab === 'coa'} className="ui-tab">
                 <Award size={14} /> Certificate of Analysis (CoA)
               </button>
 
               <button
                 onClick={() => setDetailTab('msds')}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: detailTab === 'msds' ? '1px solid #0284c7' : '1px solid transparent',
-                  background: detailTab === 'msds' ? '#eff6ff' : 'transparent',
-                  color: detailTab === 'msds' ? '#0284c7' : 'var(--text-secondary)',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
+               aria-pressed={detailTab === 'msds'} className="ui-tab">
                 <FileText size={14} /> MSDS / SDS Safety
               </button>
 
               <button
                 onClick={() => setDetailTab('summary')}
-                style={{
-                  padding: '6px 12px',
-                  borderRadius: '6px',
-                  border: detailTab === 'summary' ? '1px solid #0284c7' : '1px solid transparent',
-                  background: detailTab === 'summary' ? '#eff6ff' : 'transparent',
-                  color: detailTab === 'summary' ? '#0284c7' : 'var(--text-secondary)',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px'
-                }}
-              >
+               aria-pressed={detailTab === 'summary'} className="ui-tab">
                 <Info size={14} /> Spesifikasi Ringkas
               </button>
             </div>
@@ -584,8 +529,8 @@ export const IngredientPage: React.FC = () => {
               marginTop: 'auto',
               padding: '10px 12px',
               borderRadius: '8px',
-              background: activeIngredient.halal_status === 'HALAL_VERIFIED' 
-                ? 'rgba(16, 185, 129, 0.1)' 
+              background: activeIngredient.halal_status === 'HALAL_VERIFIED'
+                ? 'rgba(16, 185, 129, 0.1)'
                 : 'rgba(245, 158, 11, 0.1)',
               border: activeIngredient.halal_status === 'HALAL_VERIFIED'
                 ? '1px solid rgba(16, 185, 129, 0.3)'

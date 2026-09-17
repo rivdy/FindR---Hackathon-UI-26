@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { MOCK_CMA_ATTRIBUTES } from '../data/mockData';
 import { SupplyChainPage } from './SupplyChainPage';
 import { exportCmaPdf } from '../utils/pdfGenerator';
-import { 
-  FlaskConical, 
-  Info, 
+import {
+  FlaskConical,
+  Info,
   CheckCircle2,
   Download,
-  FileText,
   TrendingUp
 } from 'lucide-react';
 
@@ -20,7 +19,7 @@ export const CmaPage: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Top Banner */}
       <div className="glass-panel" style={{
         padding: '18px 22px',
@@ -46,64 +45,35 @@ export const CmaPage: React.FC = () => {
         <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
           <button
             onClick={handleDownloadPdf}
-            className="btn-secondary"
-            style={{
-              fontSize: '0.78rem',
-              padding: '7px 14px',
-              color: '#0284c7',
-              borderColor: '#bfdbfe',
-              background: '#eff6ff',
-              fontWeight: 700,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            className="ui-download"
             title="Download laporan spesifikasi atribut kritis material (CMA) format PDF"
           >
-            <Download size={14} /> Download Laporan PDF
+            <Download size={14} /> Unduh PDF
           </button>
-          
+
           <button
             onClick={() => alert("Format Word DOCX sedang dalam pengembangan")}
-            className="btn-secondary"
-            style={{
-              fontSize: '0.78rem',
-              padding: '7px 14px',
-              color: '#2563eb',
-              borderColor: '#bfdbfe',
-              background: '#eff6ff',
-              fontWeight: 700,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px'
-            }}
+            className="ui-download"
             title="Download laporan resmi dalam format Word"
           >
-            <FileText size={14} /> Export Word DOCX
+            <Download size={14} /> Unduh Word
           </button>
         </div>
       </div>
 
       {/* Sub navigation bar */}
-      <div style={{
-        display: 'flex',
-        gap: '8px',
-        borderBottom: '1px solid var(--border-subtle)',
-        paddingBottom: '12px'
-      }}>
+      <div className="ui-tabs">
         <button
           onClick={() => setActiveSubTab('attributes')}
-          className={activeSubTab === 'attributes' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeSubTab === 'attributes'}>
           <FlaskConical size={14} /> Atribut Material Kritis (Spesifikasi & Uji)
         </button>
 
         <button
           onClick={() => setActiveSubTab('cogs')}
-          className={activeSubTab === 'cogs' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeSubTab === 'cogs'}>
           <TrendingUp size={14} /> Biaya COGS & MOCS
         </button>
       </div>
@@ -202,7 +172,7 @@ export const CmaPage: React.FC = () => {
 
       {/* Subtab 2: COGS & MOCS (Supply Chain) */}
       {activeSubTab === 'cogs' && (
-        <div style={{ marginTop: '-12px' }}>
+        <div>
           <SupplyChainPage />
         </div>
       )}

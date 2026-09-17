@@ -1,35 +1,34 @@
 import React, { useState } from 'react';
 import { CapaItem, FishboneBranch, FiveWhyItem } from '../types';
 import { MOCK_CAPA_ITEMS, MOCK_FISHBONE_BRANCHES } from '../data/mockData';
-import { 
-  GitFork, 
-  Search, 
-  ShieldCheck, 
-  AlertTriangle, 
-  CheckCircle2, 
-  XCircle, 
-  HelpCircle, 
-  BrainCircuit, 
-  ArrowRight, 
-  Cpu, 
-  GitBranch, 
-  FlaskConical, 
-  UserCheck, 
-  Gauge, 
+import { Download,
+  GitFork,
+  Search,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle2,
+  XCircle,
+  HelpCircle,
+  BrainCircuit,
+  ArrowRight,
+  Cpu,
+  GitBranch,
+  FlaskConical,
+  UserCheck,
+  Gauge,
   CloudRain,
   ShieldAlert,
   Thermometer,
   Activity,
   Layers,
   Clock,
-  Printer,
   User
 } from 'lucide-react';
 
 // CAPA Form component reflecting the user's photo template
 const CapaForm: React.FC = () => {
   return (
-    <div style={{
+    <div className="module-page" style={{
       background: '#fff',
       border: '1px solid #000',
       fontFamily: 'Arial, sans-serif',
@@ -39,7 +38,7 @@ const CapaForm: React.FC = () => {
       <div style={{ textAlign: 'center', padding: '12px', borderBottom: '1px solid #000', fontWeight: 'bold', fontSize: '1rem' }}>
         CORRECTIVE ACTION AND PREVENTIVE ACTION
       </div>
-      
+
       {/* Header Info */}
       <div style={{ display: 'flex', borderBottom: '1px solid #000' }}>
         <div style={{ flex: 1, padding: '8px', borderRight: '1px solid #000', fontWeight: 'bold' }}>CAPA No.</div>
@@ -49,7 +48,7 @@ const CapaForm: React.FC = () => {
         <div style={{ flex: 1, padding: '8px', borderRight: '1px solid #000', fontWeight: 'bold' }}>Date</div>
         <div style={{ flex: 2, padding: '8px' }}>18 Sep 2026</div>
       </div>
-      
+
       {/* Description */}
       <div style={{ borderBottom: '1px solid #000' }}>
         <div style={{ padding: '8px', fontWeight: 'bold' }}>Description of non-conformance:</div>
@@ -58,7 +57,7 @@ const CapaForm: React.FC = () => {
 
       {/* Source */}
       <div style={{ borderBottom: '1px solid #000' }}>
-        <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>Source of non-conformance (✓):</div>
+        <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>Source of non-conformance:</div>
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 1, borderRight: '1px solid #000' }}>
             <div style={{ display: 'flex', borderBottom: '1px solid #000' }}>
@@ -74,7 +73,7 @@ const CapaForm: React.FC = () => {
               <div style={{ padding: '4px 8px' }}>Product Recall</div>
             </div>
             <div style={{ display: 'flex', borderBottom: '1px solid #000' }}>
-              <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}>✓</div>
+              <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}><CheckCircle2 size={14} aria-label="Dipilih" /></div>
               <div style={{ padding: '4px 8px' }}>Deviation</div>
             </div>
             <div style={{ display: 'flex' }}>
@@ -105,10 +104,10 @@ const CapaForm: React.FC = () => {
 
       {/* Risk */}
       <div style={{ borderBottom: '1px solid #000' }}>
-        <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>Risk level (✓):</div>
+        <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>Risk level:</div>
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 1, borderRight: '1px solid #000', display: 'flex' }}>
-            <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}>✓</div>
+            <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}><CheckCircle2 size={14} aria-label="Dipilih" /></div>
             <div style={{ padding: '4px 8px' }}>High</div>
           </div>
           <div style={{ flex: 1, borderRight: '1px solid #000', display: 'flex' }}>
@@ -127,7 +126,7 @@ const CapaForm: React.FC = () => {
         <div style={{ padding: '8px', fontWeight: 'bold' }}>Correction/Immediate Action:</div>
         <div style={{ padding: '8px 8px 32px 8px' }}>Karantina seluruh batch trial LOT-MOIST-26-04B. Reject formulasi dan tandai sebagai tidak stabil.</div>
       </div>
-      
+
       {/* Investigation */}
       <div style={{ borderBottom: '1px solid #000' }}>
         <div style={{ padding: '8px', fontWeight: 'bold' }}>Investigation:</div>
@@ -175,12 +174,12 @@ const CapaForm: React.FC = () => {
 
       {/* Supporting Doc */}
       <div style={{ borderBottom: '1px solid #000' }}>
-        <div style={{ padding: '8px', fontWeight: 'bold' }}>Supporting Document (✓):</div>
+        <div style={{ padding: '8px', fontWeight: 'bold' }}>Supporting Document:</div>
         <div style={{ padding: '4px 8px' }}>1. Batch Record LOT-MOIST-26-04B</div>
         <div style={{ padding: '4px 8px 8px 8px' }}>2. Stability Report</div>
         <div style={{ display: 'flex', borderTop: '1px solid #000' }}>
           <div style={{ flex: 1, borderRight: '1px solid #000', display: 'flex' }}>
-            <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}>✓</div>
+            <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}><CheckCircle2 size={14} aria-label="Dipilih" /></div>
             <div style={{ padding: '4px 8px', fontWeight: 'bold' }}>Required</div>
           </div>
           <div style={{ flex: 1, display: 'flex' }}>
@@ -240,14 +239,14 @@ const CapaForm: React.FC = () => {
         <div style={{ padding: '8px', fontWeight: 'bold' }}>Conclusion:</div>
         <div style={{ padding: '8px 8px 32px 8px' }}></div>
       </div>
-      
+
       {/* Follow-up */}
       <div style={{ borderBottom: '1px solid #000' }}>
         <div style={{ padding: '8px', fontWeight: 'bold' }}>
           Non-conformance has been followed up by Dept: ____________________, and corrective and preventive actions have been fully executed.
         </div>
         <div style={{ padding: '8px', fontWeight: 'bold' }}>
-          Status (✓): [ &nbsp; ] Closed &nbsp; [ &nbsp; ] Open &nbsp; [ &nbsp; ] Extended &nbsp; [Other] ____________________
+          Status: [ &nbsp; ] Closed &nbsp; [ &nbsp; ] Open &nbsp; [ &nbsp; ] Extended &nbsp; [Other] ____________________
         </div>
       </div>
 
@@ -310,12 +309,12 @@ const CapaForm: React.FC = () => {
 
       {/* Effectiveness docs */}
       <div style={{ borderBottom: '1px solid #000' }}>
-        <div style={{ padding: '8px', fontWeight: 'bold' }}>Supporting Documents (✓):</div>
+        <div style={{ padding: '8px', fontWeight: 'bold' }}>Supporting Documents:</div>
         <div style={{ padding: '4px 8px' }}>1. Laporan Stabilitas Batch Berikutnya</div>
         <div style={{ padding: '4px 8px 8px 8px' }}>2. </div>
         <div style={{ display: 'flex', borderTop: '1px solid #000' }}>
           <div style={{ flex: 1, borderRight: '1px solid #000', display: 'flex' }}>
-            <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}>✓</div>
+            <div style={{ width: '30px', borderRight: '1px solid #000', textAlign: 'center' }}><CheckCircle2 size={14} aria-label="Dipilih" /></div>
             <div style={{ padding: '4px 8px', fontWeight: 'bold' }}>Required</div>
           </div>
           <div style={{ flex: 1, display: 'flex' }}>
@@ -324,10 +323,10 @@ const CapaForm: React.FC = () => {
           </div>
         </div>
       </div>
-      
+
       {/* CAPA Outcome */}
       <div style={{ borderBottom: '1px solid #000' }}>
-        <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>CAPA Outcome (✓):</div>
+        <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>CAPA Outcome:</div>
         <div style={{ display: 'flex' }}>
           <div style={{ flex: 1, borderRight: '1px solid #000', display: 'flex' }}>
             <div style={{ width: '30px', borderRight: '1px solid #000' }}></div>
@@ -367,7 +366,7 @@ export const RcaCapaPage: React.FC = () => {
   const [branches] = useState<FishboneBranch[]>(MOCK_FISHBONE_BRANCHES);
   const [selectedCategory, setSelectedCategory] = useState<string>('Machine');
   const [activeCauseId, setActiveCauseId] = useState<string>('c-m1');
-  
+
   // For CAPA KB
   const [query, setQuery] = useState('Phase separation antara fase air dan fase minyak setelah penyimpanan');
   const [items, setItems] = useState<CapaItem[]>(MOCK_CAPA_ITEMS);
@@ -375,7 +374,7 @@ export const RcaCapaPage: React.FC = () => {
   const [selectedSeverity, setSelectedSeverity] = useState<string>('ALL');
 
   const selectedBranch = branches.find(b => b.category === selectedCategory);
-  
+
   const getCategoryIcon = (category: string) => {
     switch(category) {
       case 'Machine': return <Cpu size={18} />;
@@ -389,7 +388,7 @@ export const RcaCapaPage: React.FC = () => {
   };
 
   const filteredItems = items.filter(item => {
-    const matchesSearch = 
+    const matchesSearch =
       item.title.toLowerCase().includes(query.toLowerCase()) ||
       item.problem_statement.toLowerCase().includes(query.toLowerCase()) ||
       item.root_cause.toLowerCase().includes(query.toLowerCase()) ||
@@ -399,7 +398,7 @@ export const RcaCapaPage: React.FC = () => {
   });
 
   return (
-    <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
       {/* Top Banner */}
       <div className="glass-panel" style={{
         padding: '18px 22px',
@@ -425,50 +424,39 @@ export const RcaCapaPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div style={{
-        display: 'flex',
-        gap: '8px',
-        borderBottom: '1px solid var(--border-subtle)',
-        paddingBottom: '12px',
-        flexWrap: 'wrap'
-      }}>
+      <div className="ui-tabs">
         <button
           onClick={() => setActiveTab('formulasi')}
-          className={activeTab === 'formulasi' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeTab === 'formulasi'}>
           <FlaskConical size={14} /> Formulasi
         </button>
 
         <button
           onClick={() => setActiveTab('stabilitas')}
-          className={activeTab === 'stabilitas' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeTab === 'stabilitas'}>
           <Thermometer size={14} /> Stabilitas
         </button>
 
         <button
           onClick={() => setActiveTab('cpp')}
-          className={activeTab === 'cpp' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeTab === 'cpp'}>
           <Activity size={14} /> Proses Kritis
         </button>
-        
+
         <button
           onClick={() => setActiveTab('cma')}
-          className={activeTab === 'cma' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeTab === 'cma'}>
           <Layers size={14} /> Material Kritis
         </button>
 
         <button
           onClick={() => setActiveTab('kb')}
-          className={activeTab === 'kb' ? 'btn-primary' : 'btn-secondary'}
-          style={{ fontSize: '0.8rem', padding: '8px 14px' }}
-        >
+          className="ui-tab"
+         aria-pressed={activeTab === 'kb'}>
           <ShieldCheck size={14} /> CAPA Knowledge Base
         </button>
       </div>
@@ -492,7 +480,7 @@ export const RcaCapaPage: React.FC = () => {
       {/* Active Deviation for Stabilitas */}
       {activeTab === 'stabilitas' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          
+
           <div style={{
             background: '#fff1f2',
             border: '1px solid #fecdd3',
@@ -512,7 +500,7 @@ export const RcaCapaPage: React.FC = () => {
           </div>
 
           <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
-            
+
             {/* RCA Panel - 6M Fishbone */}
             <div className="glass-panel" style={{ flex: 1, minWidth: '400px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -544,11 +532,11 @@ export const RcaCapaPage: React.FC = () => {
                         gap: '8px',
                         padding: '8px 14px',
                         borderRadius: '8px',
-                        border: isSelected 
-                          ? '1px solid #0284c7' 
+                        border: isSelected
+                          ? '1px solid #0284c7'
                           : '1px solid #cbd5e1',
-                        background: isSelected 
-                          ? '#eff6ff' 
+                        background: isSelected
+                          ? '#eff6ff'
                           : '#ffffff',
                         color: isSelected ? '#0284c7' : 'var(--text-secondary)',
                         cursor: 'pointer',
@@ -582,7 +570,7 @@ export const RcaCapaPage: React.FC = () => {
                     return 'var(--amber-warning)';
                   };
                   return (
-                    <div 
+                    <div
                       key={cause.id}
                       onClick={() => setActiveCauseId(cause.id)}
                       style={{
@@ -601,8 +589,8 @@ export const RcaCapaPage: React.FC = () => {
                         {cause.status === 'RULED_OUT' && <XCircle size={16} />}
                       </div>
                       <div style={{ flex: 1 }}>
-                        <div style={{ 
-                          fontSize: '0.88rem', 
+                        <div style={{
+                          fontSize: '0.88rem',
                           fontWeight: isSelected ? 700 : 500,
                           color: cause.status === 'RULED_OUT' ? 'var(--text-muted)' : '#0f172a'
                         }}>
@@ -642,8 +630,8 @@ export const RcaCapaPage: React.FC = () => {
                 <h3 style={{ fontSize: '1rem', fontWeight: 700 }}>
                   Lembar Evaluasi CAPA Terpadu
                 </h3>
-                <button className="btn-secondary" style={{ fontSize: '0.75rem', padding: '6px 12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <Printer size={13} /> Cetak & Download Form
+                <button className="ui-download" >
+                  <Download size={13} /> Unduh PDF
                 </button>
               </div>
               <CapaForm />
@@ -669,7 +657,7 @@ export const RcaCapaPage: React.FC = () => {
               padding: '10px 14px'
             }}>
               <Search size={18} color="var(--text-muted)" />
-              <input 
+              <input
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
@@ -766,7 +754,7 @@ export const RcaCapaPage: React.FC = () => {
                     <h4 style={{ fontSize: '0.92rem', fontWeight: 700, color: '#0f172a', margin: '4px 0' }}>
                       {item.title}
                     </h4>
-                    
+
                     <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {item.problem_statement}
                     </p>

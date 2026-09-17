@@ -201,6 +201,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
+              aria-current={isActive ? 'page' : undefined}
               title={collapsed ? `${item.label}: ${item.statusLabel}` : undefined}
               style={{
                 display: 'flex',
@@ -235,7 +236,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                     bottom: '20%',
                     width: '3px',
                     borderRadius: '0 3px 3px 0',
-                    background: '#1A6B5A',
+                    background: '#FFFFFF',
                   }}
                 />
               )}

@@ -526,12 +526,8 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                           >
                             <Eye size={9} /> CoA
                           </button>
-                          <span style={{
-                            fontSize: '0.6rem', padding: '1px 6px', borderRadius: '4px', fontWeight: 500,
-                            background: bpomOk ? '#F0FAF7' : '#FEF9EC',
-                            color: bpomOk ? '#1A6B5A' : '#D4860A',
-                          }}>
-                            {bpomOk ? 'BPOM ✓' : 'Limit'}
+                          <span className={bpomOk ? 'badge-pill badge-clear' : 'badge-pill badge-review'}>
+                            {bpomOk ? 'BPOM ' : 'Limit'}
                           </span>
                         </div>
                       </div>
