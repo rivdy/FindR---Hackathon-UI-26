@@ -1,203 +1,368 @@
 import React from 'react';
-import { 
-  FlaskConical, 
-  Thermometer, 
-  Activity, 
-  Layers, 
-  Award
-} from 'lucide-react';
+import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award } from 'lucide-react';
 
 interface SidebarProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
+  collapsed: boolean;
+  onToggleCollapse: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentTab, onSelectTab }) => {
-  // STRICTLY 4 REQUESTED TABS
-  const navItems = [
+// Module status encodes actual data state — not decoration
+type ModuleStatus = 'clear' | 'review' | 'violation' | 'pending';
+
+interface NavItem {
+  id: string;
+  label: string;
+  shortLabel: string;
+  desc: string;
+  icon: React.ElementType;
+  status: ModuleStatus;
+  statusLabel: string;
+  metaValue?: string;
+}
+
+const statusConfig: Record<ModuleStatus, { color: string; bg: string; dot: string }> = {
+  clear:     { color: '#22D3EE', bg: 'rgba(34,211,238,0.12)', dot: '#22D3EE' },
+  review:    { color: '#E8A340', bg: 'rgba(232,163,64,0.12)',  dot: '#E8A340' },
+  violation: { color: '#C55242', bg: 'rgba(197,82,66,0.12)',   dot: '#C55242' },
+  pending:   { color: '#8BA3BE', bg: 'rgba(139,163,190,0.12)', dot: '#8BA3BE' },
+};
+
+export const Sidebar: React.FC<SidebarProps> = ({
+  currentTab,
+  onSelectTab,
+  collapsed,
+  onToggleCollapse,
+}) => {
+  const navItems: NavItem[] = [
     {
       id: 'formulasi',
       label: 'Formulasi',
-      subtitle: '5 Prediksi, HLB, Resep & COGS',
+      shortLabel: 'Form.',
+      desc: '5 kandidat formula & kalkulasi HLB',
       icon: FlaskConical,
-      badge: '5 Prediksi'
+      status: 'clear',
+      statusLabel: 'BPOM & Halal lolos',
+      metaValue: '94.8%',
     },
     {
       id: 'stabilitas',
       label: 'Stabilitas',
-      subtitle: '8 Uji Fisik & Eksekusi SOP',
+      shortLabel: 'Stab.',
+      desc: '8 uji fisik & eksekusi SOP batch',
       icon: Thermometer,
-      badge: '<20% Drop',
-      badgeColor: '#0284c7'
+      status: 'review',
+      statusLabel: 'Batch B perlu evaluasi',
+      metaValue: '2 flag',
     },
     {
       id: 'cpp',
-      label: 'CPP (Proses Kritis)',
-      subtitle: 'Median, Simpangan ±3 & RCA',
+      label: 'Proses Kritis',
+      shortLabel: 'CPP',
+      desc: 'Median, simpangan ±3σ & RCA',
       icon: Activity,
-      badge: 'Median ±3'
+      status: 'clear',
+      statusLabel: 'Semua parameter dalam kendali',
+      metaValue: 'σ ±2.1',
     },
     {
       id: 'cma',
-      label: 'CMA (Material Kritis)',
-      subtitle: 'Spesifikasi Bahan & CAPA',
+      label: 'Material Kritis',
+      shortLabel: 'CMA',
+      desc: 'Spesifikasi bahan & CAPA knowledge hub',
       icon: Layers,
-      badge: 'Material QA'
-    }
+      status: 'pending',
+      statusLabel: 'Belum ada data batch aktif',
+      metaValue: '—',
+    },
   ];
 
   return (
-    <aside className="sidebar">
-      {/* Brand Header with Official rangkAI Logo */}
-      <div style={{
-        padding: '20px 20px 18px',
-        borderBottom: '1px solid var(--border-subtle)',
+    <aside
+      style={{
+        width: collapsed ? '60px' : '248px',
+        flexShrink: 0,
+        background: '#0F1C2E',
         display: 'flex',
         flexDirection: 'column',
-        gap: '6px'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <img 
-            src="/rangkai-logo.png" 
-            alt="rangkAI Logo" 
-            style={{ 
-              height: '38px', 
-              width: 'auto', 
-              maxWidth: '170px',
-              objectFit: 'contain' 
-            }} 
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        height: '100vh',
+        zIndex: 200,
+        transition: 'width 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
+        overflow: 'hidden',
+        borderRight: '1px solid rgba(255,255,255,0.06)',
+      }}
+    >
+      {/* ── Logo area ── */}
+      <div
+        style={{
+          padding: collapsed ? '18px 0' : '18px 18px 14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: collapsed ? 'center' : 'space-between',
+          borderBottom: '1px solid rgba(255,255,255,0.07)',
+          minHeight: '68px',
+          flexShrink: 0,
+          gap: '8px',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            opacity: collapsed ? 0 : 1,
+            transition: 'opacity 0.15s',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+          }}
+        >
+          <img
+            src="/rangkai-logo.png"
+            alt="rangkAI"
+            style={{ height: '36px', width: 'auto', objectFit: 'contain', flexShrink: 0 }}
           />
-          <span style={{
-            fontSize: '0.65rem',
-            color: '#0284c7',
-            background: '#eff6ff',
-            padding: '2px 7px',
-            borderRadius: '6px',
-            border: '1px solid #bfdbfe',
-            fontWeight: 700
-          }}>
-            v2.0
-          </span>
         </div>
-        <p style={{ fontSize: '0.73rem', color: 'var(--text-muted)', marginTop: '2px', fontWeight: 500 }}>
-          Cosmetics AI Formulation Studio
-        </p>
+
+        {/* Collapsed: show icon-only logo */}
+        {collapsed && (
+          <img
+            src="/rangkai-logo.png"
+            alt="rangkAI"
+            style={{
+              height: '32px',
+              width: '32px',
+              objectFit: 'contain',
+              objectPosition: 'left center',
+            }}
+          />
+        )}
+
+        {/* Toggle button */}
+        <button
+          onClick={onToggleCollapse}
+          title={collapsed ? 'Perluas panel navigasi' : 'Ciutkan panel navigasi'}
+          style={{
+            width: '28px',
+            height: '28px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(255,255,255,0.07)',
+            border: 'none',
+            borderRadius: '7px',
+            color: '#8BA3BE',
+            cursor: 'pointer',
+            flexShrink: 0,
+            transition: 'background 0.12s, color 0.12s',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)';
+            (e.currentTarget as HTMLElement).style.color = '#E8F0F8';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)';
+            (e.currentTarget as HTMLElement).style.color = '#8BA3BE';
+          }}
+        >
+          {collapsed ? <ChevronRight size={15} /> : <ChevronLeft size={15} />}
+        </button>
       </div>
 
-      {/* Navigation List - 4 Core Tabs */}
-      <nav style={{ padding: '18px 12px', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        <div style={{
-          fontSize: '0.68rem',
-          fontWeight: 700,
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          color: '#94a3b8',
-          padding: '4px 10px 4px'
-        }}>
-          Menu Utama R&D
-        </div>
-
-        {navItems.map((item) => {
+      {/* ── Nav items ── */}
+      <nav
+        style={{
+          flex: 1,
+          padding: '12px 8px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2px',
+          overflowY: 'auto',
+          overflowX: 'hidden',
+        }}
+      >
+        {navItems.map(item => {
           const Icon = item.icon;
           const isActive = currentTab === item.id;
+          const sc = statusConfig[item.status];
+
           return (
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
+              title={collapsed ? `${item.label} — ${item.statusLabel}` : undefined}
               style={{
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '12px 14px',
-                borderRadius: '10px',
-                border: isActive 
-                  ? '1px solid #bfdbfe' 
-                  : '1px solid transparent',
-                background: isActive 
-                  ? 'linear-gradient(90deg, #eff6ff 0%, #f0fdf4 100%)' 
-                  : 'transparent',
-                color: isActive ? '#002b5c' : '#475569',
+                alignItems: collapsed ? 'center' : 'flex-start',
+                justifyContent: collapsed ? 'center' : 'flex-start',
+                padding: collapsed ? '12px 0' : '10px 12px',
+                borderRadius: '9px',
+                border: 'none',
+                background: isActive ? 'rgba(34,211,238,0.10)' : 'transparent',
                 cursor: 'pointer',
                 textAlign: 'left',
                 width: '100%',
-                boxShadow: isActive ? '0 2px 6px rgba(2, 132, 199, 0.08)' : 'none',
-                transition: 'all 0.15s ease'
+                transition: 'background 0.12s',
+                position: 'relative',
+                gap: collapsed ? '0' : '12px',
+                flexShrink: 0,
               }}
-              onMouseEnter={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.background = '#f8fafc';
-                  e.currentTarget.style.color = '#0f172a';
-                }
+              onMouseEnter={e => {
+                if (!isActive) (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.05)';
               }}
-              onMouseLeave={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.color = '#475569';
-                }
+              onMouseLeave={e => {
+                if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent';
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <div style={{
-                  color: isActive ? '#0284c7' : '#94a3b8',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}>
-                  <Icon size={20} />
-                </div>
-                <div>
-                  <div style={{ fontSize: '0.88rem', fontWeight: isActive ? 700 : 600 }}>
-                    {item.label}
-                  </div>
-                  <div style={{ fontSize: '0.70rem', color: '#64748b' }}>
-                    {item.subtitle}
-                  </div>
-                </div>
+              {/* Active indicator line */}
+              {isActive && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: '25%',
+                    bottom: '25%',
+                    width: '2.5px',
+                    borderRadius: '0 2px 2px 0',
+                    background: '#22D3EE',
+                  }}
+                />
+              )}
+
+              {/* Icon with status dot */}
+              <div style={{ position: 'relative', flexShrink: 0 }}>
+                <Icon
+                  size={20}
+                  style={{
+                    color: isActive ? '#22D3EE' : '#8BA3BE',
+                    transition: 'color 0.12s',
+                    display: 'block',
+                  }}
+                />
+                {/* Status dot — encodes module health in collapsed mode */}
+                <span
+                  style={{
+                    position: 'absolute',
+                    bottom: '-2px',
+                    right: '-3px',
+                    width: '7px',
+                    height: '7px',
+                    borderRadius: '50%',
+                    background: sc.dot,
+                    border: '1.5px solid #0F1C2E',
+                  }}
+                />
               </div>
 
-              {item.badge && (
-                <span style={{
-                  fontSize: '0.65rem',
-                  fontWeight: 600,
-                  padding: '2px 7px',
-                  borderRadius: '6px',
-                  background: isActive ? '#dbeafe' : '#f1f5f9',
-                  color: isActive ? '#1e40af' : '#64748b',
-                  border: isActive ? '1px solid #bfdbfe' : '1px solid #e2e8f0'
-                }}>
-                  {item.badge}
-                </span>
+              {/* Label + status (only in expanded mode) */}
+              {!collapsed && (
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      fontSize: '0.875rem',
+                      fontWeight: isActive ? 700 : 500,
+                      color: isActive ? '#E8F0F8' : '#8BA3BE',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      lineHeight: 1.3,
+                      transition: 'color 0.12s, font-weight 0.12s',
+                    }}
+                  >
+                    {item.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '0.7rem',
+                      color: isActive ? '#6BAEC5' : '#3D5166',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      marginTop: '1px',
+                      transition: 'color 0.12s',
+                    }}
+                  >
+                    {item.desc}
+                  </div>
+                  {/* Status line — encodes real operational state */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                      marginTop: '5px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '4px',
+                        padding: '2px 7px',
+                        borderRadius: '4px',
+                        fontSize: '0.65rem',
+                        fontWeight: 600,
+                        background: sc.bg,
+                        color: sc.color,
+                      }}
+                    >
+                      {item.statusLabel}
+                    </span>
+                    {item.metaValue && (
+                      <span
+                        style={{
+                          fontFamily: 'var(--font-data)',
+                          fontSize: '0.65rem',
+                          fontWeight: 600,
+                          color: '#3D5166',
+                        }}
+                      >
+                        {item.metaValue}
+                      </span>
+                    )}
+                  </div>
+                </div>
               )}
             </button>
           );
         })}
       </nav>
 
-      {/* Footer Info / Hackathon Track */}
-      <div style={{
-        padding: '16px',
-        borderTop: '1px solid var(--border-subtle)',
-        background: '#f8fafc'
-      }}>
-        <div style={{
-          padding: '10px 12px',
-          background: '#ffffff',
-          border: '1px solid #e2e8f0',
-          borderRadius: '10px',
+      {/* ── Footer ── */}
+      <div
+        style={{
+          borderTop: '1px solid rgba(255,255,255,0.07)',
+          padding: collapsed ? '12px 0' : '14px 14px',
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
-          boxShadow: 'var(--shadow-xs)'
-        }}>
-          <Award size={18} color="#059669" />
-          <div>
-            <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#002b5c' }}>
+          justifyContent: collapsed ? 'center' : 'flex-start',
+          gap: '8px',
+          flexShrink: 0,
+        }}
+      >
+        <Award size={16} style={{ color: '#3D5166', flexShrink: 0 }} />
+        {!collapsed && (
+          <div style={{ overflow: 'hidden' }}>
+            <div
+              style={{
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                color: '#3D5166',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
               rangkAI — FindR UI 26
             </div>
-            <div style={{ fontSize: '0.67rem', color: '#64748b' }}>
+            <div style={{ fontSize: '0.65rem', color: '#27394F' }}>
               Cosmetics R&D Track
             </div>
           </div>
-        </div>
+        )}
       </div>
     </aside>
   );

@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
 import { QtppProfile, Ingredient } from '../types';
 import { DEFAULT_QTPP, MOCK_INGREDIENTS } from '../data/mockData';
-import { 
-  Atom, 
-  Sparkles, 
-  FileCheck2, 
-  UploadCloud, 
-  ShieldCheck, 
-  CheckCircle2, 
-  Layers, 
-  FileText, 
-  ArrowRight, 
-  Check, 
-  RotateCcw, 
-  Beaker, 
-  Info,
-  Sliders,
+import {
+  Sparkles,
+  FileCheck2,
+  UploadCloud,
+  CheckCircle2,
+  FileText,
+  Check,
+  RotateCcw,
   Search,
   Eye,
-  AlertCircle,
-  X
+  CircleDashed,
+  X,
+  FlaskConical,
+  ShieldCheck,
+  Layers,
+  ChevronRight,
 } from 'lucide-react';
 
 interface InitialDataInputViewProps {
@@ -38,103 +35,67 @@ const BLANK_QTPP: QtppProfile = {
   target_cogs_max_idr: 85000,
   shelf_life_months: 24,
   halal_required: true,
-  bpom_registered: true
+  bpom_registered: true,
 };
 
 export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGenerateComplete }) => {
-  // QTPP State - Starts empty to require user completion
   const [qtpp, setQtpp] = useState<QtppProfile>(BLANK_QTPP);
-
-  // Ingredient Selection State - Starts empty
   const [selectedIngIds, setSelectedIngIds] = useState<string[]>([]);
-
-  // Upload Documents State - Starts empty
-  const [coaUploaded, setCoaUploaded] = useState<boolean>(false);
-  const [coaFileName, setCoaFileName] = useState<string>('');
-  const [halalUploaded, setHalalUploaded] = useState<boolean>(false);
-  const [halalFileName, setHalalFileName] = useState<string>('');
-
-  // Ingredient Filtering State in Step 2
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [coaUploaded, setCoaUploaded] = useState(false);
+  const [coaFileName, setCoaFileName] = useState('');
+  const [halalUploaded, setHalalUploaded] = useState(false);
+  const [halalFileName, setHalalFileName] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('ALL');
   const [inspectedIng, setInspectedIng] = useState<Ingredient | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationStep, setGenerationStep] = useState(0);
 
-  // AI Scanning Progress State
-  const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [generationStep, setGenerationStep] = useState<number>(0);
-
-  // Validation Rules (All 3 sections must be completed before generation is allowed)
   const isSection1Valid = Boolean(
-    qtpp.product_name && qtpp.product_name.trim().length > 0 &&
+    qtpp.product_name?.trim() &&
     qtpp.target_ph_min > 0 && qtpp.target_ph_max >= qtpp.target_ph_min &&
     qtpp.target_viscosity_min > 0 && qtpp.target_viscosity_max >= qtpp.target_viscosity_min &&
     qtpp.target_cogs_max_idr > 0 &&
-    qtpp.sensory_target && qtpp.sensory_target.trim().length > 0
+    qtpp.sensory_target?.trim()
   );
-
   const isSection2Valid = selectedIngIds.length > 0;
-
   const isSection3Valid = coaUploaded && halalUploaded;
-
   const isFormValid = isSection1Valid && isSection2Valid && isSection3Valid;
+  const completedCount = (isSection1Valid ? 1 : 0) + (isSection2Valid ? 1 : 0) + (isSection3Valid ? 1 : 0);
 
   const categoryOptions = [
     { label: 'Semua', value: 'ALL' },
-    { label: 'pH Adjuster / Acid', value: 'pH adjuster' },
-    { label: 'Viscosity Enhancer', value: 'Viscosity' },
+    { label: 'pH Adjuster', value: 'pH adjuster' },
+    { label: 'Viscosity', value: 'Viscosity' },
     { label: 'Antioxidant', value: 'Antioxidant' },
     { label: 'Solvent', value: 'Solvent' },
     { label: 'Anti-foaming', value: 'Anti-foaming' },
     { label: 'Pigment & Color', value: 'Pigment' },
     { label: 'Flavoring', value: 'Flavoring' },
     { label: 'Bahan Aktif', value: 'Active' },
-    { label: 'Minyak & Wax', value: 'Emollient' },
+    { label: 'Emollient', value: 'Emollient' },
     { label: 'Humektan', value: 'Humectant' },
     { label: 'Emulsifier', value: 'Emulsifying' },
-    { label: 'Pengawet', value: 'Preservative' }
+    { label: 'Pengawet', value: 'Preservative' },
   ];
 
   const filteredIngredients = MOCK_INGREDIENTS.filter(ing => {
-    const matchesSearch = 
-      ing.inci_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (ing.trade_name && ing.trade_name.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      (ing.cas_number && ing.cas_number.includes(searchQuery));
-
-    const matchesCategory = selectedCategory === 'ALL' ||
+    const q = searchQuery.toLowerCase();
+    const matchSearch = !q ||
+      ing.inci_name.toLowerCase().includes(q) ||
+      (ing.trade_name?.toLowerCase().includes(q)) ||
+      (ing.cas_number?.includes(q));
+    const matchCat = selectedCategory === 'ALL' ||
       ing.functions.some(f => f.toLowerCase().includes(selectedCategory.toLowerCase()));
-
-    return matchesSearch && matchesCategory;
+    return matchSearch && matchCat;
   });
 
-  const toggleIngredient = (id: string) => {
-    setSelectedIngIds(prev => 
-      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
-    );
-  };
-
-  const handleSelectFiltered = () => {
-    const idsToAdd = filteredIngredients.map(i => i.id);
-    setSelectedIngIds(prev => Array.from(new Set([...prev, ...idsToAdd])));
-  };
-
-  const handleClearSelection = () => {
-    setSelectedIngIds([]);
-  };
+  const toggleIngredient = (id: string) =>
+    setSelectedIngIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
 
   const handleApplyPreset = () => {
     setQtpp(DEFAULT_QTPP);
-    setSelectedIngIds([
-      'ing-1', // Aqua
-      'ing-2', // Glycerin
-      'ing-3', // Niacinamide
-      'ing-4', // Squalane
-      'ing-5', // Beeswax
-      'ing-8', // Cetyl alcohol
-      'ing-9', // Tween 80
-      'ing-10', // Span 60
-      'ing-12', // Phenoxyethanol
-      'ing-15'  // Carbomer
-    ]);
+    setSelectedIngIds(['ing-1', 'ing-2', 'ing-3', 'ing-4', 'ing-5', 'ing-8', 'ing-9', 'ing-10', 'ing-12', 'ing-15']);
     setCoaUploaded(true);
     setCoaFileName('CoA_Niacinamide_PC_USP_Lot2026.pdf');
     setHalalUploaded(true);
@@ -153,983 +114,694 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
   const handleStartGeneration = () => {
     setIsGenerating(true);
     setGenerationStep(1);
-
-    setTimeout(() => {
-      setGenerationStep(2);
-    }, 700);
-
-    setTimeout(() => {
-      setGenerationStep(3);
-    }, 1400);
-
-    setTimeout(() => {
-      setGenerationStep(4);
-    }, 2100);
-
-    setTimeout(() => {
-      setIsGenerating(false);
-      // Clean R&D dashboard transition without confetti bursts
-      onGenerateComplete(qtpp, selectedIngIds);
-    }, 2800);
+    setTimeout(() => setGenerationStep(2), 700);
+    setTimeout(() => setGenerationStep(3), 1400);
+    setTimeout(() => setGenerationStep(4), 2100);
+    setTimeout(() => { setIsGenerating(false); onGenerateComplete(qtpp, selectedIngIds); }, 2800);
   };
 
-  const generationStepsText = [
+  const generationSteps = [
     '',
-    '1/4 Memindai batas regulasi BPOM & menganalisis keaslian sertifikasi Halal...',
-    '2/4 Menghitung required HLB (rHLB) fase minyak & optimasi rasio dual-emulsifier...',
-    '3/4 Menjalankan surrogate model machine learning untuk prediksi viskositas, pH, & stabilitas...',
-    '4/4 Mengoptimasi 5 kandidat formula terbaik dengan akurasi & presisi tertinggi!'
+    'Memindai batas regulasi BPOM & memverifikasi rantai sertifikasi Halal...',
+    'Menghitung required HLB & mengoptimasi rasio dual-emulsifier...',
+    'Menjalankan surrogate model GPR untuk prediksi viskositas, pH & stabilitas...',
+    'Menyusun 5 kandidat formula dengan probabilitas tertinggi sesuai QTPP...',
   ];
 
+  // ─── Shared style helpers ───
+  const inputSt: React.CSSProperties = {
+    width: '100%', background: '#fff',
+    border: '1.5px solid #C8D2DE', borderRadius: '8px',
+    color: '#0F1C2E', padding: '9px 12px', fontSize: '0.875rem',
+    fontFamily: 'var(--font-body)', outline: 'none',
+  };
+  const numInputSt: React.CSSProperties = {
+    ...inputSt, fontFamily: 'var(--font-data)', fontWeight: 500, fontSize: '0.875rem',
+  };
+  const labelSt: React.CSSProperties = {
+    display: 'block', fontSize: '0.72rem', fontWeight: 600,
+    color: '#64748B', marginBottom: '5px', letterSpacing: '0.03em',
+  };
+
+  // Card wrapper — each section
+  const cardSt = (valid: boolean): React.CSSProperties => ({
+    background: '#fff',
+    borderRadius: '14px',
+    border: valid ? '1.5px solid #A8DACC' : '1.5px solid #E4E8EF',
+    boxShadow: '0 1px 3px rgba(15,28,46,0.05), 0 4px 16px rgba(15,28,46,0.04)',
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    transition: 'border-color 0.25s',
+  });
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: 'var(--bg-app)',
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '28px 36px',
-      gap: '24px'
-    }}>
-      {/* Top Header */}
-      <header style={{
+    <div
+      style={{
+        minHeight: '100vh',
+        background: 'var(--surface-ground)',
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: '18px 24px',
-        background: '#ffffff',
-        borderRadius: '16px',
-        border: '1px solid var(--border-card)',
-        boxShadow: 'var(--shadow-card)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-          <img 
-            src="/rangkai-logo.png" 
-            alt="rangkAI Logo" 
-            style={{ 
-              height: '44px', 
-              width: 'auto', 
-              objectFit: 'contain' 
-            }} 
-          />
-          <div style={{ borderLeft: '1px solid var(--border-subtle)', paddingLeft: '18px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '0.95rem', fontWeight: 800, color: '#002b5c' }}>
-                Formulation Studio & R&D Copilot
-              </span>
-              <span style={{ fontSize: '0.68rem', color: '#0284c7', background: '#eff6ff', padding: '2px 8px', borderRadius: '4px', border: '1px solid #bfdbfe', fontWeight: 700 }}>
-                v2.0
-              </span>
+        flexDirection: 'column',
+      }}
+    >
+      {/* ── Sticky topbar for the onboarding view ── */}
+      <header
+        style={{
+          position: 'sticky', top: 0, zIndex: 100,
+          background: 'rgba(255,255,255,0.94)',
+          backdropFilter: 'blur(14px)',
+          borderBottom: '1px solid #E4E8EF',
+          height: '56px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '0 32px', gap: '16px',
+        }}
+      >
+        {/* Logo + title */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <img src="/rangkai-logo.png" alt="rangkAI" style={{ height: '34px', width: 'auto', objectFit: 'contain' }} />
+          <div style={{ width: '1px', height: '22px', background: '#E4E8EF' }} />
+          <div>
+            <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0F1C2E', letterSpacing: '-0.01em' }}>
+              Formulasi Baru
             </div>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginTop: '2px' }}>
-              Inisialisasi Formulasi Baru: Input Data Mutu (QTPP), Pilih Bahan (51+ INCI), & Verifikasi Certificate of Analysis (CoA) atau MSDS
-            </p>
+            <div style={{ fontSize: '0.68rem', color: '#94A3B8', marginTop: '1px' }}>
+              Siapkan QTPP, pilih bahan, unggah dokumen CoA & Halal
+            </div>
           </div>
         </div>
 
+        {/* Stepper — compact progress in header */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          {[
+            { label: 'Target kualitas', valid: isSection1Valid },
+            { label: 'Bahan baku', valid: isSection2Valid },
+            { label: 'Dokumen', valid: isSection3Valid },
+          ].map((step, i) => {
+            const done = step.valid;
+            const next = !done && i === completedCount;
+            return (
+              <React.Fragment key={i}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <div
+                    style={{
+                      width: '22px', height: '22px', borderRadius: '50%',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontSize: '0.65rem', fontWeight: 700,
+                      background: done ? '#1A6B5A' : next ? '#EAF4F2' : '#F5F6F9',
+                      color: done ? '#fff' : next ? '#1A6B5A' : '#94A3B8',
+                      border: done ? 'none' : next ? '1.5px solid #A8DACC' : '1.5px solid #E4E8EF',
+                      transition: 'all 0.25s',
+                      flexShrink: 0,
+                    }}
+                  >
+                    {done ? <Check size={11} strokeWidth={2.5} /> : i + 1}
+                  </div>
+                  <span style={{
+                    fontSize: '0.72rem', fontWeight: done ? 600 : 400,
+                    color: done ? '#1A6B5A' : next ? '#3D5166' : '#94A3B8',
+                    whiteSpace: 'nowrap',
+                  }}>
+                    {step.label}
+                  </span>
+                </div>
+                {i < 2 && (
+                  <div style={{ width: '20px', height: '1.5px', background: step.valid ? '#A8DACC' : '#E4E8EF', borderRadius: '1px', transition: 'background 0.3s' }} />
+                )}
+              </React.Fragment>
+            );
+          })}
+        </div>
+
+        {/* Actions */}
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-          <button 
+          <button
             onClick={handleResetAll}
-            className="btn-secondary"
-            style={{ fontSize: '0.8rem', borderColor: '#cbd5e1', color: '#64748b', background: '#ffffff', fontWeight: 600 }}
-            title="Kosongkan seluruh data input form"
+            className="btn-ghost"
+            style={{ fontSize: '0.75rem', padding: '5px 12px' }}
           >
-            <RotateCcw size={13} /> Kosongkan Form
+            <RotateCcw size={13} /> Reset
           </button>
-          <button 
+          <button
             onClick={handleApplyPreset}
-            className="btn-secondary"
-            style={{ fontSize: '0.8rem', borderColor: '#a7f3d0', color: '#065f46', background: '#ecfdf5', fontWeight: 600 }}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '6px',
+              padding: '6px 14px', borderRadius: '7px', fontSize: '0.75rem', fontWeight: 600,
+              border: '1.5px solid #A8DACC', background: '#F0FAF7', color: '#1A6B5A',
+              cursor: 'pointer', transition: 'background 0.12s',
+            }}
           >
-            <Sparkles size={14} color="#059669" /> Isi Cepat (Preset Moisturizer Tropis)
+            <Sparkles size={13} /> Muat preset moisturizer
           </button>
         </div>
       </header>
 
-      {/* Main Grid: 3 Steps Layout */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
-        gap: '24px',
-        flex: 1
-      }}>
-        {/* STEP 1: QTPP Setup */}
-        <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                background: '#eff6ff',
-                color: '#0284c7',
-                border: '1px solid #bfdbfe',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.85rem',
-                fontWeight: 800
-              }}>
-                1
-              </span>
+      {/* ── Page body ── */}
+      <div style={{ padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: '24px', flex: 1 }}>
+
+        {/* Section heading */}
+        <div>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0F1C2E', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+            Inisialisasi formulasi
+          </h1>
+          <p style={{ fontSize: '0.875rem', color: '#64748B', marginTop: '5px' }}>
+            Tiga langkah ini menjadi fondasi dari seluruh prediksi dan evaluasi rangkAI. Isi semua bagian sebelum menjalankan simulasi.
+          </p>
+        </div>
+
+        {/* ── 3-col grid ── */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '18px', alignItems: 'start' }}>
+
+          {/* ─── CARD 1: QTPP ─── */}
+          <div style={cardSt(isSection1Valid)}>
+            {/* Accent bar encodes completion state */}
+            <div style={{ height: '3px', background: isSection1Valid ? '#1A6B5A' : '#2A9D8F', opacity: isSection1Valid ? 1 : 0.35 }} />
+
+            <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ width: '34px', height: '34px', borderRadius: '9px', background: '#EAF4F2', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <FlaskConical size={17} style={{ color: '#1A6B5A' }} />
+                  </div>
+                  <div>
+                    <div style={labelSt}>Langkah 1</div>
+                    <h3 style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0F1C2E', lineHeight: 1.3 }}>Target kualitas produk</h3>
+                  </div>
+                </div>
+                <span className={`badge ${isSection1Valid ? 'badge-clear' : 'badge-pending'}`}>
+                  {isSection1Valid ? <><CheckCircle2 size={10} /> Lengkap</> : <><CircleDashed size={10} /> Belum diisi</>}
+                </span>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: '#94A3B8', marginTop: '8px' }}>
+                Quality Target Product Profile — parameter mutu akhir yang ingin dicapai.
+              </p>
+            </div>
+
+            <div style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
               <div>
-                <h3 style={{ fontSize: '1.02rem', fontWeight: 700, color: '#002b5c' }}>
-                  Quality Target Product Profile (QTPP)
-                </h3>
-                <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-                  Tentukan target spesifikasi produk akhir yang diinginkan.
-                </p>
+                <label style={labelSt}>Nama produk <span style={{ color: '#C55242' }}>*</span></label>
+                <input type="text" placeholder="Contoh: Barrier Restore Daily Hydro-Moisturizer"
+                  value={qtpp.product_name}
+                  onChange={e => setQtpp({ ...qtpp, product_name: e.target.value })}
+                  style={inputSt}
+                />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div>
+                  <label style={labelSt}>Target pH (min – maks)</label>
+                  <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                    <input type="number" step="0.1" value={qtpp.target_ph_min}
+                      onChange={e => setQtpp({ ...qtpp, target_ph_min: parseFloat(e.target.value) || 0 })}
+                      style={{ ...numInputSt, width: '50%' }}
+                    />
+                    <span style={{ color: '#C8D2DE', fontSize: '0.875rem' }}>–</span>
+                    <input type="number" step="0.1" value={qtpp.target_ph_max}
+                      onChange={e => setQtpp({ ...qtpp, target_ph_max: parseFloat(e.target.value) || 0 })}
+                      style={{ ...numInputSt, width: '50%' }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label style={labelSt}>Viskositas cPs (min – maks)</label>
+                  <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                    <input type="number" step="1000" value={qtpp.target_viscosity_min}
+                      onChange={e => setQtpp({ ...qtpp, target_viscosity_min: parseFloat(e.target.value) || 0 })}
+                      style={{ ...numInputSt, width: '50%' }}
+                    />
+                    <span style={{ color: '#C8D2DE', fontSize: '0.875rem' }}>–</span>
+                    <input type="number" step="1000" value={qtpp.target_viscosity_max}
+                      onChange={e => setQtpp({ ...qtpp, target_viscosity_max: parseFloat(e.target.value) || 0 })}
+                      style={{ ...numInputSt, width: '50%' }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <label style={labelSt}>Batas COGS bahan baku (IDR / kg)</label>
+                <input type="number" step="5000" value={qtpp.target_cogs_max_idr}
+                  onChange={e => setQtpp({ ...qtpp, target_cogs_max_idr: parseFloat(e.target.value) || 0 })}
+                  style={numInputSt}
+                />
+              </div>
+
+              <div>
+                <label style={labelSt}>Target sensory & klaim <span style={{ color: '#C55242' }}>*</span></label>
+                <textarea rows={3}
+                  placeholder="Contoh: Non-comedogenic, penyerapan cepat, finish matte ringan, efek soothing"
+                  value={qtpp.sensory_target}
+                  onChange={e => setQtpp({ ...qtpp, sensory_target: e.target.value })}
+                  style={{ ...inputSt, resize: 'none', lineHeight: 1.5 }}
+                />
               </div>
             </div>
-            <span className={isSection1Valid ? "badge-pill badge-emerald" : "badge-pill badge-neutral"} style={{ fontSize: '0.65rem' }}>
-              {isSection1Valid ? <><CheckCircle2 size={11} /> Lengkap</> : 'Belum Lengkap'}
-            </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', fontSize: '0.82rem' }}>
-            <div>
-              <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '5px', fontWeight: 600 }}>
-                Nama Produk & Tipe Sediaan <span style={{ color: '#e11d48' }}>*</span>
-              </label>
-              <input 
-                type="text"
-                placeholder="Contoh: Barrier Restore Daily Hydro-Moisturizer"
-                value={qtpp.product_name}
-                onChange={(e) => setQtpp({ ...qtpp, product_name: e.target.value })}
-                style={{
-                  width: '100%',
-                  background: '#ffffff',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: '8px',
-                  color: '#0f172a',
-                  padding: '8px 12px',
-                  fontSize: '0.84rem'
-                }}
-              />
-            </div>
+          {/* ─── CARD 2: BAHAN ─── */}
+          <div style={{ ...cardSt(isSection2Valid), minHeight: '500px' }}>
+            <div style={{ height: '3px', background: isSection2Valid ? '#1A6B5A' : '#7B6FA0', opacity: isSection2Valid ? 1 : 0.35 }} />
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-              <div>
-                <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '5px', fontWeight: 600 }}>
-                  Target pH ({qtpp.target_ph_min} - {qtpp.target_ph_max})
-                </label>
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <input 
-                    type="number"
-                    step="0.1"
-                    value={qtpp.target_ph_min}
-                    onChange={(e) => setQtpp({ ...qtpp, target_ph_min: parseFloat(e.target.value) || 0 })}
-                    style={{
-                      width: '50%',
-                      background: '#ffffff',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '8px',
-                      color: '#0f172a',
-                      padding: '7px 10px',
-                      fontFamily: 'var(--font-mono)'
-                    }}
-                  />
-                  <input 
-                    type="number"
-                    step="0.1"
-                    value={qtpp.target_ph_max}
-                    onChange={(e) => setQtpp({ ...qtpp, target_ph_max: parseFloat(e.target.value) || 0 })}
-                    style={{
-                      width: '50%',
-                      background: '#ffffff',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '8px',
-                      color: '#0f172a',
-                      padding: '7px 10px',
-                      fontFamily: 'var(--font-mono)'
-                    }}
-                  />
+            <div style={{ padding: '18px 20px 12px', borderBottom: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ width: '34px', height: '34px', borderRadius: '9px', background: '#F3F0FA', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Layers size={17} style={{ color: '#7B6FA0' }} />
+                  </div>
+                  <div>
+                    <div style={labelSt}>Langkah 2</div>
+                    <h3 style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0F1C2E', lineHeight: 1.3 }}>Pilih bahan baku</h3>
+                  </div>
                 </div>
+                <span className={`badge ${isSection2Valid ? 'badge-clear' : 'badge-pending'}`}>
+                  {isSection2Valid ? <><CheckCircle2 size={10} /> {selectedIngIds.length} bahan</> : <><CircleDashed size={10} /> Belum dipilih</>}
+                </span>
               </div>
 
-              <div>
-                <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '5px', fontWeight: 600 }}>
-                  Target Viskositas (cPs)
-                </label>
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <input 
-                    type="number"
-                    step="1000"
-                    value={qtpp.target_viscosity_min}
-                    onChange={(e) => setQtpp({ ...qtpp, target_viscosity_min: parseFloat(e.target.value) || 0 })}
-                    style={{
-                      width: '50%',
-                      background: '#ffffff',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '8px',
-                      color: '#0f172a',
-                      padding: '7px 10px',
-                      fontFamily: 'var(--font-mono)'
-                    }}
-                  />
-                  <input 
-                    type="number"
-                    step="1000"
-                    value={qtpp.target_viscosity_max}
-                    onChange={(e) => setQtpp({ ...qtpp, target_viscosity_max: parseFloat(e.target.value) || 0 })}
-                    style={{
-                      width: '50%',
-                      background: '#ffffff',
-                      border: '1px solid #cbd5e1',
-                      borderRadius: '8px',
-                      color: '#0f172a',
-                      padding: '7px 10px',
-                      fontFamily: 'var(--font-mono)'
-                    }}
-                  />
-                </div>
+              {/* Search */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: '#F8FAFC', border: '1.5px solid #E4E8EF', borderRadius: '8px', padding: '7px 11px' }}>
+                <Search size={14} style={{ color: '#94A3B8', flexShrink: 0 }} />
+                <input type="text" placeholder="Cari INCI, trade name, CAS number..."
+                  value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+                  style={{ background: 'transparent', border: 'none', outline: 'none', color: '#0F1C2E', fontSize: '0.8125rem', width: '100%', fontFamily: 'var(--font-body)' }}
+                />
+                {searchQuery && (
+                  <button onClick={() => setSearchQuery('')} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94A3B8', padding: 0, display: 'flex' }}>
+                    <X size={13} />
+                  </button>
+                )}
               </div>
             </div>
 
-            <div>
-              <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '5px', fontWeight: 600 }}>
-                Batas Maksimal COGS Bahan Baku (IDR / kg)
-              </label>
-              <input 
-                type="number"
-                step="5000"
-                value={qtpp.target_cogs_max_idr}
-                onChange={(e) => setQtpp({ ...qtpp, target_cogs_max_idr: parseFloat(e.target.value) || 0 })}
-                style={{
-                  width: '100%',
-                  background: '#ffffff',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: '8px',
-                  color: '#002b5c',
-                  fontWeight: 700,
-                  padding: '8px 12px',
-                  fontFamily: 'var(--font-mono)'
-                }}
-              />
+            {/* Category pills */}
+            <div style={{ padding: '8px 20px', borderBottom: '1px solid #F1F5F9', display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+              {categoryOptions.map(cat => (
+                <button key={cat.value} onClick={() => setSelectedCategory(cat.value)}
+                  style={{
+                    fontSize: '0.68rem', padding: '3px 9px', borderRadius: '5px',
+                    border: selectedCategory === cat.value ? '1.5px solid #A8DACC' : '1.5px solid #E4E8EF',
+                    background: selectedCategory === cat.value ? '#EAF4F2' : '#fff',
+                    color: selectedCategory === cat.value ? '#1A6B5A' : '#64748B',
+                    fontWeight: selectedCategory === cat.value ? 700 : 400,
+                    cursor: 'pointer', transition: 'all 0.1s',
+                  }}
+                >
+                  {cat.label}
+                </button>
+              ))}
             </div>
 
-            <div>
-              <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '5px', fontWeight: 600 }}>
-                Target Karakteristik Sensory & Klaim <span style={{ color: '#e11d48' }}>*</span>
-              </label>
-              <textarea 
-                rows={2}
-                placeholder="Contoh: Non-comedogenic, rapid absorption, non-sticky matte finish, soothing hydration"
-                value={qtpp.sensory_target}
-                onChange={(e) => setQtpp({ ...qtpp, sensory_target: e.target.value })}
-                style={{
-                  width: '100%',
-                  background: '#ffffff',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: '8px',
-                  color: '#0f172a',
-                  padding: '8px 12px',
-                  fontSize: '0.82rem',
-                  resize: 'none'
-                }}
-              />
+            {/* Quick action row */}
+            <div style={{ padding: '6px 20px', borderBottom: '1px solid #F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.7rem', color: '#94A3B8', fontFamily: 'var(--font-data)' }}>
+                {filteredIngredients.length} tersedia  ·  {selectedIngIds.length} terpilih
+              </span>
+              <div style={{ display: 'flex', gap: '5px' }}>
+                <button onClick={() => setSelectedIngIds(prev => Array.from(new Set([...prev, ...filteredIngredients.map(i => i.id)])))}
+                  style={{ fontSize: '0.68rem', padding: '3px 9px', borderRadius: '5px', background: '#EAF4F2', border: '1px solid #A8DACC', color: '#1A6B5A', fontWeight: 600, cursor: 'pointer' }}>
+                  Pilih semua hasil filter
+                </button>
+                <button onClick={() => setSelectedIngIds([])}
+                  style={{ fontSize: '0.68rem', padding: '3px 9px', borderRadius: '5px', background: '#F5F6F9', border: '1px solid #E4E8EF', color: '#64748B', cursor: 'pointer' }}>
+                  Bersihkan
+                </button>
+              </div>
+            </div>
+
+            {/* Ingredient list */}
+            <div style={{ flex: 1, overflowY: 'auto', maxHeight: '340px', padding: '8px 12px 12px' }}>
+              {filteredIngredients.length === 0 ? (
+                <div style={{ padding: '28px 16px', textAlign: 'center', color: '#94A3B8', fontSize: '0.8125rem' }}>
+                  Tidak ada bahan yang cocok.
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                  {filteredIngredients.map(ing => {
+                    const sel = selectedIngIds.includes(ing.id);
+                    const bpomOk = ing.regulatory_status === 'BPOM_COMPLIANT' || ing.regulatory_status === 'COSING_APPROVED';
+                    return (
+                      <div
+                        key={ing.id}
+                        onClick={() => toggleIngredient(ing.id)}
+                        style={{
+                          padding: '8px 10px', borderRadius: '9px', cursor: 'pointer',
+                          border: sel ? '1.5px solid #A8DACC' : '1.5px solid transparent',
+                          background: sel ? '#F0FAF7' : '#F8FAFC',
+                          display: 'flex', alignItems: 'center', gap: '9px',
+                          transition: 'background 0.1s, border-color 0.1s',
+                        }}
+                        onMouseEnter={e => { if (!sel) (e.currentTarget as HTMLElement).style.background = '#F1F5F9'; }}
+                        onMouseLeave={e => { if (!sel) (e.currentTarget as HTMLElement).style.background = '#F8FAFC'; }}
+                      >
+                        {/* Checkbox */}
+                        <div style={{
+                          width: '17px', height: '17px', borderRadius: '4px', flexShrink: 0,
+                          border: sel ? 'none' : '1.5px solid #C8D2DE',
+                          background: sel ? '#1A6B5A' : '#fff',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          transition: 'all 0.12s',
+                        }}>
+                          {sel && <Check size={10} color="#fff" strokeWidth={3} />}
+                        </div>
+
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ fontSize: '0.8125rem', fontWeight: sel ? 700 : 500, color: sel ? '#0F3D30' : '#1E293B', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {ing.inci_name}
+                          </div>
+                          <div style={{ fontSize: '0.66rem', color: '#94A3B8', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {ing.trade_name} · {ing.functions.slice(0, 2).join(', ')}
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                          <button
+                            onClick={e => { e.stopPropagation(); setInspectedIng(ing); }}
+                            style={{
+                              padding: '2px 7px', background: '#fff', border: '1px solid #E4E8EF',
+                              borderRadius: '5px', fontSize: '0.62rem', color: '#64748B',
+                              cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px', fontWeight: 600,
+                            }}
+                          >
+                            <Eye size={9} /> CoA
+                          </button>
+                          <span className={`badge ${bpomOk ? 'badge-clear' : 'badge-review'}`} style={{ fontSize: '0.6rem', padding: '1px 6px' }}>
+                            {bpomOk ? 'BPOM ✓' : 'Limit'}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ─── CARD 3: DOKUMEN ─── */}
+          <div style={cardSt(isSection3Valid)}>
+            <div style={{ height: '3px', background: isSection3Valid ? '#1A6B5A' : '#E8A340', opacity: isSection3Valid ? 1 : 0.45 }} />
+
+            <div style={{ padding: '18px 20px 14px', borderBottom: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <div style={{ width: '34px', height: '34px', borderRadius: '9px', background: '#FEF9EC', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <ShieldCheck size={17} style={{ color: '#D4860A' }} />
+                  </div>
+                  <div>
+                    <div style={labelSt}>Langkah 3</div>
+                    <h3 style={{ fontSize: '0.9375rem', fontWeight: 700, color: '#0F1C2E', lineHeight: 1.3 }}>Verifikasi dokumen</h3>
+                  </div>
+                </div>
+                <span className={`badge ${isSection3Valid ? 'badge-clear' : 'badge-pending'}`}>
+                  {isSection3Valid ? <><CheckCircle2 size={10} /> Terverifikasi</> : <><CircleDashed size={10} /> Belum diunggah</>}
+                </span>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: '#94A3B8', marginTop: '8px' }}>
+                rangkAI mengekstrak parameter CoA & memvalidasi rantai sertifikasi Halal secara otomatis.
+              </p>
+            </div>
+
+            <div style={{ padding: '16px 20px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {/* CoA dropzone */}
+              <div style={{
+                borderRadius: '10px', padding: '14px',
+                background: coaUploaded ? '#F0FAF7' : '#FAFBFE',
+                border: coaUploaded ? '1.5px solid #A8DACC' : '1.5px dashed #C8D2DE',
+                transition: 'all 0.2s',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <div>
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#0F1C2E' }}>
+                      CoA / MSDS bahan baku <span style={{ color: '#C55242' }}>*</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: '#94A3B8', marginTop: '2px' }}>
+                      Certificate of Analysis atau Material Safety Data Sheet
+                    </div>
+                  </div>
+                  {coaUploaded && <span className="badge badge-clear" style={{ fontSize: '0.65rem' }}><CheckCircle2 size={9} /> Valid</span>}
+                </div>
+
+                {coaUploaded ? (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', borderRadius: '7px', padding: '7px 10px', border: '1px solid #A8DACC' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                      <FileText size={13} style={{ color: '#1A6B5A', flexShrink: 0 }} />
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#0F3D30', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{coaFileName}</span>
+                    </div>
+                    <button onClick={() => { setCoaUploaded(false); setCoaFileName(''); }}
+                      style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', padding: '2px', display: 'flex', borderRadius: '4px', flexShrink: 0 }}>
+                      <X size={13} />
+                    </button>
+                  </div>
+                ) : (
+                  <label style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
+                    padding: '9px', background: '#fff', borderRadius: '7px',
+                    fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', color: '#64748B', border: '1px solid #E4E8EF',
+                  }}>
+                    <UploadCloud size={14} style={{ color: '#94A3B8' }} /> Unggah CoA / MSDS
+                    <input type="file" accept=".pdf,.doc,.docx" onChange={e => { if (e.target.files?.[0]) { setCoaFileName(e.target.files[0].name); setCoaUploaded(true); } }} style={{ display: 'none' }} />
+                  </label>
+                )}
+              </div>
+
+              {/* Halal dropzone */}
+              <div style={{
+                borderRadius: '10px', padding: '14px',
+                background: halalUploaded ? '#F0FAF7' : '#FAFBFE',
+                border: halalUploaded ? '1.5px solid #A8DACC' : '1.5px dashed #C8D2DE',
+                transition: 'all 0.2s',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                  <div>
+                    <div style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#0F1C2E' }}>
+                      Sertifikat Halal BPJPH / MUI <span style={{ color: '#C55242' }}>*</span>
+                    </div>
+                    <div style={{ fontSize: '0.68rem', color: '#94A3B8', marginTop: '2px' }}>
+                      Sertifikasi resmi BPJPH atau LPPOM MUI
+                    </div>
+                  </div>
+                  {halalUploaded && <span className="badge badge-clear" style={{ fontSize: '0.65rem' }}><CheckCircle2 size={9} /> Valid</span>}
+                </div>
+
+                {halalUploaded ? (
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#fff', borderRadius: '7px', padding: '7px 10px', border: '1px solid #A8DACC' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                      <FileText size={13} style={{ color: '#1A6B5A', flexShrink: 0 }} />
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#0F3D30', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{halalFileName}</span>
+                    </div>
+                    <button onClick={() => { setHalalUploaded(false); setHalalFileName(''); }}
+                      style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer', padding: '2px', display: 'flex', borderRadius: '4px', flexShrink: 0 }}>
+                      <X size={13} />
+                    </button>
+                  </div>
+                ) : (
+                  <label style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '7px',
+                    padding: '9px', background: '#fff', borderRadius: '7px',
+                    fontSize: '0.75rem', fontWeight: 600, cursor: 'pointer', color: '#64748B', border: '1px solid #E4E8EF',
+                  }}>
+                    <UploadCloud size={14} style={{ color: '#94A3B8' }} /> Unggah Sertifikat Halal
+                    <input type="file" accept=".pdf,.jpg,.png" onChange={e => { if (e.target.files?.[0]) { setHalalFileName(e.target.files[0].name); setHalalUploaded(true); } }} style={{ display: 'none' }} />
+                  </label>
+                )}
+              </div>
+
+              {/* AI Extraction panel — only when CoA uploaded */}
+              {coaUploaded && (
+                <div style={{ background: '#F5F8FF', border: '1px solid #D6E4F5', borderRadius: '10px', padding: '13px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2A6B9D', display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '9px' }}>
+                    <FileCheck2 size={13} /> Ekstraksi otomatis dari CoA:
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px', fontSize: '0.72rem' }}>
+                    {[['Lot', 'LOT-NIA-20260810-USP'], ['Kemurnian', '99.6% (HPLC)'], ['Logam berat', '<10 ppm'], ['TPC mikroba', '<100 CFU/g'], ['GHS', 'Cat 2A Irritation'], ['Halal ID', 'ID00410000287190']].map(([k, v]) => (
+                      <div key={k} style={{ color: '#3D5166' }}>{k}: <strong style={{ color: '#0F1C2E', fontFamily: 'var(--font-data)', fontSize: '0.68rem' }}>{v}</strong></div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
 
-        {/* STEP 2: Ingredient Selection with Search, Categories & CoA Inspection */}
-        <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                background: '#ecfdf5',
-                color: '#059669',
-                border: '1px solid #a7f3d0',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.85rem',
-                fontWeight: 800
-              }}>
-                2
+        {/* ── Generate action bar ── */}
+        <div style={{
+          background: '#fff',
+          borderRadius: '14px',
+          border: isFormValid ? '1.5px solid #A8DACC' : '1.5px solid #E4E8EF',
+          boxShadow: isFormValid ? '0 4px 20px rgba(26,107,90,0.08), 0 1px 4px rgba(0,0,0,0.04)' : '0 1px 3px rgba(0,0,0,0.04)',
+          padding: '20px 24px',
+          display: 'flex', alignItems: 'center', gap: '28px',
+          transition: 'border-color 0.3s, box-shadow 0.3s',
+        }}>
+          {/* Progress info */}
+          <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+              <span style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0F1C2E' }}>Kesiapan simulasi</span>
+              <span className={`badge ${isFormValid ? 'badge-clear' : 'badge-pending'}`}>
+                {isFormValid ? <><CheckCircle2 size={10} /> Siap jalankan simulasi</> : <><CircleDashed size={10} /> {completedCount}/3 langkah selesai</>}
               </span>
-              <div>
-                <h3 style={{ fontSize: '1.02rem', fontWeight: 700, color: '#002b5c' }}>
-                  Pilih Bahan Baku Formula (Katalog INCI)
-                </h3>
-                <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-                  <strong>{selectedIngIds.length}</strong> bahan terpilih dari {MOCK_INGREDIENTS.length} bahan INCI.
-                </p>
-              </div>
             </div>
 
-            {/* Quick Action Buttons & Status Badge */}
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
-              <span className={isSection2Valid ? "badge-pill badge-emerald" : "badge-pill badge-neutral"} style={{ fontSize: '0.65rem' }}>
-                {isSection2Valid ? <><CheckCircle2 size={11} /> {selectedIngIds.length} Bahan</> : 'Belum Ada Bahan'}
-              </span>
-              <button
-                onClick={handleSelectFiltered}
-                style={{
-                  fontSize: '0.72rem',
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  background: '#eff6ff',
-                  border: '1px solid #bfdbfe',
-                  color: '#0284c7',
-                  fontWeight: 600,
-                  cursor: 'pointer'
-                }}
-                title="Pilih seluruh bahan hasil filter"
-              >
-                + Pilih Filter
-              </button>
-              <button
-                onClick={handleClearSelection}
-                style={{
-                  fontSize: '0.72rem',
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  background: '#f8fafc',
-                  border: '1px solid #cbd5e1',
-                  color: '#64748b',
-                  cursor: 'pointer'
-                }}
-                title="Kosongkan pilihan"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-
-          {/* Search bar inside Step 2 */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            background: '#ffffff',
-            border: '1px solid #cbd5e1',
-            borderRadius: '8px',
-            padding: '8px 12px'
-          }}>
-            <Search size={15} color="#94a3b8" />
-            <input 
-              type="text"
-              placeholder="Cari INCI (misal: Niacinamide, Glycerin, Sodium Hyaluronate)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              style={{
-                background: 'transparent',
-                border: 'none',
-                outline: 'none',
-                color: '#0f172a',
-                fontSize: '0.82rem',
-                width: '100%',
-                padding: 0
-              }}
-            />
-          </div>
-
-          {/* Category Filter Pills */}
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-            {categoryOptions.map(cat => (
-              <button
-                key={cat.value}
-                onClick={() => setSelectedCategory(cat.value)}
-                style={{
-                  fontSize: '0.7rem',
-                  padding: '4px 10px',
-                  borderRadius: '6px',
-                  border: selectedCategory === cat.value ? '1px solid #0284c7' : '1px solid #e2e8f0',
-                  background: selectedCategory === cat.value ? '#eff6ff' : '#ffffff',
-                  color: selectedCategory === cat.value ? '#0284c7' : '#64748b',
-                  fontWeight: selectedCategory === cat.value ? 700 : 500,
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
-                }}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Scrollable list of ingredients */}
-          <div style={{
-            flex: 1,
-            maxHeight: '340px',
-            overflowY: 'auto',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px',
-            paddingRight: '6px'
-          }}>
-            {filteredIngredients.map(ing => {
-              const isSelected = selectedIngIds.includes(ing.id);
-              return (
-                <div
-                  key={ing.id}
-                  style={{
-                    padding: '8px 12px',
-                    borderRadius: '8px',
-                    border: isSelected ? '1px solid #bfdbfe' : '1px solid #f1f5f9',
-                    background: isSelected ? '#eff6ff' : '#ffffff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    transition: 'all 0.15s ease'
-                  }}
-                >
-                  <div 
-                    onClick={() => toggleIngredient(ing.id)}
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', flex: 1 }}
-                  >
-                    <div style={{
-                      width: '18px',
-                      height: '18px',
-                      borderRadius: '4px',
-                      border: isSelected ? '1px solid #0284c7' : '1px solid #cbd5e1',
-                      background: isSelected ? '#0284c7' : '#ffffff',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0
-                    }}>
-                      {isSelected && <Check size={13} color="#ffffff" strokeWidth={3} />}
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 600, color: isSelected ? '#002b5c' : '#0f172a' }}>
-                        {ing.inci_name}
-                      </div>
-                      <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>
-                        {ing.trade_name} • {ing.functions.slice(0, 2).join(', ')}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <button
-                      onClick={() => setInspectedIng(ing)}
-                      style={{
-                        padding: '4px 8px',
-                        background: '#ffffff',
-                        border: '1px solid #cbd5e1',
-                        borderRadius: '6px',
-                        fontSize: '0.68rem',
-                        color: '#475569',
-                        cursor: 'pointer'
-                      }}
-                      title="Lihat spesifikasi Certificate of Analysis (CoA) atau MSDS bahan"
-                    >
-                      <Eye size={12} /> CoA
-                    </button>
-                    <span style={{
-                      fontSize: '0.65rem',
-                      fontWeight: 600,
-                      padding: '2px 6px',
-                      borderRadius: '4px',
-                      background: (ing.regulatory_status === 'BPOM_COMPLIANT' || ing.regulatory_status === 'COSING_APPROVED') ? '#ecfdf5' : '#fffbeb',
-                      color: (ing.regulatory_status === 'BPOM_COMPLIANT' || ing.regulatory_status === 'COSING_APPROVED') ? '#065f46' : '#92400e',
-                      border: (ing.regulatory_status === 'BPOM_COMPLIANT' || ing.regulatory_status === 'COSING_APPROVED') ? '1px solid #a7f3d0' : '1px solid #fde68a'
-                    }}>
-                      {(ing.regulatory_status === 'BPOM_COMPLIANT' || ing.regulatory_status === 'COSING_APPROVED') ? 'BPOM OK' : 'Limit'}
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {[
+                { label: 'Target kualitas', valid: isSection1Valid },
+                { label: 'Bahan baku', valid: isSection2Valid },
+                { label: 'CoA & Halal', valid: isSection3Valid },
+              ].map((seg, i) => (
+                <div key={i} style={{ flex: 1 }}>
+                  <div style={{
+                    height: '4px', borderRadius: '3px', marginBottom: '4px',
+                    background: seg.valid ? '#1A6B5A' : '#E4E8EF',
+                    transition: 'background 0.3s',
+                  }} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+                    {seg.valid && <Check size={10} style={{ color: '#1A6B5A', flexShrink: 0 }} />}
+                    <span style={{ fontSize: '0.68rem', color: seg.valid ? '#1A6B5A' : '#94A3B8', fontWeight: seg.valid ? 600 : 400 }}>
+                      {seg.label}
                     </span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* STEP 3: Upload Evidence Documents & Parsed CoA/MSDS Inspection */}
-        <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                background: '#fff7ed',
-                color: '#c2410c',
-                border: '1px solid #fed7aa',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.85rem',
-                fontWeight: 800
-              }}>
-                3
-              </span>
-              <div>
-                <h3 style={{ fontSize: '1.02rem', fontWeight: 700, color: '#002b5c' }}>
-                  Upload Bukti Dokumen (Certificate of Analysis (CoA) atau MSDS, Halal)
-                </h3>
-                <p style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>
-                  AI mengekstrak parameter CoA & memvalidasi keaslian sertifikat Halal.
-                </p>
-              </div>
-            </div>
-            <span className={isSection3Valid ? "badge-pill badge-emerald" : "badge-pill badge-neutral"} style={{ fontSize: '0.65rem' }}>
-              {isSection3Valid ? <><CheckCircle2 size={11} /> 2 Terunggah</> : 'Belum Lengkap'}
-            </span>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {/* CoA Dropzone */}
-            <div style={{
-              background: coaUploaded ? '#ecfdf5' : '#f8fafc',
-              border: coaUploaded ? '1px solid #a7f3d0' : '1.5px dashed #cbd5e1',
-              borderRadius: '10px',
-              padding: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#002b5c' }}>Certificate of Analysis (CoA) atau MSDS <span style={{ color: '#e11d48' }}>*</span></span>
-                {coaUploaded ? (
-                  <span className="badge-pill badge-emerald" style={{ fontSize: '0.65rem' }}>
-                    <CheckCircle2 size={11} /> CoA Valid (✓)
-                  </span>
-                ) : (
-                  <span className="badge-pill badge-neutral" style={{ fontSize: '0.65rem' }}>Belum Diunggah</span>
-                )}
-              </div>
-
-              <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                {coaUploaded ? (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', color: '#065f46', fontWeight: 600 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      <FileText size={13} color="#059669" /> {coaFileName}
-                    </div>
-                    <button
-                      onClick={() => {
-                        setCoaUploaded(false);
-                        setCoaFileName('');
-                      }}
-                      style={{ background: 'none', border: 'none', color: '#e11d48', fontSize: '0.7rem', cursor: 'pointer', fontWeight: 600, padding: '2px 4px' }}
-                      title="Hapus berkas ini"
-                    >
-                      Hapus
-                    </button>
-                  </div>
-                ) : (
-                  'Unggah berkas CoA atau MSDS untuk auto-check regulasi BPOM.'
-                )}
-              </div>
-
-              <label style={{
-                marginTop: '4px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                padding: '6px 12px',
-                background: '#ffffff',
-                borderRadius: '6px',
-                fontSize: '0.74rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                color: '#1e293b',
-                border: '1px solid #cbd5e1',
-                boxShadow: 'var(--shadow-xs)'
-              }}>
-                <UploadCloud size={14} /> {coaUploaded ? 'Ganti Berkas CoA' : 'Upload Berkas CoA atau MSDS'}
-                <input 
-                  type="file" 
-                  accept=".pdf,.doc,.docx" 
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      setCoaFileName(e.target.files[0].name);
-                      setCoaUploaded(true);
-                    }
-                  }} 
-                  style={{ display: 'none' }} 
-                />
-              </label>
-            </div>
-
-            {/* Halal Dropzone */}
-            <div style={{
-              background: halalUploaded ? '#ecfdf5' : '#f8fafc',
-              border: halalUploaded ? '1px solid #a7f3d0' : '1.5px dashed #cbd5e1',
-              borderRadius: '10px',
-              padding: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#002b5c' }}>Sertifikat Halal (BPJPH / LPPOM MUI) <span style={{ color: '#e11d48' }}>*</span></span>
-                {halalUploaded ? (
-                  <span className="badge-pill badge-emerald" style={{ fontSize: '0.65rem' }}>
-                    <CheckCircle2 size={11} /> Halal Verified (✓)
-                  </span>
-                ) : (
-                  <span className="badge-pill badge-neutral" style={{ fontSize: '0.65rem' }}>Belum Diunggah</span>
-                )}
-              </div>
-
-              <div style={{ fontSize: '0.74rem', color: 'var(--text-secondary)' }}>
-                {halalUploaded ? (
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px', color: '#065f46', fontWeight: 600 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      <FileText size={13} color="#059669" /> {halalFileName}
-                    </div>
-                    <button
-                      onClick={() => {
-                        setHalalUploaded(false);
-                        setHalalFileName('');
-                      }}
-                      style={{ background: 'none', border: 'none', color: '#e11d48', fontSize: '0.7rem', cursor: 'pointer', fontWeight: 600, padding: '2px 4px' }}
-                      title="Hapus berkas ini"
-                    >
-                      Hapus
-                    </button>
-                  </div>
-                ) : (
-                  'Unggah sertifikat halal bahan baku untuk auto-centang status Halal.'
-                )}
-              </div>
-
-              <label style={{
-                marginTop: '4px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                padding: '6px 12px',
-                background: '#ffffff',
-                borderRadius: '6px',
-                fontSize: '0.74rem',
-                fontWeight: 600,
-                cursor: 'pointer',
-                color: '#1e293b',
-                border: '1px solid #cbd5e1',
-                boxShadow: 'var(--shadow-xs)'
-              }}>
-                <UploadCloud size={14} /> {halalUploaded ? 'Ganti Sertifikat Halal' : 'Upload Sertifikat Halal'}
-                <input 
-                  type="file" 
-                  accept=".pdf,.jpg,.png" 
-                  onChange={(e) => {
-                    if (e.target.files && e.target.files[0]) {
-                      setHalalFileName(e.target.files[0].name);
-                      setHalalUploaded(true);
-                    }
-                  }} 
-                  style={{ display: 'none' }} 
-                />
-              </label>
-            </div>
-
-            {/* AI Auto-Extraction Summary Panel */}
-            {coaUploaded && (
-              <div style={{
-                background: '#eff6ff',
-                border: '1px solid #bfdbfe',
-                borderRadius: '10px',
-                padding: '12px 14px',
-                fontSize: '0.74rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '4px'
-              }}>
-                <div style={{ fontWeight: 700, color: '#0284c7', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <CheckCircle2 size={14} color="#0284c7" /> Ekstraksi Parameter CoA oleh rangkAI (Pass):
-                </div>
-                <div style={{ color: 'var(--text-secondary)', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '4px' }}>
-                  <div>Lot: <strong style={{ color: '#0f172a' }}>LOT-NIA-20260810-USP</strong></div>
-                  <div>Kemurnian: <strong style={{ color: '#059669' }}>99.6% (HPLC)</strong></div>
-                  <div>Logam Berat: <strong style={{ color: '#0284c7' }}>&lt;10 ppm</strong></div>
-                  <div>Mikroba TPC: <strong style={{ color: '#0f172a' }}>&lt;100 CFU/g</strong></div>
-                  <div>GHS: <strong style={{ color: '#d97706' }}>Cat 2A Irritation</strong></div>
-                  <div>Halal ID: <strong style={{ color: '#059669' }}>ID00410000287190</strong></div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* BOTTOM GENERATION ACTION BAR (Spans below all 3 sections) */}
-      <div className="glass-panel" style={{
-        padding: '22px 28px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '24px',
-        flexWrap: 'wrap',
-        background: '#ffffff',
-        border: isFormValid ? '1.5px solid #bfdbfe' : '1px solid var(--border-card)',
-        boxShadow: isFormValid ? '0 10px 30px -4px rgba(2, 132, 199, 0.12)' : 'var(--shadow-card)',
-        borderRadius: '16px'
-      }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-            <h4 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#002b5c' }}>
-              Status Kesiapan Inisialisasi Formulasi
-            </h4>
-            <span className={isFormValid ? "badge-pill badge-emerald" : "badge-pill badge-amber"} style={{ fontSize: '0.72rem' }}>
-              {isFormValid ? <><CheckCircle2 size={12} /> Siap Generate (3/3 Seksi Terisi)</> : <><AlertCircle size={12} /> Belum Lengkap (Wajib Isi Semua 3 Seksi)</>}
-            </span>
-          </div>
-
-          {/* Validation Checklist for All 3 Sections */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-            {/* Seksi 1 Checklist */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '5px 12px',
-              borderRadius: '6px',
-              background: isSection1Valid ? '#ecfdf5' : '#fffbeb',
-              color: isSection1Valid ? '#065f46' : '#92400e',
-              border: isSection1Valid ? '1px solid #a7f3d0' : '1px solid #fde68a',
-              fontWeight: 600,
-              fontSize: '0.75rem'
-            }}>
-              {isSection1Valid ? <CheckCircle2 size={13} color="#059669" /> : <AlertCircle size={13} color="#d97706" />}
-              <span>Seksi 1: QTPP ({isSection1Valid ? 'Lengkap ✓' : 'Belum Diisi !'})</span>
-            </div>
-
-            {/* Seksi 2 Checklist */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '5px 12px',
-              borderRadius: '6px',
-              background: isSection2Valid ? '#ecfdf5' : '#fffbeb',
-              color: isSection2Valid ? '#065f46' : '#92400e',
-              border: isSection2Valid ? '1px solid #a7f3d0' : '1px solid #fde68a',
-              fontWeight: 600,
-              fontSize: '0.75rem'
-            }}>
-              {isSection2Valid ? <CheckCircle2 size={13} color="#059669" /> : <AlertCircle size={13} color="#d97706" />}
-              <span>Seksi 2: Bahan Baku ({selectedIngIds.length > 0 ? `${selectedIngIds.length} Terpilih ✓` : 'Belum Dipilih !'})</span>
-            </div>
-
-            {/* Seksi 3 Checklist */}
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '5px 12px',
-              borderRadius: '6px',
-              background: isSection3Valid ? '#ecfdf5' : '#fffbeb',
-              color: isSection3Valid ? '#065f46' : '#92400e',
-              border: isSection3Valid ? '1px solid #a7f3d0' : '1px solid #fde68a',
-              fontWeight: 600,
-              fontSize: '0.75rem'
-            }}>
-              {isSection3Valid ? <CheckCircle2 size={13} color="#059669" /> : <AlertCircle size={13} color="#d97706" />}
-              <span>Seksi 3: CoA/MSDS & Halal ({isSection3Valid ? 'Terunggah ✓' : !coaUploaded && !halalUploaded ? 'Belum Diunggah !' : !coaUploaded ? 'CoA Kurang !' : 'Halal Kurang !'})</span>
+              ))}
             </div>
           </div>
 
-          {!isFormValid && (
-            <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '2px' }}>
-              Tombol generate otomatis aktif setelah seluruh 3 seksi terpenuhi. Anda juga dapat menekan tombol <strong>"Isi Cepat (Preset Moisturizer Tropis)"</strong> di atas untuk pengisian instan.
-            </p>
-          )}
-        </div>
-
-        {/* Action Button */}
-        <div>
+          {/* Generate CTA */}
           <button
             onClick={handleStartGeneration}
             disabled={!isFormValid || isGenerating}
             style={{
-              padding: '16px 36px',
-              fontSize: '0.95rem',
-              fontWeight: 700,
-              borderRadius: '12px',
+              flexShrink: 0,
+              display: 'flex', alignItems: 'center', gap: '9px',
+              padding: '14px 32px', borderRadius: '11px',
+              fontSize: '0.9375rem', fontWeight: 700,
+              letterSpacing: '-0.01em',
+              background: isFormValid
+                ? 'linear-gradient(135deg, #0F3D30 0%, #1A6B5A 60%, #2A9D8F 100%)'
+                : '#F1F5F9',
+              color: isFormValid ? '#ffffff' : '#94A3B8',
+              border: isFormValid ? 'none' : '1.5px solid #E4E8EF',
+              boxShadow: isFormValid
+                ? '0 6px 20px rgba(26,107,90,0.28), 0 2px 6px rgba(15,61,48,0.12)'
+                : 'none',
               cursor: isFormValid ? 'pointer' : 'not-allowed',
-              background: isFormValid 
-                ? 'linear-gradient(135deg, #002b5c 0%, #0284c7 100%)' 
-                : '#f1f5f9',
-              color: isFormValid ? '#ffffff' : '#94a3b8',
-              border: isFormValid ? 'none' : '1px solid #cbd5e1',
-              boxShadow: isFormValid ? '0 4px 16px rgba(2, 132, 199, 0.3)' : 'none',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              transition: 'all 0.2s ease',
-              opacity: isFormValid ? 1 : 0.7
+              transition: 'all 0.18s',
+              minWidth: '260px', justifyContent: 'center',
             }}
           >
-            <Sparkles size={18} color={isFormValid ? '#ffffff' : '#94a3b8'} />
-            GENERATE 5 PREDIKSI FORMULASI DENGAN rangkAI
-            <ArrowRight size={16} color={isFormValid ? '#ffffff' : '#94a3b8'} />
+            {isFormValid ? <Sparkles size={17} style={{ opacity: 0.85 }} /> : <CircleDashed size={17} />}
+            <span>Jalankan simulasi</span>
+            {isFormValid && <ChevronRight size={17} style={{ opacity: 0.7 }} />}
           </button>
         </div>
       </div>
 
-      {/* Ingredient CoA / MSDS Quick Inspection Modal */}
+      {/* ── CoA Inspection Modal ── */}
       {inspectedIng && (
         <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(15, 23, 42, 0.45)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1100,
-          padding: '20px'
+          position: 'fixed', inset: 0, zIndex: 1100,
+          background: 'rgba(15,28,46,0.55)', backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px',
         }}>
-          <div className="glass-panel-elevated" style={{
-            maxWidth: '600px',
-            width: '100%',
-            padding: '26px',
-            maxHeight: '90vh',
-            overflowY: 'auto',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-            background: '#ffffff',
-            border: '1px solid #cbd5e1',
-            boxShadow: '0 20px 40px -10px rgba(15, 23, 42, 0.2)'
+          <div style={{
+            background: '#fff', borderRadius: '16px', maxWidth: '560px', width: '100%',
+            maxHeight: '88vh', overflowY: 'auto',
+            boxShadow: '0 20px 60px rgba(15,28,46,0.2)',
+            border: '1px solid #E4E8EF',
           }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-              <div>
-                <span className="badge-pill badge-emerald">Certificate of Analysis (CoA) atau MSDS</span>
-                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginTop: '4px', color: '#002b5c' }}>
-                  {inspectedIng.inci_name}
-                </h3>
-                <div style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-                  {inspectedIng.trade_name} | CAS: {inspectedIng.cas_number || 'N/A'}
+            <div style={{ padding: '22px 22px 14px', borderBottom: '1px solid #F1F5F9' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                <div>
+                  <div style={labelSt}>CoA / MSDS — Tinjauan bahan</div>
+                  <h3 style={{ fontSize: '1.125rem', fontWeight: 800, color: '#0F1C2E', marginTop: '3px', letterSpacing: '-0.02em' }}>
+                    {inspectedIng.inci_name}
+                  </h3>
+                  <p style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '2px' }}>
+                    {inspectedIng.trade_name} · CAS: {inspectedIng.cas_number || 'N/A'}
+                  </p>
+                </div>
+                <button onClick={() => setInspectedIng(null)}
+                  style={{ background: '#F5F6F9', border: 'none', color: '#64748B', borderRadius: '7px', padding: '8px', cursor: 'pointer', display: 'flex' }}>
+                  <X size={15} />
+                </button>
+              </div>
+            </div>
+
+            <div style={{ padding: '18px 22px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <div style={{ background: '#F5F6F9', borderRadius: '10px', padding: '14px', border: '1px solid #E4E8EF' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1A6B5A', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <FileCheck2 size={13} /> Parameter uji mutu (Lot: {inspectedIng.coa_details?.lot_number || 'REG-2026'})
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px', fontSize: '0.75rem' }}>
+                  <div style={{ color: '#64748B' }}>Pemerian: <strong style={{ color: '#0F1C2E' }}>{inspectedIng.coa_details?.appearance}</strong></div>
+                  <div style={{ color: '#64748B' }}>Kemurnian: <strong style={{ color: '#1A6B5A', fontFamily: 'var(--font-data)' }}>{inspectedIng.coa_details?.assay_purity_pct}%</strong></div>
+                  <div style={{ color: '#64748B' }}>Logam berat: <strong style={{ color: '#2A6B9D', fontFamily: 'var(--font-data)' }}>{inspectedIng.coa_details?.heavy_metals_ppm}</strong></div>
+                  <div style={{ color: '#64748B' }}>TPC mikroba: <strong style={{ color: '#0F1C2E', fontFamily: 'var(--font-data)' }}>{inspectedIng.coa_details?.microbial_alt}</strong></div>
+                  <div style={{ color: '#64748B' }}>Patogen: <strong style={{ color: '#1A6B5A' }}>{inspectedIng.coa_details?.pathogens}</strong></div>
+                  <div style={{ color: '#64748B' }}>pH 1%: <strong style={{ color: '#0F1C2E', fontFamily: 'var(--font-data)' }}>{inspectedIng.coa_details?.ph_solution_1pct ?? '6.5'}</strong></div>
                 </div>
               </div>
+
+              {inspectedIng.msds_details && (
+                <div style={{ background: '#F5F8FF', borderRadius: '10px', padding: '14px', border: '1px solid #D6E4F5' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2A6B9D', marginBottom: '9px' }}>Keselamatan bahan (MSDS):</div>
+                  <div style={{ fontSize: '0.75rem', color: '#3D5166', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <div>GHS: <strong>{inspectedIng.msds_details.ghs_classification}</strong> ({inspectedIng.msds_details.signal_word})</div>
+                    <div>Bahaya: {inspectedIng.msds_details.hazard_statements.join('; ')}</div>
+                    <div>APD: <strong style={{ color: '#0F1C2E' }}>{inspectedIng.msds_details.personal_protective_equipment}</strong></div>
+                    <div>P3K: {inspectedIng.msds_details.first_aid_eye}</div>
+                  </div>
+                </div>
+              )}
+
               <button
-                onClick={() => setInspectedIng(null)}
+                onClick={() => { toggleIngredient(inspectedIng.id); setInspectedIng(null); }}
                 style={{
-                  background: '#f1f5f9',
-                  border: '1px solid #cbd5e1',
-                  color: '#475569',
-                  borderRadius: '6px',
-                  padding: '5px 12px',
-                  cursor: 'pointer',
-                  fontSize: '0.8rem',
-                  fontWeight: 600
+                  width: '100%', padding: '12px', borderRadius: '10px',
+                  fontSize: '0.875rem', fontWeight: 700, cursor: 'pointer', border: 'none',
+                  background: selectedIngIds.includes(inspectedIng.id)
+                    ? '#FDF3F1' : 'linear-gradient(135deg, #0F3D30 0%, #2A9D8F 100%)',
+                  color: selectedIngIds.includes(inspectedIng.id) ? '#C55242' : '#ffffff',
+                  boxShadow: selectedIngIds.includes(inspectedIng.id) ? 'none' : '0 3px 12px rgba(26,107,90,0.25)',
                 }}
               >
-                Tutup
+                {selectedIngIds.includes(inspectedIng.id) ? 'Hapus dari formula' : 'Tambahkan ke formula'}
               </button>
             </div>
-
-            {/* CoA Grid */}
-            <div style={{
-              background: '#f8fafc',
-              border: '1px solid #e2e8f0',
-              borderRadius: '10px',
-              padding: '14px',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px'
-            }}>
-              <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#059669' }}>
-                Parameter Uji Mutu CoA (Lot: {inspectedIng.coa_details?.lot_number || 'REG-2026'}):
-              </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', fontSize: '0.78rem' }}>
-                <div>Pemerian: <strong>{inspectedIng.coa_details?.appearance}</strong></div>
-                <div>Assay Kemurnian: <strong style={{ color: '#059669' }}>{inspectedIng.coa_details?.assay_purity_pct}%</strong></div>
-                <div>Logam Berat: <strong style={{ color: '#0284c7' }}>{inspectedIng.coa_details?.heavy_metals_ppm}</strong></div>
-                <div>TPC Mikroba: <strong>{inspectedIng.coa_details?.microbial_alt}</strong></div>
-                <div>Uji Patogen: <strong style={{ color: '#059669' }}>{inspectedIng.coa_details?.pathogens}</strong></div>
-                <div>pH 1%: <strong>{inspectedIng.coa_details?.ph_solution_1pct ?? '6.5'}</strong></div>
-              </div>
-            </div>
-
-            {/* MSDS Summary */}
-            {inspectedIng.msds_details && (
-              <div style={{
-                background: '#eff6ff',
-                border: '1px solid #bfdbfe',
-                borderRadius: '10px',
-                padding: '14px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '6px',
-                fontSize: '0.76rem'
-              }}>
-                <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#0284c7' }}>
-                  Lembar Keselamatan Bahan (MSDS):
-                </div>
-                <div>GHS: <strong>{inspectedIng.msds_details.ghs_classification}</strong> ({inspectedIng.msds_details.signal_word})</div>
-                <div>Pernyataan Bahaya: {inspectedIng.msds_details.hazard_statements.join('; ')}</div>
-                <div>APD: <strong style={{ color: '#002b5c' }}>{inspectedIng.msds_details.personal_protective_equipment}</strong></div>
-                <div>Pertolongan Pertama: {inspectedIng.msds_details.first_aid_eye}</div>
-              </div>
-            )}
-
-            <button
-              onClick={() => {
-                toggleIngredient(inspectedIng.id);
-                setInspectedIng(null);
-              }}
-              className="btn-primary"
-              style={{ width: '100%', fontSize: '0.84rem', padding: '11px', borderRadius: '8px' }}
-            >
-              {selectedIngIds.includes(inspectedIng.id) ? '✓ Bahan Sudah Terpilih (Klik untuk Hapus)' : '+ Pilih Bahan Ini ke Formula'}
-            </button>
           </div>
         </div>
       )}
 
-      {/* AI Processing Modal / Overlay */}
+      {/* ── Generation overlay ── */}
       {isGenerating && (
         <div style={{
-          position: 'fixed',
-          inset: 0,
-          background: 'rgba(248, 250, 252, 0.92)',
-          backdropFilter: 'blur(12px)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000,
-          padding: '20px'
+          position: 'fixed', inset: 0, zIndex: 1000,
+          background: 'rgba(245,246,249,0.96)', backdropFilter: 'blur(14px)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px',
         }}>
-          <div className="glass-panel-elevated" style={{
-            padding: '40px',
-            maxWidth: '540px',
-            width: '100%',
-            textAlign: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '20px',
-            background: '#ffffff',
-            border: '1px solid #bfdbfe',
-            boxShadow: '0 20px 50px -10px rgba(15, 23, 42, 0.15)'
+          <div style={{
+            background: '#fff', borderRadius: '20px', padding: '44px 52px', maxWidth: '480px', width: '100%',
+            textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '22px',
+            boxShadow: '0 20px 60px rgba(15,28,46,0.14)', border: '1px solid #E4E8EF',
           }}>
-            <img 
-              src="/rangkai-logo.png" 
-              alt="rangkAI" 
-              style={{ height: '48px', width: 'auto', objectFit: 'contain' }} 
-            />
-
+            <img src="/rangkai-logo.png" alt="rangkAI" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
             <div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#002b5c' }}>
-                rangkAI Formulation Engine Running...
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F1C2E', letterSpacing: '-0.02em' }}>
+                Simulasi sedang berjalan
               </h3>
-              <p style={{ fontSize: '0.86rem', color: '#0284c7', marginTop: '8px', minHeight: '38px', lineHeight: 1.4, fontWeight: 600 }}>
-                {generationStepsText[generationStep]}
+              <p style={{ fontSize: '0.8125rem', color: '#2A9D8F', marginTop: '9px', lineHeight: 1.6, fontWeight: 500, minHeight: '40px' }}>
+                {generationSteps[generationStep]}
               </p>
             </div>
-
-            {/* Progress bar */}
-            <div style={{ width: '100%', height: '8px', background: '#e2e8f0', borderRadius: '4px', overflow: 'hidden' }}>
+            {/* Progress bar — width encodes step completion, not decoration */}
+            <div style={{ width: '100%', height: '5px', background: '#E4E8EF', borderRadius: '3px', overflow: 'hidden' }}>
               <div style={{
-                height: '100%',
+                height: '100%', borderRadius: '3px',
                 width: `${(generationStep / 4) * 100}%`,
-                background: 'linear-gradient(90deg, #002b5c 0%, #0284c7 100%)',
-                transition: 'width 0.6s ease'
+                background: 'linear-gradient(90deg, #0F3D30 0%, #2A9D8F 100%)',
+                transition: 'width 0.55s cubic-bezier(0.4, 0, 0.2, 1)',
               }} />
             </div>
-
-            <div style={{ fontSize: '0.76rem', color: 'var(--text-muted)' }}>
-              Memproses 30.175 INCI katalog, 100 korpus stabilitas, dan kalkulasi aljabar HLB Croda.
-            </div>
+            <p style={{ fontSize: '0.7rem', color: '#94A3B8', maxWidth: '320px', lineHeight: 1.6 }}>
+              Memproses 30.175 katalog INCI, 100 korpus stabilitas ilmiah, dan kalkulasi aljabar HLB Croda.
+            </p>
           </div>
         </div>
       )}

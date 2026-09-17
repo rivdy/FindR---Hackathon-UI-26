@@ -11,13 +11,11 @@ import { FormulaCandidate, QtppProfile } from './types';
 import { DEFAULT_QTPP } from './data/mockData';
 
 export const App: React.FC = () => {
-  // LANDING STATE: false means user starts from inputting data from scratch!
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
-
-  // 4 MAIN TABS: 'formulasi' | 'stabilitas' | 'cpp' | 'cma'
   const [currentTab, setCurrentTab] = useState<string>('formulasi');
   const [isQtppModalOpen, setIsQtppModalOpen] = useState<boolean>(false);
   const [_currentQtpp, setCurrentQtpp] = useState<QtppProfile>(DEFAULT_QTPP);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
 
   const handleGenerateComplete = (newQtpp: QtppProfile, _selectedIngredients: string[]) => {
     setCurrentQtpp(newQtpp);
@@ -30,74 +28,73 @@ export const App: React.FC = () => {
   };
 
   const handleSelectCandidateForTrial = (_candidate: FormulaCandidate) => {
-    // Jump to Stabilitas module with SOP execution
     setCurrentTab('stabilitas');
   };
 
   const handleNavigateToRca = () => {
-    // Jump to CPP module with RCA 6M Fishbone
     setCurrentTab('cpp');
   };
 
   const handleNavigateToCapa = () => {
-    // Jump to CMA module with CAPA Knowledge Hub
     setCurrentTab('cma');
   };
 
-  // IF NOT YET GENERATED: Show the initial input onboarding view!
   if (!isGenerated) {
     return (
       <InitialDataInputView onGenerateComplete={handleGenerateComplete} />
     );
   }
 
-  // ONCE GENERATED: Reveal full 4-tab studio workspace!
+  const SIDEBAR_WIDTH = sidebarCollapsed ? 60 : 248;
+
   return (
-    <div className="app-container">
-      {/* QTPP Configuration & Document Ingestion Modal */}
-      <QtppModal 
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--surface-ground)' }}>
+      <QtppModal
         isOpen={isQtppModalOpen}
         onClose={() => setIsQtppModalOpen(false)}
         onSave={(newQtpp) => setCurrentQtpp(newQtpp)}
       />
 
-      {/* Fixed Sidebar with strictly 4 tabs */}
-      <Sidebar 
-        currentTab={currentTab} 
-        onSelectTab={(tab) => setCurrentTab(tab)} 
+      {/* Fixed Sidebar */}
+      <Sidebar
+        currentTab={currentTab}
+        onSelectTab={(tab) => setCurrentTab(tab)}
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(c => !c)}
       />
 
-      {/* Main Content Area */}
-      <div className="main-content">
-        <TopBar 
-          activeTab={currentTab} 
+      {/* Main content — offset by sidebar width, transitions with it */}
+      <div
+        style={{
+          marginLeft: `${SIDEBAR_WIDTH}px`,
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+          transition: 'margin-left 0.22s cubic-bezier(0.4, 0, 0.2, 1)',
+          minWidth: 0,
+        }}
+      >
+        <TopBar
+          activeTab={currentTab}
           onOpenQtpp={() => setIsQtppModalOpen(true)}
           onResetToNewInput={handleResetToNewInput}
         />
-        
+
         <main style={{ flex: 1, overflowY: 'auto' }}>
           {currentTab === 'formulasi' && (
-            <FormulationPage 
-              onSelectForTrial={handleSelectCandidateForTrial} 
+            <FormulationPage
+              onSelectForTrial={handleSelectCandidateForTrial}
               onNavigateToRca={handleNavigateToRca}
             />
           )}
-
           {currentTab === 'stabilitas' && (
-            <StabilityPage 
-              onNavigateToRca={handleNavigateToRca}
-            />
+            <StabilityPage onNavigateToRca={handleNavigateToRca} />
           )}
-
           {currentTab === 'cpp' && (
-            <CppPage 
-              onNavigateToCapa={handleNavigateToCapa} 
-            />
+            <CppPage onNavigateToCapa={handleNavigateToCapa} />
           )}
-
-          {currentTab === 'cma' && (
-            <CmaPage />
-          )}
+          {currentTab === 'cma' && <CmaPage />}
         </main>
       </div>
     </div>
