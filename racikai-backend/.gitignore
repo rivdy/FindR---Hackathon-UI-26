@@ -1,0 +1,20 @@
+# Credentials and local environments
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+# Generated artifacts
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+node_modules/
+dist/
+# Data, sensitive documents, and model artifacts are excluded by default
+/data/**
+!/data/**/
+!/data/**/.gitkeep
+/models/**
+!/models/**/
+!/models/**/.gitkeep

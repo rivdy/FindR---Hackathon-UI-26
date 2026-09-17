@@ -1,0 +1,9 @@
+# Initial runtime and notebook dependencies; lock versions after validation.
+fastapi
+uvicorn[standard]
+pydantic>=2,<3
+pandas
+numpy
+scikit-learn
+jupyter
+ipykernel
