@@ -606,7 +606,7 @@ export const RcaCapaPage: React.FC = () => {
                           fontWeight: isSelected ? 700 : 500,
                           color: cause.status === 'RULED_OUT' ? 'var(--text-muted)' : '#0f172a'
                         }}>
-                          {cause.title}
+                          {cause.text}
                         </div>
                         {isSelected && (
                           <div style={{
@@ -621,11 +621,11 @@ export const RcaCapaPage: React.FC = () => {
                               <BrainCircuit size={14} /> Analisis AI
                             </div>
                             <p style={{ color: '#475569', marginBottom: '8px' }}>
-                              {cause.ai_analysis}
+                              {(cause as any).ai_analysis || cause.detail}
                             </p>
                             <div style={{ background: '#f1f5f9', padding: '6px 10px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }}>
-                              <span style={{ color: '#64748b' }}>Data Sensor:</span>
-                              <span className="font-mono-calc" style={{ fontWeight: 700, color: '#0f172a' }}>{cause.sensor_data}</span>
+                              <span style={{ color: '#64748b' }}>Data Sensor / Evidence:</span>
+                              <span className="font-mono-calc" style={{ fontWeight: 700, color: '#0f172a' }}>{(cause as any).sensor_data || cause.evidence}</span>
                             </div>
                           </div>
                         )}
@@ -783,7 +783,7 @@ export const RcaCapaPage: React.FC = () => {
                     {selectedCapa.report_id}
                   </span>
                   <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Clock size={12} /> {selectedCapa.date_filed}
+                    <Clock size={12} /> {selectedCapa.incident_date}
                   </span>
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.3 }}>
@@ -808,7 +808,7 @@ export const RcaCapaPage: React.FC = () => {
               <div>
                 <h4 style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '10px' }}>Corrective & Preventive Actions</h4>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {selectedCapa.actions_taken.map((action, idx) => (
+                  {[selectedCapa.corrective_action, selectedCapa.preventive_action].map((action, idx) => (
                     <div key={idx} style={{
                       display: 'flex',
                       gap: '10px',
@@ -843,7 +843,7 @@ export const RcaCapaPage: React.FC = () => {
               <div style={{ marginTop: '10px', paddingTop: '20px', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <User size={16} color="var(--text-muted)" />
-                  <span style={{ fontSize: '0.8rem', color: '#475569' }}>Filed by: <strong>{selectedCapa.filed_by}</strong></span>
+                  <span style={{ fontSize: '0.8rem', color: '#475569' }}>Filed by: <strong>{selectedCapa.owner}</strong></span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--emerald-neon)', fontSize: '0.8rem', fontWeight: 700 }}>
                   <CheckCircle2 size={16} /> Status: CLOSED

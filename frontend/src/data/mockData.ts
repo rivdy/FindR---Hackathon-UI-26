@@ -2105,7 +2105,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-6', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 2.5, calculated_mass_g: 25, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-7', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 2.8, calculated_mass_g: 28, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-8', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 1.9, calculated_mass_g: 19, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-9', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-9', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   },
   {
@@ -2154,8 +2154,8 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-b6', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 3.0, calculated_mass_g: 30, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-b7', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 3.2, calculated_mass_g: 32, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-b8', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 2.3, calculated_mass_g: 23, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-b9', ingredient_id: 'ing-11', inci_name: 'Ceramide NP', trade_name: 'Ceramide III Pure', phase: 'Phase C (Actives, Stabilizer Phase C (Actives & Stabilizer) Preservative)', percentage: 0.3, calculated_mass_g: 3, cost_per_kg: 18500000, halal_status: 'HALAL_VERIFIED', function: 'Barrier Repair Active' },
-      { id: 'li-b10', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-b9', ingredient_id: 'ing-11', inci_name: 'Ceramide NP', trade_name: 'Ceramide III Pure', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 0.3, calculated_mass_g: 3, cost_per_kg: 18500000, halal_status: 'HALAL_VERIFIED', function: 'Barrier Repair Active' },
+      { id: 'li-b10', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   },
   {
@@ -2186,12 +2186,12 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
     items: [
       { id: 'li-c1', ingredient_id: 'ing-1', inci_name: 'Aqua', trade_name: 'Deionized Water Pure', phase: 'Phase A (Water Phase)', percentage: 78.4, calculated_mass_g: 784, cost_per_kg: 2500, halal_status: 'HALAL_VERIFIED', function: 'Solvent' },
       { id: 'li-c2', ingredient_id: 'ing-2', inci_name: 'Glycerin', trade_name: 'Vegetable Glycerin 99.7%', phase: 'Phase A (Water Phase)', percentage: 4.5, calculated_mass_g: 45, cost_per_kg: 32000, halal_status: 'HALAL_VERIFIED', function: 'Humectant' },
-      { id: 'li-c3', ingredient_id: 'ing-13', inci_name: 'Centella Asiatica Extract', trade_name: 'Madecassoside Cica Powder', phase: 'Phase C (Actives, Stabilizer Phase C (Actives & Stabilizer) Preservative)', percentage: 1.2, calculated_mass_g: 12, cost_per_kg: 2400000, halal_status: 'HALAL_VERIFIED', function: 'Active Calming' },
+      { id: 'li-c3', ingredient_id: 'ing-13', inci_name: 'Centella Asiatica Extract', trade_name: 'Madecassoside Cica Powder', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 1.2, calculated_mass_g: 12, cost_per_kg: 2400000, halal_status: 'HALAL_VERIFIED', function: 'Active Calming' },
       { id: 'li-c4', ingredient_id: 'ing-4', inci_name: 'Squalane', trade_name: 'Neossance Squalane', phase: 'Phase B (Oil Phase)', percentage: 4.5, calculated_mass_g: 45, cost_per_kg: 680000, halal_status: 'HALAL_VERIFIED', function: 'Emollient' },
       { id: 'li-c5', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-c6', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 2.6, calculated_mass_g: 26, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-c7', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 1.8, calculated_mass_g: 18, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-c8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-c8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   },
   {
@@ -2239,7 +2239,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-d5', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 3.0, calculated_mass_g: 30, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-d6', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 2.5, calculated_mass_g: 25, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-d7', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-d8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol', trade_name: 'Pure Phenoxyethanol Liquid', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.4, calculated_mass_g: 14, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative (BPOM VIOLATION)' }
+      { id: 'li-d8', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol', trade_name: 'Pure Phenoxyethanol Liquid', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 1.4, calculated_mass_g: 14, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative (BPOM VIOLATION)' }
     ]
   },
   {
@@ -2274,7 +2274,7 @@ export const MOCK_CANDIDATES: FormulaCandidate[] = [
       { id: 'li-e4', ingredient_id: 'ing-8', inci_name: 'Cetyl alcohol', trade_name: 'Kalcol 6098', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 48000, halal_status: 'HALAL_VERIFIED', function: 'Co-emulsifier' },
       { id: 'li-e5', ingredient_id: 'ing-9', inci_name: 'Polysorbate 80', trade_name: 'Tween 80', phase: 'Phase B (Oil Phase)', percentage: 3.0, calculated_mass_g: 30, cost_per_kg: 92000, halal_status: 'HALAL_VERIFIED', function: 'O/W Emulsifier' },
       { id: 'li-e6', ingredient_id: 'ing-10', inci_name: 'Sorbitan Stearate', trade_name: 'Span 60', phase: 'Phase B (Oil Phase)', percentage: 2.0, calculated_mass_g: 20, cost_per_kg: 86000, halal_status: 'HALAL_VERIFIED', function: 'W/O Emulsifier' },
-      { id: 'li-e7', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer Phase D (Preservative & Adjuster) Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
+      { id: 'li-e7', ingredient_id: 'ing-12', inci_name: 'Phenoxyethanol (and) Ethylhexylglycerin', trade_name: 'Euxyl PE 9010', phase: 'Phase C (Actives, Stabilizer & Preservative)', percentage: 1.0, calculated_mass_g: 10, cost_per_kg: 145000, halal_status: 'HALAL_VERIFIED', function: 'Preservative' }
     ]
   }
 ];
@@ -3018,7 +3018,7 @@ export const MOCK_TRIAL_BATCH: TrialBatch = {
       id: 'step-5',
       order: 5,
       name: 'Penambahan Bahan Aktif & Preservatif (Phase C & D)',
-      phase: 'Phase C & D',
+      phase: 'Phase C (Actives, Stabilizer & Preservative)',
       equipment: 'Slow Anchor Sweep Blade',
       target_temp_c: 38,
       actual_temp_c: 38,

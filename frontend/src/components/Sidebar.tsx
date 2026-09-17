@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award, ShieldAlert } from 'lucide-react';
+import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award, ShieldAlert, TrendingUp } from 'lucide-react';
 
 interface SidebarProps {
   currentTab: string;
@@ -69,9 +69,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       id: 'cma',
       label: 'Material Kritis',
       shortLabel: 'CMA',
-      desc: 'Spesifikasi bahan & CAPA knowledge hub',
-      icon: Layers,
+      desc: 'Critical Material Attributes & Supply Chain',
+      icon: TrendingUp,
       statusLabel: 'Belum ada data batch aktif',
+      status: 'pending',
     },
     {
       id: 'rcaCapa',
