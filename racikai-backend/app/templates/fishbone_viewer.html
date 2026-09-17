@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; base-uri 'none'; form-action 'none'">
+<title>PhormulAI — RCA Fishbone Explorer</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f5f6;color:#173442;font:15px/1.5 'Segoe UI',Arial,sans-serif}header{padding:20px 28px;background:#12394d;color:white;display:flex;align-items:center;justify-content:space-between;gap:20px}header b{font-size:25px}header span{color:#bcd5df}.shell{display:grid;grid-template-columns:330px minmax(0,1fr);min-height:calc(100vh - 78px)}aside{background:#fff;border-right:1px solid #d8e2e6;padding:20px;max-height:calc(100vh - 78px);overflow:auto;position:sticky;top:0}label{display:block;font-weight:600;margin:10px 0 5px}input,select,button{font:inherit}input,select{width:100%;padding:10px;border:1px solid #b4c6cf;border-radius:7px;background:white;color:#173442}button{cursor:pointer;border:1px solid #b4c6cf;border-radius:7px;background:white;color:#173442;padding:9px 13px}button:hover{background:#eaf4f3}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #25a99e;outline-offset:2px}.case{display:block;width:100%;text-align:left;margin:9px 0;padding:12px;border-color:#d9e3e7}.case[aria-pressed=true]{background:#e4f3ef;border:2px solid #16736e}.case strong{display:block;font-size:12px;color:#16736e;margin-bottom:5px}.case small{display:block;margin-top:8px;color:#526d78}.muted{color:#526d78;font-size:13px}main{min-width:0;padding:26px}h1{font-size:25px;line-height:1.3;margin:10px 0}h2{font-size:19px;margin:0 0 14px}.eyebrow{font-weight:700;color:#16736e;font-size:13px}.toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:18px 0}.notice{padding:12px 16px;background:#fff6dd;border-left:4px solid #bd831a;border-radius:4px;font-size:14px}.diagram{overflow:auto;border:1px solid #dbe5e8;background:#f8fafc;border-radius:10px;margin:16px 0}.diagram svg{display:block;width:100%;min-width:980px;height:auto}.diagram.full svg{width:2200px}.legend{margin:10px 0;color:#526d78;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.panel{background:white;border:1px solid #dbe5e8;border-radius:9px;padding:20px;margin-bottom:16px}.panel p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}details{border-top:1px solid #dbe5e8;padding:12px 0}summary{cursor:pointer;font-weight:600}.branch{padding:12px 0;white-space:pre-wrap}.empty{padding:25px;background:white;border:1px dashed #a7bcc5;border-radius:8px}.tag{display:inline-block;background:#e7eef1;border-radius:5px;padding:3px 8px;margin-right:6px}#warnings li{margin:5px 0}footer{color:#526d78;font-size:12px;padding:15px 0}[hidden]{display:none!important}@media(max-width:850px){.shell{grid-template-columns:1fr}aside{position:static;max-height:360px;border-bottom:1px solid #d8e2e6}.grid{grid-template-columns:1fr}main{padding:18px}header span{display:none}}@media print{header,aside,.toolbar,.notice,footer{display:none}.shell{display:block}main{padding:0}.diagram svg{min-width:0;width:100%}.diagram{overflow:visible}.grid{display:block}.panel{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><b>PhormulAI <span>/</span> RCA</b><span>Investigasi berbasis data · Fishbone per kasus</span></header>
+<div class="shell">
+<aside aria-label="Pilih kasus RCA">
+<h2>Daftar masalah</h2>
+<label for="query">Cari ID atau masalah</label><input id="query" type="search" placeholder="Contoh: CAPA-003, pigmen, pH">
+<label for="status">Status laporan</label><select id="status"><option value="">Semua status</option><option>Open</option><option>Closed</option><option>Extended</option></select>
+<p id="count" class="muted" aria-live="polite"></p><div id="cases"></div>
+</aside>
+<main>
+<div id="empty" class="empty" hidden>Tidak ada kasus yang cocok. Ubah pencarian atau filter status.</div>
+<article id="selected" aria-label="Detail kasus terpilih">
+<div class="eyebrow" id="report-id"></div><h1 id="problem"></h1><div id="metadata"></div>
+<div class="toolbar"><span class="muted">6 kategori Ishikawa · rincian dari satu record sumber</span><div><button id="zoom" type="button" aria-pressed="false">Perbesar diagram</button> <button id="download" type="button">Unduh SVG</button></div></div>
+<div class="notice">Penyebab dan root cause di bawah adalah pernyataan dalam CSV yang belum diverifikasi dengan bukti laboratorium. Status Closed tidak otomatis berarti CAPA terbukti efektif.</div>
+<div class="diagram" id="diagram"></div>
+<p class="legend">Hijau: penyebab tercatat dalam kasus ini. Amber / garis putus-putus: kategori belum tercatat, bukan penyebab terkonfirmasi.</p>
+<section class="panel"><h2>Rincian pembagian penyebab</h2><div id="branches"></div></section>
+<section class="panel"><h2>Root cause yang dinyatakan dalam CSV</h2><p id="root-cause"></p></section>
+<div class="grid"><section class="panel"><h2>Tindakan segera</h2><p id="correction"></p></section><section class="panel"><h2>Usulan CAPA</h2><p id="proposed"></p></section><section class="panel"><h2>Corrective action tercatat</h2><p id="corrective"></p></section><section class="panel"><h2>Preventive action tercatat</h2><p id="preventive"></p></section></div>
+<section class="panel"><h2>Evaluasi efektivitas — klaim sumber</h2><p id="effectiveness"></p><p id="timeframe" class="muted"></p></section>
+<section class="panel"><h2>Kelengkapan bukti</h2><ul id="warnings"></ul><details><summary>Lihat teks RCA asli</summary><p id="source-text"></p></details></section>
+<footer id="provenance"></footer>
+</article>
+</main>
+</div>
+<script type="application/json" id="records">__RCA_DATA__</script>
+<div hidden id="templates">__RCA_DIAGRAMS__</div>
+<script>
+'use strict';
+const records=JSON.parse(document.getElementById('records').textContent);
+const byId=new Map(records.map(r=>[r.report_id,r]));
+const templates=new Map([...document.querySelectorAll('template[data-report-id]')].map(t=>[t.dataset.reportId,t]));
+const categories=[['Man','Manusia'],['Machine','Mesin'],['Material','Material'],['Method','Metode'],['Environment','Lingkungan'],['Measurement','Pengukuran']];
+const warnings={source_claims_not_verified:'Pernyataan sumber belum diverifikasi.',effectiveness_text_is_not_a_binary_outcome:'Narasi evaluasi belum menjadi label efektivitas terverifikasi.',no_batch_or_lab_evidence_links:'Identitas batch dan dokumen hasil uji belum ditautkan.',no_implementation_or_evaluation_dates:'Tanggal implementasi dan verifikasi CAPA belum tersedia.',nonclosed_case_has_effectiveness_text_review_plan_vs_actual_result:'Kasus belum Closed; pastikan narasi evaluasi merupakan rencana atau hasil aktual.',missing_fishbone_categories:'Ada kategori fishbone yang belum tercatat.'};
+let selectedId=null;
+const el=id=>document.getElementById(id);
+function put(id,value){el(id).textContent=value||'Belum tercatat.'}
+function selectCase(id){
+  const record=byId.get(id);
+  if(!record)return;
+  selectedId=id;el('selected').hidden=false;el('empty').hidden=true;
+  put('report-id',record.report_id);put('problem',record.problem);
+  put('metadata',`${record.date} · Risiko ${record.risk_level} · Status ${record.status}`);
+  el('diagram').replaceChildren(templates.get(id).content.cloneNode(true));
+  el('branches').replaceChildren();
+  for(const [key,label] of categories){
+    const details=document.createElement('details');const summary=document.createElement('summary');
+    const values=(record.fishbone.branches[key]||[]).filter(x=>x.trim());
+    summary.textContent=`${label} (${key}) · ${values.length ? values.length+' pernyataan sumber':'belum tercatat'}`;
+    const body=document.createElement('div');body.className='branch';
+    body.textContent=values.join('\n\n')||'Tidak ada penyebab untuk kategori ini dalam record sumber. Perlu investigasi tambahan.';
+    details.append(summary,body);el('branches').append(details);
+  }
+  put('root-cause',record.fishbone.source_root_causes.join('\n\n'));
+  for(const [id,key] of [['correction','correction'],['proposed','proposed_capa'],['corrective','corrective_action'],['preventive','preventive_action'],['effectiveness','effectiveness_text']])put(id,record[key]);
+  put('timeframe','Timeframe sumber: '+record.timeframe);put('source-text',record.fishbone.source_text);
+  put('provenance',`${record.source_file} · baris ${record.source_row} · ${record.data_status}`);
+  el('warnings').replaceChildren();
+  for(const warning of record.warnings||[]){const li=document.createElement('li');li.textContent=warnings[warning]||warning;el('warnings').append(li)}
+  for(const button of el('cases').querySelectorAll('button'))button.setAttribute('aria-pressed',String(button.dataset.id===id));
+  window.location.hash=encodeURIComponent(id);
+}
+function filterCases(){
+  const query=el('query').value.trim().toLocaleLowerCase();const status=el('status').value;
+  const filtered=records.filter(r=>(!status||r.status===status)&&`${r.report_id} ${r.problem}`.toLocaleLowerCase().includes(query));
+  put('count',`${filtered.length} dari ${records.length} kasus`);el('cases').replaceChildren();
+  for(const record of filtered){
+    const button=document.createElement('button');button.type='button';button.className='case';button.dataset.id=record.report_id;
+    const id=document.createElement('strong');id.textContent=record.report_id;
+    const problem=document.createElement('span');problem.textContent=record.problem;
+    const meta=document.createElement('small');meta.textContent=`${record.status} · ${record.risk_level}`;
+    button.append(id,problem,meta);button.addEventListener('click',()=>selectCase(record.report_id));el('cases').append(button);
+  }
+  if(!filtered.length){selectedId=null;el('selected').hidden=true;el('empty').hidden=false;el('diagram').replaceChildren();return}
+  selectCase(filtered.some(r=>r.report_id===selectedId)?selectedId:filtered[0].report_id);
+}
+el('query').addEventListener('input',filterCases);el('status').addEventListener('change',filterCases);
+el('zoom').addEventListener('click',()=>{const full=el('diagram').classList.toggle('full');el('zoom').setAttribute('aria-pressed',String(full));el('zoom').textContent=full?'Sesuaikan lebar':'Perbesar diagram'});
+el('download').addEventListener('click',()=>{
+  if(!selectedId)return;
+  const svg=el('diagram').querySelector('svg');const blob=new Blob([new XMLSerializer().serializeToString(svg)],{type:'image/svg+xml;charset=utf-8'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`fishbone_${selectedId.replace(/[^A-Za-z0-9_-]/g,'_')}.svg`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
+try{const initial=decodeURIComponent(window.location.hash.slice(1));if(byId.has(initial))selectedId=initial}catch{}
+filterCases();
+</script>
+</body>
+</html>

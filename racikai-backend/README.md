@@ -4,11 +4,20 @@ Repository directory: `racikai-backend`. Product: **PhormulAI**.
 
 FastAPI and Jupyter project for cosmetic and personal care R&D.
 Only `/health` is currently defined as an API route. Local Python modules support
-ingredient lookup, source annotations, and HLB arithmetic. Formula prediction,
-CAPA search, RCA, and optimization services remain placeholders.
+ingredient lookup, source annotations, and HLB arithmetic. Formula prediction
+and optimization services remain placeholders. Local CAPA retrieval and RCA draft
+generation are available; see [RCA/CAPA usage and fishbone](docs/rca_capa_usage.md).
+
+For case-by-case RCA diagrams, open the generated local viewer at
+`data/processed/capa_v1/rca_fishbone_explorer.html` in a browser. It includes
+100 selectable reports, status/search filters, full cause details and SVG download.
 
 See [the detailed PhormulAI specification](docs/PHORMULAI_SPECIFICATION.md) for
 the data model, API roadmap, HLB rules, demo workflow, and implementation status.
+
+The [halal and concentration sampling guide](docs/halal_and_sampling.md) explains
+the exemption reference dataset, internal status codes, scoped human review, and
+how to call the sampling function with a required halal evidence gate.
 
 ## Local setup (PowerShell)
 
