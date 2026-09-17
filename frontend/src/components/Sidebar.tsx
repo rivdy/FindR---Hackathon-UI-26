@@ -1,11 +1,13 @@
-import React from 'react';
-import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award, ShieldAlert, TrendingUp } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, Award, ShieldAlert, TrendingUp, X } from 'lucide-react';
 
 interface SidebarProps {
   currentTab: string;
   onSelectTab: (tab: string) => void;
   collapsed: boolean;
   onToggleCollapse: () => void;
+  mobileOpen: boolean;
+  onCloseMobile: () => void;
 }
 
 type ModuleStatus = 'clear' | 'review' | 'violation' | 'pending';
@@ -33,7 +35,32 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onSelectTab,
   collapsed,
   onToggleCollapse,
+  mobileOpen,
+  onCloseMobile,
 }) => {
+  const sidebarRef = useRef<HTMLElement>(null);
+  // The drawer traps keyboard focus while open; desktop navigation stays unchanged.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const sidebar = sidebarRef.current;
+    const controls = () => Array.from(sidebar?.querySelectorAll<HTMLButtonElement>('button') ?? [])
+      .filter(button => button.getClientRects().length > 0);
+    controls()[0]?.focus();
+    const trapFocus = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') return;
+      const buttons = controls();
+      const first = buttons[0];
+      const last = buttons[buttons.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault(); last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault(); first?.focus();
+      }
+    };
+    document.addEventListener('keydown', trapFocus);
+    return () => document.removeEventListener('keydown', trapFocus);
+  }, [mobileOpen]);
+  const compact = collapsed && !mobileOpen;
   const navItems: NavItem[] = [
     {
       id: 'formulasi',
@@ -88,8 +115,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside
+      ref={sidebarRef}
+      id="module-navigation"
+      className={`module-sidebar${mobileOpen ? ' mobile-open' : ''}`}
+      aria-label="Navigasi modul"
       style={{
-        width: collapsed ? '60px' : '248px',
+        width: compact ? '60px' : '248px',
         flexShrink: 0,
         background: '#FFFFFF',
         display: 'flex',
@@ -106,11 +137,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
     >
       {/* Logo area */}
       <div
+        className="sidebar-brand"
         style={{
-          padding: collapsed ? '16px 0' : '16px 16px',
+          padding: compact ? '16px 0' : '16px 16px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'space-between',
+          justifyContent: compact ? 'center' : 'space-between',
           borderBottom: '1px solid #F0F2F5',
           minHeight: '60px',
           flexShrink: 0,
@@ -122,7 +154,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             display: 'flex',
             alignItems: 'center',
             gap: '10px',
-            opacity: collapsed ? 0 : 1,
+            opacity: compact ? 0 : 1,
             transition: 'opacity 0.15s',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
@@ -135,7 +167,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           />
         </div>
 
-        {collapsed && (
+        {compact && (
           <img
             src="/rangkai-logo.png"
             alt="rangkAI"
@@ -148,9 +180,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
           />
         )}
 
+        <button className="mobile-menu-close" onClick={onCloseMobile} aria-label="Tutup menu navigasi">
+          <X size={20} />
+        </button>
         <button
+          className="sidebar-collapse-toggle"
           onClick={onToggleCollapse}
-          title={collapsed ? 'Perluas panel navigasi' : 'Ciutkan panel navigasi'}
+          title={compact ? 'Perluas panel navigasi' : 'Ciutkan panel navigasi'}
           style={{
             width: '28px',
             height: '28px',
@@ -176,7 +212,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             (e.currentTarget as HTMLElement).style.borderColor = '#E8ECF1';
           }}
         >
-          {collapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
+          {compact ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
       </div>
 
@@ -202,12 +238,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
               key={item.id}
               onClick={() => onSelectTab(item.id)}
               aria-current={isActive ? 'page' : undefined}
-              title={collapsed ? `${item.label}: ${item.statusLabel}` : undefined}
+              title={compact ? `${item.label}: ${item.statusLabel}` : undefined}
               style={{
                 display: 'flex',
-                alignItems: collapsed ? 'center' : 'flex-start',
-                justifyContent: collapsed ? 'center' : 'flex-start',
-                padding: collapsed ? '10px 0' : '10px 12px',
+                alignItems: compact ? 'center' : 'flex-start',
+                justifyContent: compact ? 'center' : 'flex-start',
+                padding: compact ? '10px 0' : '10px 12px',
                 borderRadius: '10px',
                 border: 'none',
                 background: isActive ? '#F0FAF7' : 'transparent',
@@ -216,7 +252,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 width: '100%',
                 transition: 'all 0.15s',
                 position: 'relative',
-                gap: collapsed ? '0' : '10px',
+                gap: compact ? '0' : '10px',
                 flexShrink: 0,
               }}
               onMouseEnter={e => {
@@ -266,7 +302,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
 
               {/* Label + description */}
-              {!collapsed && (
+              {!compact && (
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div
                     style={{
@@ -343,16 +379,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <div
         style={{
           borderTop: '1px solid #F0F2F5',
-          padding: collapsed ? '12px 0' : '12px 14px',
+          padding: compact ? '12px 0' : '12px 14px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'flex-start',
+          justifyContent: compact ? 'center' : 'flex-start',
           gap: '8px',
           flexShrink: 0,
         }}
       >
         <Award size={14} style={{ color: '#CBD5E1', flexShrink: 0 }} />
-        {!collapsed && (
+        {!compact && (
           <div style={{ overflow: 'hidden' }}>
             <div
               style={{

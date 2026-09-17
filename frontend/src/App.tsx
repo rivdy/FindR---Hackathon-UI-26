@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { TopBar } from './components/TopBar';
 import { FormulationPage } from './pages/FormulationPage';
@@ -17,6 +17,34 @@ export const App: React.FC = () => {
   const [isQtppModalOpen, setIsQtppModalOpen] = useState<boolean>(false);
   const [_currentQtpp, setCurrentQtpp] = useState<QtppProfile>(DEFAULT_QTPP);
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    const viewport = window.matchMedia('(max-width: 767px)');
+    const closeOnResize = () => { if (!viewport.matches) setMobileMenuOpen(false); };
+    const previousOverflow = document.body.style.overflow;
+    if (viewport.matches) document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', closeOnEscape);
+    viewport.addEventListener('change', closeOnResize);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', closeOnEscape);
+      viewport.removeEventListener('change', closeOnResize);
+    };
+  }, [mobileMenuOpen]);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    menuButtonRef.current?.focus();
+  };
 
   const handleGenerateComplete = (newQtpp: QtppProfile, _selectedIngredients: string[]) => {
     setCurrentQtpp(newQtpp);
@@ -53,15 +81,24 @@ export const App: React.FC = () => {
       />
 
       {/* Fixed Sidebar */}
+      {mobileMenuOpen && (
+        <button className="mobile-menu-backdrop" onClick={closeMobileMenu} aria-label="Tutup menu navigasi" tabIndex={-1} />
+      )}
       <Sidebar
         currentTab={currentTab}
-        onSelectTab={(tab) => setCurrentTab(tab)}
+        onSelectTab={(tab) => {
+          setCurrentTab(tab);
+          if (mobileMenuOpen) closeMobileMenu();
+        }}
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(c => !c)}
+        mobileOpen={mobileMenuOpen}
+        onCloseMobile={closeMobileMenu}
       />
 
       {/* Main content - offset by sidebar width, transitions with it */}
       <div
+        className="workspace-content"
         style={{
           marginLeft: `${SIDEBAR_WIDTH}px`,
           flex: 1,
@@ -76,6 +113,9 @@ export const App: React.FC = () => {
           activeTab={currentTab}
           onOpenQtpp={() => setIsQtppModalOpen(true)}
           onResetToNewInput={handleResetToNewInput}
+          mobileMenuOpen={mobileMenuOpen}
+          onToggleMobileMenu={() => setMobileMenuOpen(open => !open)}
+          menuButtonRef={menuButtonRef}
         />
 
         <main style={{ flex: 1, overflowY: 'auto' }}>

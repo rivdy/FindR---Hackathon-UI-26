@@ -29,9 +29,9 @@ export const CmaPage: React.FC = () => {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <FlaskConical size={20} color="var(--cyan-neon)" />
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
               CMA (Critical Material Attributes) & CAPA Hub
@@ -42,7 +42,7 @@ export const CmaPage: React.FC = () => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }} data-mobile-wrap="true">
           <button
             onClick={handleDownloadPdf}
             className="ui-download"
@@ -91,14 +91,14 @@ export const CmaPage: React.FC = () => {
             alignItems: 'center',
             gap: '10px',
             color: '#1e40af'
-          }}>
+          }} data-mobile-wrap="true">
             <Info size={18} color="#0284c7" style={{ flexShrink: 0 }} />
             <div>
               <strong>Atribut Kritis Material (CMA):</strong> Spesifikasi fisiko-kimia bahan baku yang mempengaruhi langsung <em>Critical Quality Attributes</em> (CQA) kestabilan emulsi dan kepatuhan registrasi.
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }}>
+          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)', background: '#f8fafc' }}>
@@ -140,7 +140,7 @@ export const CmaPage: React.FC = () => {
           </div>
 
           {/* Empty Table for Real Data Entry */}
-          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff', marginTop: '8px' }}>
+          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff', marginTop: '8px' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px', color: '#0f172a' }}>
               Input Data CMA Manual (Hasil Uji Lab Analitik Aktual)
             </h3>

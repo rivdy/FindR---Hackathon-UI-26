@@ -45,9 +45,9 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Sparkles size={20} color="var(--emerald-neon)" />
             <h3 style={{ fontSize: '1.15rem', fontWeight: 800 }}>
               5 Prediksi Formulasi Tertinggi & Metrik Evaluasi Model
@@ -59,7 +59,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '12px', fontSize: '0.74rem' }}>
+        <div style={{ display: 'flex', gap: '12px', fontSize: '0.74rem' }} data-mobile-wrap="true">
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--emerald-neon)' }}>
             <CheckCircle2 size={13} /> BPOM / Halal Lolos
           </span>
@@ -74,7 +74,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
         gap: '20px'
-      }}>
+      }} data-mobile-grid="true">
         {candidates.map((cand, index) => {
           const isRankOne = index === 0;
           const isBpomViolated = !cand.bpom_compliant;
@@ -120,7 +120,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
 
               {/* Title & Statuses */}
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
                   <span className="badge-pill badge-neutral font-mono-calc" style={{ background: '#f1f5f9', color: '#002b5c', fontWeight: 700 }}>{cand.code}</span>
                   <span style={{ fontSize: '0.72rem', color: 'var(--text-muted)', fontWeight: 600 }}>Rank #{index + 1}</span>
                 </div>
@@ -145,7 +145,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                 gridTemplateColumns: '1fr 1fr',
                 gap: '8px',
                 fontSize: '0.75rem'
-              }}>
+              }} data-mobile-grid="true">
                 {/* BPOM Check */}
                 <div style={{
                   padding: '6px 10px',
@@ -155,7 +155,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
-                }} className={cand.bpom_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'}>
+                }} className={cand.bpom_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'} data-mobile-wrap="true">
                   {cand.bpom_compliant ? (
                     <>
                       <CheckCircle2 size={14} color="var(--emerald-neon)" />
@@ -178,7 +178,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                   display: 'flex',
                   alignItems: 'center',
                   gap: '6px'
-                }} className={cand.halal_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'}>
+                }} className={cand.halal_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'} data-mobile-wrap="true">
                   {cand.halal_compliant ? (
                     <>
                       <CheckCircle2 size={14} color="var(--emerald-neon)" />
@@ -239,9 +239,9 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
 
                 {/* Accuracy */}
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }} data-mobile-wrap="true">
                     <span style={{ color: 'var(--text-secondary)' }}>Akurasi (≥90% Bagus):</span>
-                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                       <span className="font-mono-calc" style={{ fontWeight: 700, color: '#002b5c' }}>
                         {cand.metrics.accuracy_pct}%
                       </span>
@@ -261,9 +261,9 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
 
                 {/* Precision */}
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }} data-mobile-wrap="true">
                     <span style={{ color: 'var(--text-secondary)' }}>Presisi (≥90% Bagus):</span>
-                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                       <span className="font-mono-calc" style={{ fontWeight: 700, color: '#002b5c' }}>
                         {cand.metrics.precision_pct}%
                       </span>
@@ -283,9 +283,9 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
 
                 {/* Correlation */}
                 <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', marginBottom: '4px' }} data-mobile-wrap="true">
                     <span style={{ color: 'var(--text-secondary)' }}>Korelasi ($r$, ≥0.90 Bagus):</span>
-                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                       <span className="font-mono-calc" style={{ fontWeight: 700, color: '#002b5c' }}>
                         {cand.metrics.correlation_r}
                       </span>
@@ -311,7 +311,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
                 fontSize: '0.76rem',
                 borderTop: '1px solid #f1f5f9',
                 paddingTop: '10px'
-              }}>
+              }} data-mobile-wrap="true">
                 <span style={{ color: 'var(--text-muted)' }}>Status Bahan:</span>
                 <span className="font-mono-calc" style={{ fontWeight: 700, color: cand.bpom_compliant && cand.halal_compliant ? 'var(--emerald-neon)' : 'var(--rose-danger)' }}>
                   {cand.bpom_compliant && cand.halal_compliant ? 'CoA & BPOM Lolos' : 'Peringatan Regulasi'}

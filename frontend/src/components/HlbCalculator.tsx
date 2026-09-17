@@ -56,9 +56,9 @@ export const HlbCalculator: React.FC = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Calculator size={20} color="var(--cyan-neon)" />
             <h2 style={{ fontSize: '1.15rem', fontWeight: 700 }}>
               Deterministic HLB Arithmetic & Emulsifier Optimizer
@@ -83,10 +83,10 @@ export const HlbCalculator: React.FC = () => {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(420px, 1fr))',
         gap: '24px'
-      }}>
+      }} data-mobile-grid="true">
         {/* COLUMN 1: Oil Phase Components */}
         <div className="glass-panel" style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
             <div>
               <h3 style={{ fontSize: '0.98rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
                 1. Fase Minyak & Required HLB ($rHLB_i$)
@@ -105,7 +105,7 @@ export const HlbCalculator: React.FC = () => {
           </div>
 
           {/* Table */}
-          <div style={{ overflowX: 'auto' }}>
+          <div style={{ overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-subtle)', color: 'var(--text-secondary)', textAlign: 'left' }}>
@@ -192,7 +192,7 @@ export const HlbCalculator: React.FC = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center'
-          }}>
+          }} data-mobile-wrap="true">
             <div>
               <div style={{ fontSize: '0.74rem', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--brand-blue)', fontWeight: 700 }}>
                 Total rHLB Campuran Minyak ($rHLB_{'{mix}'}$)
@@ -223,11 +223,11 @@ export const HlbCalculator: React.FC = () => {
 
           {/* Emulsifier A */}
           <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }} data-mobile-wrap="true">
               <label style={{ fontSize: '0.78rem', fontWeight: 600, color: '#0f172a' }}>Emulsifier A (Hydrophilic High HLB)</label>
               <span className="font-mono-calc" style={{ fontSize: '0.8rem', color: 'var(--emerald-neon)' }}>HLB: {emulsifierAHLB}</span>
             </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px' }} data-mobile-wrap="true">
               <select
                 value={emulsifierAName}
                 onChange={(e) => {
@@ -277,11 +277,11 @@ export const HlbCalculator: React.FC = () => {
 
           {/* Emulsifier B */}
           <div style={{ background: '#f8fafc', padding: '12px', borderRadius: '8px', border: '1px solid var(--border-subtle)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }} data-mobile-wrap="true">
               <label style={{ fontSize: '0.78rem', fontWeight: 600, color: '#0f172a' }}>Emulsifier B (Lipophilic Low HLB)</label>
               <span className="font-mono-calc" style={{ fontSize: '0.8rem', color: 'var(--amber-warning)' }}>HLB: {emulsifierBHLB}</span>
             </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px' }} data-mobile-wrap="true">
               <select
                 value={emulsifierBName}
                 onChange={(e) => {
@@ -328,7 +328,7 @@ export const HlbCalculator: React.FC = () => {
           </div>
 
           {/* Target & Total Dose Controls */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }} data-mobile-grid="true">
             <div>
               <label style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', display: 'block', marginBottom: '4px' }}>
                 Target HLB ({targetHLB})
@@ -376,7 +376,7 @@ export const HlbCalculator: React.FC = () => {
               border: '1px solid #a7f3d0',
               borderRadius: '10px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#065f46', fontSize: '0.8rem', fontWeight: 700, marginBottom: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#065f46', fontSize: '0.8rem', fontWeight: 700, marginBottom: '10px' }} data-mobile-wrap="true">
                 <CheckCircle2 size={16} /> Solusi Feasible: Rasio Emulsifier Optimal
               </div>
 
@@ -386,7 +386,7 @@ export const HlbCalculator: React.FC = () => {
                 <div style={{ width: `${blendCalc.fractionB * 100}%`, background: 'var(--amber-warning)' }} title={`${emulsifierBName}: ${(blendCalc.fractionB * 100).toFixed(1)}%`} />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.8rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', fontSize: '0.8rem' }} data-mobile-grid="true">
                 <div style={{ background: '#ffffff', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 1px 2px rgba(0,0,0,0.03)' }}>
                   <div style={{ fontSize: '0.7rem', color: 'var(--text-secondary)' }}>Massa Emulsifier A:</div>
                   <div className="font-mono-calc" style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--emerald-neon)' }}>
@@ -420,7 +420,7 @@ export const HlbCalculator: React.FC = () => {
               display: 'flex',
               gap: '8px',
               alignItems: 'center'
-            }}>
+            }} data-mobile-wrap="true">
               <AlertCircle size={18} style={{ flexShrink: 0 }} />
               <div>{blendCalc.errorMessage}</div>
             </div>

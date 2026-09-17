@@ -73,9 +73,9 @@ export const IngredientPage: React.FC = () => {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Database size={18} color="var(--emerald-neon)" />
             <h2 style={{ fontSize: '1.15rem', fontWeight: 700 }}>
               Ingredient Intelligence & Certificate of Analysis (CoA) atau MSDS Knowledge Base
@@ -99,7 +99,7 @@ export const IngredientPage: React.FC = () => {
       </div>
 
       {/* Search & Filters */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }} data-mobile-wrap="true">
         <div style={{
           flex: '1 1 300px',
           display: 'flex',
@@ -109,7 +109,7 @@ export const IngredientPage: React.FC = () => {
           border: '1px solid #cbd5e1',
           borderRadius: '8px',
           padding: '8px 12px'
-        }}>
+        }} data-mobile-wrap="true">
           <Search size={16} color="var(--text-muted)" />
           <input
             type="text"
@@ -128,7 +128,7 @@ export const IngredientPage: React.FC = () => {
         </div>
 
         {/* Function Pills */}
-        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }} data-mobile-wrap="true">
           {functionOptions.map(fn => (
             <button
               key={fn}
@@ -175,9 +175,9 @@ export const IngredientPage: React.FC = () => {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
         gap: '20px'
-      }}>
+      }} data-mobile-grid="true">
         {/* Left: Table */}
-        <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto', maxHeight: '720px' }}>
+        <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto', maxHeight: '720px' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '8px' }}>
             Menampilkan {filtered.length} dari {MOCK_INGREDIENTS.length} bahan baku kosmetik
           </div>
@@ -212,7 +212,7 @@ export const IngredientPage: React.FC = () => {
                       </div>
                     </td>
                     <td style={{ padding: '10px 6px', color: 'var(--text-secondary)' }}>
-                      <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+                      <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }} data-mobile-wrap="true">
                         {ing.functions.slice(0, 2).map((f, i) => (
                           <span key={i} style={{
                             padding: '2px 6px',
@@ -261,9 +261,9 @@ export const IngredientPage: React.FC = () => {
         {activeIngredient && (
           <div className="glass-panel" style={{ padding: '22px', display: 'flex', flexDirection: 'column', gap: '14px', maxHeight: '720px', overflowY: 'auto' }}>
             {/* Header with Title and Price */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }} data-mobile-wrap="true">
               <div>
-                <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                   <span className="badge-pill badge-cyan">Cosmetic Raw Material</span>
                   <span className="badge-pill badge-emerald">CoA Verified</span>
                 </div>
@@ -314,7 +314,7 @@ export const IngredientPage: React.FC = () => {
                   border: '1px solid rgba(16, 185, 129, 0.25)',
                   padding: '8px 12px',
                   borderRadius: '6px'
-                }}>
+                }} data-mobile-wrap="true">
                   <div style={{ fontSize: '0.75rem', color: 'var(--emerald-neon)', fontWeight: 600 }}>
                     Lot No: <strong>{activeIngredient.coa_details?.lot_number || 'LOT-2026-REG'}</strong>
                   </div>
@@ -328,7 +328,7 @@ export const IngredientPage: React.FC = () => {
                   gridTemplateColumns: '1fr 1fr',
                   gap: '8px',
                   fontSize: '0.76rem'
-                }}>
+                }} data-mobile-grid="true">
                   <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
                     <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem' }}>Pemerian (Appearance):</div>
                     <div style={{ fontWeight: 600, color: '#0f172a' }}>{activeIngredient.coa_details?.appearance}</div>
@@ -387,7 +387,7 @@ export const IngredientPage: React.FC = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'
-                }}>
+                }} data-mobile-wrap="true">
                   <CheckCircle2 size={16} color="#059669" />
                   <div style={{ fontSize: '0.74rem', color: '#065f46' }}>
                     <strong>Audit Mutu CoA: LULUS (PASS).</strong> Sesuai standar kompendial USP / BPOM / CPKB untuk sediaan kosmetik aman.
@@ -409,7 +409,7 @@ export const IngredientPage: React.FC = () => {
                       border: '1px solid #bfdbfe',
                       padding: '8px 12px',
                       borderRadius: '6px'
-                    }}>
+                    }} data-mobile-wrap="true">
                       <div style={{ fontSize: '0.75rem', color: '#1d4ed8', fontWeight: 600 }}>
                         GHS: <strong>{activeIngredient.msds_details.ghs_classification}</strong>
                       </div>
@@ -437,7 +437,7 @@ export const IngredientPage: React.FC = () => {
                         </ul>
                       </div>
 
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }} data-mobile-grid="true">
                         <div style={{ background: '#f8fafc', padding: '10px', borderRadius: '6px', border: '1px solid #e2e8f0' }}>
                           <div style={{ color: 'var(--text-muted)', fontSize: '0.68rem' }}>Pertolongan Pertama (Mata):</div>
                           <div style={{ color: '#0f172a', marginTop: '2px', fontWeight: 500 }}>{activeIngredient.msds_details.first_aid_eye}</div>
@@ -478,7 +478,7 @@ export const IngredientPage: React.FC = () => {
                   gridTemplateColumns: '1fr 1fr',
                   gap: '8px',
                   fontSize: '0.78rem'
-                }}>
+                }} data-mobile-grid="true">
                   <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 10px', borderRadius: '6px' }}>
                     <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>CAS Number:</div>
                     <div className="font-mono-calc" style={{ fontWeight: 600 }}>{activeIngredient.cas_number || 'N/A'}</div>
@@ -538,7 +538,7 @@ export const IngredientPage: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               gap: '10px'
-            }}>
+            }} data-mobile-wrap="true">
               {activeIngredient.halal_status === 'HALAL_VERIFIED' ? (
                 <>
                   <ShieldCheck size={18} color="var(--emerald-neon)" />

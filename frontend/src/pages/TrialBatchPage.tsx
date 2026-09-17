@@ -35,9 +35,9 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
         justifyContent: 'space-between',
         alignItems: 'center',
         gap: '16px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} data-mobile-wrap="true">
             <ClipboardCheck size={20} color="var(--amber-warning)" />
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
               Batch Execution SOP: {batch.batch_number}
@@ -52,7 +52,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
         </div>
 
         {/* Action button to RCA */}
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }} data-mobile-wrap="true">
           <button
             onClick={onNavigateToRCA}
             className="btn-primary"
@@ -77,7 +77,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
           display: 'flex',
           alignItems: 'flex-start',
           gap: '12px'
-        }}>
+        }} data-mobile-wrap="true">
           <ShieldAlert size={22} color="var(--rose-danger)" style={{ flexShrink: 0, marginTop: '2px' }} />
           <div>
             <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--rose-danger)' }}>
@@ -92,7 +92,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
               marginTop: '8px',
               fontSize: '0.78rem',
               color: 'var(--text-muted)'
-            }}>
+            }} data-mobile-wrap="true">
               <span>Measured Viscosity: <strong className="font-mono-calc" style={{ color: 'var(--rose-danger)' }}>{batch.measured_viscosity_cps?.toLocaleString()} cPs</strong> (Target: min 18,000 cPs)</span>
               <span>Measured pH: <strong className="font-mono-calc" style={{ color: '#fff' }}>{batch.measured_ph}</strong> (Pass)</span>
             </div>
@@ -118,8 +118,8 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
                 background: isDeviation ? 'rgba(244, 63, 94, 0.04)' : 'var(--bg-glass)'
               }}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }} data-mobile-wrap="true">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} data-mobile-wrap="true">
                   <div style={{
                     width: '26px',
                     height: '26px',
@@ -166,13 +166,13 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
                 padding: '12px',
                 borderRadius: '8px',
                 fontSize: '0.78rem'
-              }}>
+              }} data-mobile-grid="true">
                 {/* Temperature */}
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }} data-mobile-wrap="true">
                     <Thermometer size={14} /> Suhu (°C)
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '4px' }} data-mobile-wrap="true">
                     <span className="font-mono-calc" style={{
                       fontSize: '1rem',
                       fontWeight: 700,
@@ -188,10 +188,10 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
 
                 {/* Agitator / Homogenizer RPM */}
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }} data-mobile-wrap="true">
                     <Activity size={14} /> Kecepatan Pengadukan (RPM)
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '4px' }} data-mobile-wrap="true">
                     <span className="font-mono-calc" style={{
                       fontSize: '1rem',
                       fontWeight: 700,
@@ -207,10 +207,10 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
 
                 {/* Duration */}
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: 'var(--text-muted)' }} data-mobile-wrap="true">
                     <Clock size={14} /> Durasi Waktu
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '4px' }} data-mobile-wrap="true">
                     <span className="font-mono-calc" style={{
                       fontSize: '1rem',
                       fontWeight: 700,
@@ -228,7 +228,7 @@ export const TrialBatchPage: React.FC<TrialBatchPageProps> = ({ onNavigateToRCA 
               {/* Endpoint or Deviation Note */}
               <div style={{ marginTop: '10px', fontSize: '0.76rem', color: isDeviation ? 'var(--rose-danger)' : 'var(--text-secondary)' }}>
                 {isDeviation ? (
-                  <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }} data-mobile-wrap="true">
                     <AlertTriangle size={14} style={{ flexShrink: 0, marginTop: '1px' }} />
                     <span><strong>Catatan Deviasi:</strong> {step.operator_notes}</span>
                   </div>

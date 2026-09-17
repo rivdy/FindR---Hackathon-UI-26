@@ -53,9 +53,9 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
         alignItems: 'center',
         gap: '16px',
         borderLeft: isHundredPercent ? '4px solid var(--emerald-neon)' : '4px solid var(--rose-danger)'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Layers size={18} color="var(--emerald-neon)" />
             <h3 style={{ fontSize: '1.05rem', fontWeight: 700 }}>
               Formulation Sheet: {candidate.name} ({candidate.code})
@@ -67,10 +67,10 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
         </div>
 
         {/* Meters */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }} data-mobile-wrap="true">
           <div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Ukuran Batch:</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }} data-mobile-wrap="true">
               <input 
                 type="number"
                 step="0.5"
@@ -101,7 +101,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
 
           <div>
             <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Total Persentase:</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
               <span className="font-mono-calc" style={{
                 fontSize: '1.25rem',
                 fontWeight: 800,
@@ -138,8 +138,8 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
                 paddingBottom: '10px',
                 borderBottom: '1px solid var(--border-subtle)',
                 marginBottom: '10px'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              }} data-mobile-wrap="true">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
                   <span style={{
                     width: '8px',
                     height: '8px',
@@ -159,7 +159,7 @@ export const FormulaEditor: React.FC<FormulaEditorProps> = ({ candidate = MOCK_C
               </div>
 
               {/* Table */}
-              <div style={{ overflowX: 'auto' }}>
+              <div style={{ overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                   <thead>
                     <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>

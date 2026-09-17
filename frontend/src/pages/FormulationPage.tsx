@@ -35,7 +35,7 @@ export const FormulationPage: React.FC<FormulationPageProps> = ({
         paddingBottom: '12px',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div className="ui-tabs">
           <button
             onClick={() => setActiveSubTab('candidates')}

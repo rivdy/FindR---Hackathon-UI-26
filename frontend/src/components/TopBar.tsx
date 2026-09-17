@@ -1,10 +1,13 @@
 import React from 'react';
-import { ShieldCheck, AlertTriangle, FlaskConical, RotateCcw, FileCog } from 'lucide-react';
+import { ShieldCheck, AlertTriangle, FlaskConical, RotateCcw, FileCog, Menu } from 'lucide-react';
 
 interface TopBarProps {
   activeTab: string;
   onOpenQtpp: () => void;
   onResetToNewInput?: () => void;
+  mobileMenuOpen: boolean;
+  onToggleMobileMenu: () => void;
+  menuButtonRef: React.RefObject<HTMLButtonElement | null>;
 }
 
 const TAB_CONTEXT: Record<string, { label: string; sub: string }> = {
@@ -14,11 +17,12 @@ const TAB_CONTEXT: Record<string, { label: string; sub: string }> = {
   cma: { label: 'Material Kritis', sub: 'CMA · spesifikasi bahan · CAPA hub' },
 };
 
-export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetToNewInput }) => {
+export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetToNewInput, mobileMenuOpen, onToggleMobileMenu, menuButtonRef }) => {
   const ctx = TAB_CONTEXT[activeTab] ?? { label: activeTab, sub: '' };
 
   return (
     <header
+      className="workspace-topbar"
       style={{
         height: '52px',
         background: 'var(--surface-panel)',
@@ -34,8 +38,13 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
       }}
     >
       {/* Left: current project + module context */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+      <div className="topbar-context" style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0 }}>
+        <button ref={menuButtonRef} className="mobile-menu-trigger" onClick={onToggleMobileMenu}
+          aria-label="Buka menu navigasi" aria-expanded={mobileMenuOpen} aria-controls="module-navigation">
+          <Menu size={20} />
+        </button>
         <div
+          className="topbar-project"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -57,6 +66,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
         </div>
 
         <div
+          className="topbar-divider"
           style={{
             width: '1px',
             height: '14px',
@@ -76,6 +86,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
             {ctx.label}
           </span>
           <span
+            className="topbar-description"
             style={{
               marginLeft: '7px',
               fontSize: '0.72rem',
@@ -88,7 +99,7 @@ export const TopBar: React.FC<TopBarProps> = ({ activeTab, onOpenQtpp, onResetTo
       </div>
 
       {/* Right: status indicators + actions */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+      <div className="topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
         {/* Halal Gate - structural indicator, not decoration */}
         <div
           style={{ '--badge-color': '#15803d',

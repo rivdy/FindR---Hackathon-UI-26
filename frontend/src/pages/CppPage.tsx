@@ -104,9 +104,9 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }} data-mobile-wrap="true">
             <Activity size={20} color={batchStatus === 'deviation' ? 'var(--rose-warning)' : 'var(--cyan-neon)'} />
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
               CPP (Critical Process Parameters) & Lembar Protokol Batch
@@ -133,7 +133,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }} data-mobile-wrap="true">
           {/* Download Options: PDF or DOCS */}
           <div style={{
             display: 'inline-flex',
@@ -200,12 +200,12 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               alignItems: 'center',
               justifyContent: 'space-between',
               boxShadow: '0 2px 6px rgba(2, 132, 199, 0.2)'
-            }}>
+            }} data-mobile-wrap="true">
               <span>C. Target Parameter Proses</span>
               <span style={{ fontSize: '0.74rem', opacity: 0.9, fontWeight: 500 }}>Standar R&D Pilot Compounding</span>
             </div>
 
-            <div style={{ overflowX: 'auto' }}>
+            <div style={{ overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                 <thead>
                   <tr style={{ background: '#f8fafc', color: '#475569', borderBottom: '2px solid #e2e8f0', textAlign: 'left' }}>
@@ -256,8 +256,8 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               flexWrap: 'wrap',
               gap: '10px',
               boxShadow: '0 2px 6px rgba(2, 132, 199, 0.2)'
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            }} data-mobile-wrap="true">
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} data-mobile-wrap="true">
                 <span>D. Data Aktual Trial Batch</span>
                 <span style={{
                   fontSize: '0.72rem',
@@ -272,7 +272,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               </div>
 
               {/* Research Controls Toolbar */}
-              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }} data-mobile-wrap="true">
                 <button
                   onClick={handleLoadOptimized}
                   style={{
@@ -335,7 +335,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               </div>
             </div>
 
-            <div style={{ overflowX: 'auto' }}>
+            <div style={{ overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                 <thead>
                   <tr style={{ background: '#f8fafc', color: '#475569', borderBottom: '2px solid #e2e8f0', textAlign: 'left' }}>
@@ -458,14 +458,14 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
               alignItems: 'center',
               justifyContent: 'space-between',
               boxShadow: '0 2px 6px rgba(2, 132, 199, 0.2)'
-            }}>
+            }} data-mobile-wrap="true">
               <span>E. Data Pengamatan Akhir (Target vs Hasil T0 vs Hasil 24 Jam)</span>
               <span style={{ fontSize: '0.74rem', opacity: 0.9, fontWeight: 500 }}>
                 {batchStatus === 'blank' ? 'Menunggu Pengujian Lab' : `Evaluasi CQA (${currentLotNumber})`}
               </span>
             </div>
 
-            <div style={{ overflowX: 'auto' }}>
+            <div style={{ overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
                 <thead>
                   <tr style={{ background: '#f8fafc', color: '#475569', borderBottom: '2px solid #e2e8f0', textAlign: 'left' }}>
@@ -577,7 +577,7 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
                 display: 'flex',
                 alignItems: 'flex-start',
                 gap: '12px'
-              }}>
+              }} data-mobile-wrap="true">
                 <FlaskConical size={20} color="#0284c7" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
                   <strong style={{ color: '#002b5c' }}> Lembar Kerja Kosong Siap Diisi:</strong> Sesuai SOP CPKB industri kosmetik, tabel <strong>Data Aktual Trial (D)</strong> dan <strong>Data Pengamatan Akhir (E)</strong> disiapkan kosong sebelum proses compounding dimulai.
@@ -629,14 +629,14 @@ export const CppPage: React.FC<CppPageProps> = ({ onNavigateToCapa }) => {
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
-          }}>
+          }} data-mobile-wrap="true">
             <Info size={18} color="var(--emerald-neon)" style={{ flexShrink: 0 }} />
             <div>
               <strong>Kaidah Perhitungan CPP:</strong> Nilai proses dihitung berdasarkan <strong>Median</strong> dari data replikasi (Run 1, Run 2, Run 3) dengan rentang toleransi simpangan yang terkontrol rapat (<strong>±3 satuan</strong>).
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }}>
+          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)' }}>

@@ -60,7 +60,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
   };
 
   return (
-    <div style={{
+    <div className="qtpp-overlay" style={{
       position: 'fixed',
       top: 0,
       left: 0,
@@ -88,9 +88,9 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
         boxShadow: '0 20px 45px -10px rgba(15,23,42,0.18)'
       }}>
         {/* Modal Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }} data-mobile-wrap="true">
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
               <div style={{
                 background: 'linear-gradient(135deg, #002b5c 0%, #0284c7 100%)',
                 padding: '7px',
@@ -138,7 +138,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
             <Layers size={16} /> 1. Parameter Target Mutu (QTPP)
           </h4>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }} data-mobile-grid="true">
             <div>
               <label style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
                 Nama Produk & Tipe Sediaan
@@ -163,7 +163,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
               <label style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
                 Target Rentang pH
               </label>
-              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                 <input 
                   type="number"
                   step="0.1"
@@ -204,7 +204,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
               <label style={{ fontSize: '0.74rem', color: 'var(--text-muted)', display: 'block', marginBottom: '4px' }}>
                 Target Viskositas (cPs)
               </label>
-              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+              <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                 <input 
                   type="number"
                   step="500"
@@ -275,7 +275,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
           flexDirection: 'column',
           gap: '14px'
         }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
             <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: '#002b5c', display: 'flex', alignItems: 'center', gap: '6px' }}>
               <ShieldCheck size={16} color="#059669" /> 2. Upload Dokumen Bukti (CoA / MSDS & Sertifikat Halal)
             </h4>
@@ -286,7 +286,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
             )}
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }} data-mobile-grid="true">
             {/* CoA / MSDS Dropzone */}
             <div style={{
               background: '#ffffff',
@@ -298,7 +298,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
               gap: '8px',
               boxShadow: '0 1px 3px rgba(15,23,42,0.03)'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
                 <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Certificate of Analysis (CoA) atau MSDS</span>
                 {coaUploaded ? (
                   <span className="badge-pill badge-emerald">
@@ -311,7 +311,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
 
               <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
                 {coaUploaded ? (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0f172a', fontWeight: 600 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0f172a', fontWeight: 600 }} data-mobile-wrap="true">
                     <FileText size={14} color="#059669" /> {coaFileName}
                   </div>
                 ) : (
@@ -350,7 +350,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
               gap: '8px',
               boxShadow: '0 1px 3px rgba(15,23,42,0.03)'
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
                 <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Sertifikat Halal (BPJPH / MUI)</span>
                 {halalUploaded ? (
                   <span className="badge-pill badge-emerald">
@@ -363,7 +363,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
 
               <div style={{ fontSize: '0.72rem', color: 'var(--text-secondary)' }}>
                 {halalUploaded ? (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0f172a', fontWeight: 600 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0f172a', fontWeight: 600 }} data-mobile-wrap="true">
                     <FileText size={14} color="#059669" /> {halalFileName}
                   </div>
                 ) : (
@@ -394,7 +394,7 @@ export const QtppModal: React.FC<QtppModalProps> = ({ isOpen, onClose, onSave })
         </div>
 
         {/* Footer Actions */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }} data-mobile-wrap="true">
           <button onClick={onClose} className="btn-secondary" style={{ fontSize: '0.82rem' }}>
             Batal
           </button>

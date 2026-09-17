@@ -134,7 +134,7 @@ const CapaForm: React.FC = () => {
       </div>
 
       {/* Proposed CAPA */}
-      <div style={{ borderBottom: '1px solid #000' }}>
+      <div style={{ borderBottom: '1px solid #000' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
         <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>Proposed CAPA:</div>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
           <thead>
@@ -269,7 +269,7 @@ const CapaForm: React.FC = () => {
       </div>
 
       {/* Evaluation */}
-      <div style={{ borderBottom: '1px solid #000' }}>
+      <div style={{ borderBottom: '1px solid #000' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
         <div style={{ padding: '8px', fontWeight: 'bold', borderBottom: '1px solid #000' }}>Evaluation of CAPA Effectiveness:</div>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
           <thead>
@@ -408,9 +408,9 @@ export const RcaCapaPage: React.FC = () => {
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <ShieldAlert size={20} color="var(--amber-warning)" />
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
               RCA & CAPA Hub Pusat
@@ -491,7 +491,7 @@ export const RcaCapaPage: React.FC = () => {
             display: 'flex',
             alignItems: 'center',
             gap: '12px'
-          }}>
+          }} data-mobile-wrap="true">
             <AlertTriangle size={24} style={{ flexShrink: 0 }} />
             <div>
               <strong style={{ fontSize: '0.9rem' }}>Penyimpangan Stabilitas Terdeteksi: LOT-MOIST-26-04B</strong><br />
@@ -499,11 +499,11 @@ export const RcaCapaPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '24px', alignItems: 'flex-start', flexWrap: 'wrap' }} data-mobile-wrap="true">
 
             {/* RCA Panel - 6M Fishbone */}
-            <div className="glass-panel" style={{ flex: 1, minWidth: '400px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="glass-panel" style={{ flex: 1, minWidth: '400px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }} data-mobile-fluid="true">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
                 <div>
                   <h3 style={{ fontSize: '1rem', fontWeight: 700 }}>
                     Evidence-Based Root Cause Analysis (6M Ishikawa)
@@ -515,7 +515,7 @@ export const RcaCapaPage: React.FC = () => {
               </div>
 
               {/* 6M Category Selector Pills */}
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }} data-mobile-wrap="true">
                 {branches.map(branch => {
                   const isSelected = selectedCategory === branch.category;
                   const hasConfirmed = branch.causes.some(c => c.status === 'CONFIRMED_CAUSE');
@@ -582,7 +582,7 @@ export const RcaCapaPage: React.FC = () => {
                         display: 'flex',
                         gap: '12px'
                       }}
-                    >
+                     data-mobile-wrap="true">
                       <div style={{ color: getStatusColor(), marginTop: '2px' }}>
                         {cause.status === 'CONFIRMED_CAUSE' && <CheckCircle2 size={16} />}
                         {cause.status === 'HYPOTHESIS' && <HelpCircle size={16} />}
@@ -605,13 +605,13 @@ export const RcaCapaPage: React.FC = () => {
                             border: '1px solid #e2e8f0',
                             fontSize: '0.78rem'
                           }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: 600, marginBottom: '6px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#0284c7', fontWeight: 600, marginBottom: '6px' }} data-mobile-wrap="true">
                               <BrainCircuit size={14} /> Analisis AI
                             </div>
                             <p style={{ color: '#475569', marginBottom: '8px' }}>
                               {(cause as any).ai_analysis || cause.detail}
                             </p>
-                            <div style={{ background: '#f1f5f9', padding: '6px 10px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }}>
+                            <div style={{ background: '#f1f5f9', padding: '6px 10px', borderRadius: '4px', display: 'flex', justifyContent: 'space-between' }} data-mobile-wrap="true">
                               <span style={{ color: '#64748b' }}>Data Sensor / Evidence:</span>
                               <span className="font-mono-calc" style={{ fontWeight: 700, color: '#0f172a' }}>{(cause as any).sensor_data || cause.evidence}</span>
                             </div>
@@ -625,8 +625,8 @@ export const RcaCapaPage: React.FC = () => {
             </div>
 
             {/* CAPA Form Preview */}
-            <div style={{ flex: 1, minWidth: '450px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ flex: 1, minWidth: '450px', display: 'flex', flexDirection: 'column', gap: '14px' }} data-mobile-fluid="true">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
                 <h3 style={{ fontSize: '1rem', fontWeight: 700 }}>
                   Lembar Evaluasi CAPA Terpadu
                 </h3>
@@ -645,7 +645,7 @@ export const RcaCapaPage: React.FC = () => {
       {activeTab === 'kb' && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {/* NLP Search Bar */}
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }} data-mobile-wrap="true">
             <div style={{
               flex: 1,
               display: 'flex',
@@ -655,7 +655,7 @@ export const RcaCapaPage: React.FC = () => {
               border: '1px solid #cbd5e1',
               borderRadius: '8px',
               padding: '10px 14px'
-            }}>
+            }} data-mobile-wrap="true">
               <Search size={18} color="var(--text-muted)" />
               <input
                 type="text"
@@ -698,7 +698,7 @@ export const RcaCapaPage: React.FC = () => {
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))',
             gap: '20px'
-          }}>
+          }} data-mobile-grid="true">
             {/* Left: Matched List */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               <div style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
@@ -722,8 +722,8 @@ export const RcaCapaPage: React.FC = () => {
                       gap: '8px'
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
                         <span className="font-mono-calc" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                           {item.report_id}
                         </span>
@@ -745,7 +745,7 @@ export const RcaCapaPage: React.FC = () => {
                           borderRadius: '4px',
                           fontSize: '0.72rem',
                           fontWeight: 700
-                        }}>
+                        }} data-mobile-wrap="true">
                           {Math.round(item.similarity_score * 100)}% Match
                         </div>
                       )}
@@ -766,7 +766,7 @@ export const RcaCapaPage: React.FC = () => {
             {/* Right: Detail View */}
             <div className="glass-panel" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px', background: '#ffffff', alignSelf: 'start', position: 'sticky', top: '24px' }}>
               <div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }} data-mobile-wrap="true">
                   <span className="font-mono-calc" style={{ color: 'var(--brand-blue)', fontWeight: 700, fontSize: '0.85rem' }}>
                     {selectedCapa.report_id}
                   </span>
@@ -804,7 +804,7 @@ export const RcaCapaPage: React.FC = () => {
                       background: '#ffffff',
                       border: '1px solid #e2e8f0',
                       borderRadius: '8px'
-                    }}>
+                    }} data-mobile-wrap="true">
                       <div style={{
                         width: '24px',
                         height: '24px',
@@ -828,12 +828,12 @@ export const RcaCapaPage: React.FC = () => {
                 </div>
               </div>
 
-              <div style={{ marginTop: '10px', paddingTop: '20px', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{ marginTop: '10px', paddingTop: '20px', borderTop: '1px solid var(--border-subtle)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} data-mobile-wrap="true">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
                   <User size={16} color="var(--text-muted)" />
                   <span style={{ fontSize: '0.8rem', color: '#475569' }}>Filed by: <strong>{selectedCapa.owner}</strong></span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--emerald-neon)', fontSize: '0.8rem', fontWeight: 700 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--emerald-neon)', fontSize: '0.8rem', fontWeight: 700 }} data-mobile-wrap="true">
                   <CheckCircle2 size={16} /> Status: CLOSED
                 </div>
               </div>

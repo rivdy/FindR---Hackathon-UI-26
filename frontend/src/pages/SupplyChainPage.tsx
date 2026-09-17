@@ -72,9 +72,9 @@ export const SupplyChainPage: React.FC = () => {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <TrendingUp size={18} color="var(--emerald-neon)" />
             <h2 style={{ fontSize: '1.1rem', fontWeight: 700 }}>
               Supply Chain, Procurement MOQ & COGS Scaling
@@ -96,11 +96,11 @@ export const SupplyChainPage: React.FC = () => {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
         gap: '16px'
-      }}>
+      }} data-mobile-grid="true">
         {/* Scaler Input */}
         <div className="glass-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Skala Batch Target:</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <input
               type="number"
               step="5"
@@ -166,7 +166,7 @@ export const SupplyChainPage: React.FC = () => {
       </div>
 
       {/* Breakdown Table */}
-      <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }}>
+      <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
           <thead>
             <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)' }}>
@@ -195,7 +195,7 @@ export const SupplyChainPage: React.FC = () => {
                     {item.neededKg} kg
                   </td>
                   <td style={{ padding: '10px 6px', fontFamily: 'var(--font-mono)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }} data-mobile-wrap="true">
                       <input
                         type="number"
                         step="1"

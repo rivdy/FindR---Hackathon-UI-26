@@ -42,9 +42,9 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Activity size={20} color="var(--cyan-neon)" />
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
               Evaluasi Stabilitas, CPP (Proses Kritis) & CMA (Material Kritis)
@@ -107,14 +107,14 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
-          }}>
+          }} data-mobile-wrap="true">
             <Info size={18} color="var(--cyan-neon)" style={{ flexShrink: 0 }} />
             <div>
               <strong>Kriteria Stabilitas rangkAI:</strong> Emulsi dinyatakan <span style={{ color: 'var(--emerald-neon)', fontWeight: 700 }}>STABIL</span> apabila penurunan viskositas <strong>kurang dari 20% (&lt;20%)</strong> pada bulan ke-3. Jika penurunan viskositas <span style={{ color: 'var(--rose-danger)', fontWeight: 700 }}>≥20%</span>, AI otomatis memicu investigasi RCA dan CAPA.
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }}>
+          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)' }}>
@@ -220,14 +220,14 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
-          }}>
+          }} data-mobile-wrap="true">
             <Info size={18} color="var(--emerald-neon)" style={{ flexShrink: 0 }} />
             <div>
               <strong>Kaidah Perhitungan CPP:</strong> Nilai proses dihitung berdasarkan <strong>Median</strong> dari data replikasi (Run 1, Run 2, Run 3) dengan rentang toleransi simpangan yang terkontrol rapat (<strong>±3 satuan</strong>).
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }}>
+          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)' }}>
@@ -294,14 +294,14 @@ export const StabilityCppCmaPage: React.FC<StabilityCppCmaPageProps> = ({ onNavi
             display: 'flex',
             alignItems: 'center',
             gap: '10px'
-          }}>
+          }} data-mobile-wrap="true">
             <Info size={18} color="#a5b4fc" style={{ flexShrink: 0 }} />
             <div>
               <strong>Atribut Kritis Material (CMA):</strong> Spesifikasi fisiko-kimia bahan baku yang mempengaruhi langsung *Critical Quality Attributes* (CQA) kestabilan emulsi dan kepatuhan registrasi.
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }}>
+          <div className="glass-panel" style={{ padding: '16px', overflowX: 'auto' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ color: 'var(--text-muted)', textAlign: 'left', borderBottom: '1px solid var(--border-subtle)' }}>

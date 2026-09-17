@@ -37,9 +37,9 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
         alignItems: 'center',
         flexWrap: 'wrap',
         gap: '12px'
-      }}>
+      }} data-mobile-wrap="true">
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Thermometer size={20} color="var(--cyan-neon)" />
             <h2 style={{ fontSize: '1.2rem', fontWeight: 800 }}>
               Modul Stabilitas & Eksekusi Batch Trial
@@ -50,7 +50,7 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }} data-mobile-wrap="true">
           <button
             onClick={handleDownloadPdf}
             className="ui-download"
@@ -99,14 +99,14 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
             display: 'flex',
             alignItems: 'center',
             gap: '12px'
-          }}>
+          }} data-mobile-wrap="true">
             <Info size={20} color="#0284c7" style={{ flexShrink: 0 }} />
             <div>
               <strong>Kriteria Stabilitas rangkAI:</strong> Emulsi dinyatakan <span style={{ color: '#059669', fontWeight: 700 }}>STABIL</span> apabila penurunan viskositas <strong>kurang dari 20% (&lt;20%)</strong> pada bulan ke-3. Jika penurunan viskositas <span style={{ color: '#e11d48', fontWeight: 700 }}>≥20%</span>, AI otomatis memicu investigasi RCA dan CAPA.
             </div>
           </div>
 
-          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff' }}>
+          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
               <thead>
                 <tr style={{ color: '#475569', background: '#f8fafc', textAlign: 'left', borderBottom: '2px solid #e2e8f0' }}>
@@ -199,7 +199,7 @@ export const StabilityPage: React.FC<StabilityPageProps> = ({ onNavigateToRca })
           </div>
 
           {/* Empty Table for Real Data Entry */}
-          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff', marginTop: '8px' }}>
+          <div className="glass-panel" style={{ padding: '20px', overflowX: 'auto', background: '#ffffff', marginTop: '8px' }} data-table-scroll="true" tabIndex={0} role="region" aria-label="Tabel data, geser untuk melihat kolom lainnya">
             <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '12px', color: '#0f172a' }}>
               Input Data Stabilitas Manual (Data Real Lab)
             </h3>

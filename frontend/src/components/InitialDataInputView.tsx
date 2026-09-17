@@ -157,6 +157,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
 
   return (
     <div
+      className="initial-input-page"
       style={{
         minHeight: '100vh',
         background: '#F7F8FA',
@@ -166,6 +167,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
     >
       {/* Sticky topbar */}
       <header
+        className="initial-input-header"
         style={{
           position: 'sticky', top: 0, zIndex: 100,
           background: 'rgba(255,255,255,0.92)',
@@ -177,7 +179,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
         }}
       >
         {/* Logo + title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }} data-mobile-wrap="true">
           <img src="/rangkai-logo.png" alt="rangkAI" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
           <div style={{ width: '1px', height: '20px', background: '#EDF0F4' }} />
           <div>
@@ -191,7 +193,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
         </div>
 
         {/* Actions */}
-        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }} data-mobile-wrap="true">
           <button
             onClick={handleResetAll}
             style={{
@@ -218,19 +220,19 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
       </header>
 
       {/* Page body */}
-      <div style={{ padding: '24px 36px 32px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
+      <div className="initial-input-body" style={{ padding: '24px 36px 32px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
 
         {/* Readiness bar - at top */}
-        <div style={{
+        <div className="input-readiness" style={{
           background: '#FFFFFF',
           borderRadius: '14px',
           border: isFormValid ? '1px solid #D1E7DF' : '1px solid #EDF0F4',
           padding: '16px 20px',
           display: 'flex', alignItems: 'center', gap: '20px',
           transition: 'border-color 0.2s',
-        }}>
+        }} data-mobile-wrap="true">
           <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }} data-mobile-wrap="true">
               <span style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#0F1C2E' }}>Kesiapan simulasi</span>
               <span
                 style={{
@@ -245,7 +247,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
               </span>
             </div>
 
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px' }} data-mobile-wrap="true">
               {[
                 { label: 'Target kualitas', valid: isSection1Valid },
                 { label: 'Bahan baku', valid: isSection2Valid },
@@ -257,7 +259,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                     background: seg.valid ? '#1A6B5A' : '#EDF0F4',
                     transition: 'background 0.3s',
                   }} />
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }} data-mobile-wrap="true">
                     {seg.valid && <Check size={10} style={{ color: '#1A6B5A', flexShrink: 0 }} />}
                     <span style={{ fontSize: '0.6875rem', color: seg.valid ? '#1A6B5A' : '#94A3B8', fontWeight: seg.valid ? 500 : 400 }}>
                       {seg.label}
@@ -302,13 +304,13 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
         </div>
 
         {/* 3-col grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', alignItems: 'start' }} data-mobile-grid="true">
 
           {/* CARD 1: QTPP */}
           <div style={cardSt(isSection1Valid)}>
             <div style={{ padding: '20px 20px 14px', borderBottom: '1px solid #F5F6F9' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }} data-mobile-wrap="true">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} data-mobile-wrap="true">
                   <FlaskConical size={18} style={{ color: isSection1Valid ? '#1A6B5A' : '#94A3B8', flexShrink: 0, transition: 'color 0.2s' }} />
                   <div>
                     <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#0F1C2E', lineHeight: 1.3 }}>Target kualitas produk</h3>
@@ -338,10 +340,10 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }} data-mobile-grid="true">
                 <div>
                   <label style={labelSt}>Target pH (min / maks)</label>
-                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                     <input type="number" step="0.1" value={qtpp.target_ph_min}
                       onChange={e => setQtpp({ ...qtpp, target_ph_min: parseFloat(e.target.value) || 0 })}
                       style={{ ...numInputSt, width: '50%' }}
@@ -355,7 +357,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                 </div>
                 <div>
                   <label style={labelSt}>Viskositas cPs (min / maks)</label>
-                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }} data-mobile-wrap="true">
                     <input type="number" step="1000" value={qtpp.target_viscosity_min}
                       onChange={e => setQtpp({ ...qtpp, target_viscosity_min: parseFloat(e.target.value) || 0 })}
                       style={{ ...numInputSt, width: '50%' }}
@@ -392,8 +394,8 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
           {/* CARD 2: BAHAN */}
           <div style={{ ...cardSt(isSection2Valid), minHeight: '500px' }}>
             <div style={{ padding: '20px 20px 12px', borderBottom: '1px solid #F5F6F9' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '10px' }} data-mobile-wrap="true">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} data-mobile-wrap="true">
                   <Layers size={18} style={{ color: isSection2Valid ? '#1A6B5A' : '#94A3B8', flexShrink: 0, transition: 'color 0.2s' }} />
                   <div>
                     <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#0F1C2E', lineHeight: 1.3 }}>Pilih bahan baku</h3>
@@ -416,7 +418,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '8px',
                 background: '#FAFBFE', border: '1px solid #EDF0F4', borderRadius: '10px', padding: '8px 12px',
-              }}>
+              }} data-mobile-wrap="true">
                 <Search size={14} style={{ color: '#CBD5E1', flexShrink: 0 }} />
                 <input type="text" placeholder="Cari INCI, trade name, CAS..."
                   value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
@@ -431,7 +433,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
             </div>
 
             {/* Category pills */}
-            <div style={{ padding: '8px 16px', borderBottom: '1px solid #F5F6F9', display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
+            <div style={{ padding: '8px 16px', borderBottom: '1px solid #F5F6F9', display: 'flex', gap: '4px', flexWrap: 'wrap' }} data-mobile-wrap="true">
               {categoryOptions.map(cat => (
                 <button key={cat.value} onClick={() => setSelectedCategory(cat.value)}
                   style={{
@@ -449,11 +451,11 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
             </div>
 
             {/* Quick action row */}
-            <div style={{ padding: '6px 16px', borderBottom: '1px solid #F5F6F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ padding: '6px 16px', borderBottom: '1px solid #F5F6F9', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} data-mobile-wrap="true">
               <span style={{ fontSize: '0.6875rem', color: '#B0BCCB', fontFamily: 'var(--font-data)' }}>
                 {filteredIngredients.length} tersedia · {selectedIngIds.length} terpilih
               </span>
-              <div style={{ display: 'flex', gap: '4px' }}>
+              <div style={{ display: 'flex', gap: '4px' }} data-mobile-wrap="true">
                 <button onClick={() => setSelectedIngIds(prev => Array.from(new Set([...prev, ...filteredIngredients.map(i => i.id)])))}
                   style={{
                     fontSize: '0.6875rem', padding: '3px 10px', borderRadius: '6px',
@@ -495,7 +497,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                         }}
                         onMouseEnter={e => { if (!sel) (e.currentTarget as HTMLElement).style.background = '#FAFBFE'; }}
                         onMouseLeave={e => { if (!sel) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
-                      >
+                       data-mobile-wrap="true">
                         <div style={{
                           width: '16px', height: '16px', borderRadius: '5px', flexShrink: 0,
                           border: sel ? 'none' : '1.5px solid #CBD5E1',
@@ -515,7 +517,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                           </div>
                         </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }} data-mobile-wrap="true">
                           <button
                             onClick={e => { e.stopPropagation(); setInspectedIng(ing); }}
                             style={{
@@ -541,8 +543,8 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
           {/* CARD 3: DOKUMEN */}
           <div style={cardSt(isSection3Valid)}>
             <div style={{ padding: '20px 20px 14px', borderBottom: '1px solid #F5F6F9' }}>
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }} data-mobile-wrap="true">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }} data-mobile-wrap="true">
                   <ShieldCheck size={18} style={{ color: isSection3Valid ? '#1A6B5A' : '#94A3B8', flexShrink: 0, transition: 'color 0.2s' }} />
                   <div>
                     <h3 style={{ fontSize: '0.875rem', fontWeight: 600, color: '#0F1C2E', lineHeight: 1.3 }}>Verifikasi dokumen</h3>
@@ -570,7 +572,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                 border: coaUploaded ? '1px solid #D1E7DF' : '1px dashed #D8DEE8',
                 transition: 'all 0.2s',
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }} data-mobile-wrap="true">
                   <div>
                     <div style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#0F1C2E' }}>
                       CoA / MSDS bahan baku <span style={{ color: '#E5534B' }}>*</span>
@@ -593,8 +595,8 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                   <div style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     background: '#fff', borderRadius: '8px', padding: '8px 12px', border: '1px solid #E8ECF1',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                  }} data-mobile-wrap="true">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }} data-mobile-wrap="true">
                       <FileText size={13} style={{ color: '#1A6B5A', flexShrink: 0 }} />
                       <span style={{ fontSize: '0.75rem', fontWeight: 500, color: '#334155', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{coaFileName}</span>
                     </div>
@@ -623,7 +625,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                 border: halalUploaded ? '1px solid #D1E7DF' : '1px dashed #D8DEE8',
                 transition: 'all 0.2s',
               }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }} data-mobile-wrap="true">
                   <div>
                     <div style={{ fontSize: '0.8125rem', fontWeight: 600, color: '#0F1C2E' }}>
                       Sertifikat Halal BPJPH / MUI <span style={{ color: '#E5534B' }}>*</span>
@@ -646,8 +648,8 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
                   <div style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     background: '#fff', borderRadius: '8px', padding: '8px 12px', border: '1px solid #E8ECF1',
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }}>
+                  }} data-mobile-wrap="true">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '7px', overflow: 'hidden' }} data-mobile-wrap="true">
                       <FileText size={13} style={{ color: '#1A6B5A', flexShrink: 0 }} />
                       <span style={{ fontSize: '0.75rem', fontWeight: 500, color: '#334155', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{halalFileName}</span>
                     </div>
@@ -672,10 +674,10 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
               {/* AI Extraction panel */}
               {coaUploaded && (
                 <div style={{ background: '#F8FAFF', border: '1px solid #E4ECF7', borderRadius: '12px', padding: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#3B6FA0', display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '10px' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#3B6FA0', display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '10px' }} data-mobile-wrap="true">
                     <FileCheck2 size={13} /> Ekstraksi otomatis dari CoA
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px', fontSize: '0.6875rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5px', fontSize: '0.6875rem' }} data-mobile-grid="true">
                     {[['Lot', 'LOT-NIA-20260810-USP'], ['Kemurnian', '99.6% (HPLC)'], ['Logam berat', '<10 ppm'], ['TPC mikroba', '<100 CFU/g'], ['GHS', 'Cat 2A Irritation'], ['Halal ID', 'ID00410000287190']].map(([k, v]) => (
                       <div key={k} style={{ color: '#64748B' }}>{k}: <strong style={{ color: '#0F1C2E', fontFamily: 'var(--font-data)', fontSize: '0.65rem' }}>{v}</strong></div>
                     ))}
@@ -701,7 +703,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
             border: '1px solid #EDF0F4',
           }}>
             <div style={{ padding: '22px 24px 14px', borderBottom: '1px solid #F5F6F9' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }} data-mobile-wrap="true">
                 <div>
                   <div style={{ fontSize: '0.6875rem', fontWeight: 500, color: '#94A3B8' }}>CoA / MSDS</div>
                   <h3 style={{ fontSize: '1.0625rem', fontWeight: 700, color: '#0F1C2E', marginTop: '2px', letterSpacing: '-0.01em' }}>
@@ -720,10 +722,10 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
 
             <div style={{ padding: '18px 24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ background: '#F8F9FB', borderRadius: '12px', padding: '14px', border: '1px solid #EDF0F4' }}>
-                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#1A6B5A', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: '#1A6B5A', marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '5px' }} data-mobile-wrap="true">
                   <FileCheck2 size={13} /> Parameter uji mutu (Lot: {inspectedIng.coa_details?.lot_number || 'REG-2026'})
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px', fontSize: '0.75rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px', fontSize: '0.75rem' }} data-mobile-grid="true">
                   <div style={{ color: '#64748B' }}>Pemerian: <strong style={{ color: '#0F1C2E' }}>{inspectedIng.coa_details?.appearance}</strong></div>
                   <div style={{ color: '#64748B' }}>Kemurnian: <strong style={{ color: '#1A6B5A', fontFamily: 'var(--font-data)' }}>{inspectedIng.coa_details?.assay_purity_pct}%</strong></div>
                   <div style={{ color: '#64748B' }}>Logam berat: <strong style={{ color: '#3B6FA0', fontFamily: 'var(--font-data)' }}>{inspectedIng.coa_details?.heavy_metals_ppm}</strong></div>
@@ -812,7 +814,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
             </div>
 
             {/* Step indicators */}
-            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }} data-mobile-wrap="true">
               {[1, 2, 3, 4].map(step => (
                 <div key={step} style={{
                   width: step <= generationStep ? '28px' : '8px',
