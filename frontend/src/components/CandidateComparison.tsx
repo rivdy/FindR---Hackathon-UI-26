@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContextSignal } from './ModuleHero';
 import { FormulaCandidate, FormulaReplacementSolution } from '../types';
 import { MOCK_CANDIDATES } from '../data/mockData';
 import {
@@ -69,6 +70,7 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
         </div>
       </div>
 
+      <ContextSignal kind="regulation" />
       {/* 5 Cards Horizontal Grid */}
       <div style={{
         display: 'grid',
@@ -84,9 +86,10 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
           return (
             <div
               key={cand.id}
-              className={`glass-panel ${isRankOne ? 'glass-panel-elevated' : ''}`}
+              className={`glass-panel candidate-card ${isRankOne ? 'glass-panel-elevated' : ''}`}
               style={{
                 padding: '22px',
+                animationDelay: `${index * 65}ms`,
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '16px',

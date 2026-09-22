@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ContextSignal } from '../components/ModuleHero';
 import { Ingredient, HalalStatus } from '../types';
 import { MOCK_INGREDIENTS } from '../data/mockData';
 import { exportIngredientCoaPdf } from '../utils/pdfGenerator';
@@ -78,7 +79,7 @@ export const IngredientPage: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} data-mobile-wrap="true">
             <Database size={18} color="var(--emerald-neon)" />
             <h2 style={{ fontSize: '1.15rem', fontWeight: 700 }}>
-              Ingredient Intelligence & Certificate of Analysis (CoA) atau MSDS Knowledge Base
+              Katalog Bahan & Dokumen Mutu
             </h2>
             <span className="badge-pill badge-emerald">51+ INCI Kosmetik Terverifikasi</span>
           </div>
@@ -98,6 +99,7 @@ export const IngredientPage: React.FC = () => {
         )}
       </div>
 
+      <ContextSignal kind="coa" />
       {/* Search & Filters */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }} data-mobile-wrap="true">
         <div style={{
@@ -498,7 +500,7 @@ export const IngredientPage: React.FC = () => {
 
                   <div style={{ background: 'rgba(255,255,255,0.02)', padding: '8px 10px', borderRadius: '6px' }}>
                     <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)' }}>Maksimum Batas Regulasi BPOM:</div>
-                    <div className="font-mono-calc" style={{ fontWeight: 600, color: activeIngredient.regulatory_status === 'RESTRICTED_MAX_LIMIT' ? 'var(--amber-warning)' : '#fff' }}>
+                    <div className="font-mono-calc" style={{ fontWeight: 600, color: activeIngredient.regulatory_status === 'RESTRICTED_MAX_LIMIT' ? 'var(--amber-warning)' : 'var(--text-primary)' }}>
                       {activeIngredient.regulatory_max_pct ? `Max ${activeIngredient.regulatory_max_pct}%` : 'Unrestricted'}
                     </div>
                   </div>
@@ -571,4 +573,3 @@ export const IngredientPage: React.FC = () => {
     </div>
   );
 };
-

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ModuleHero } from '../components/ModuleHero';
 import { CandidateComparison } from '../components/CandidateComparison';
 import { HlbCalculator } from '../components/HlbCalculator';
 import { FormulaEditor } from '../components/FormulaEditor';
@@ -6,7 +7,7 @@ import { IngredientPage } from './IngredientPage';
 import { FormulaCandidate } from '../types';
 import { MOCK_CANDIDATES } from '../data/mockData';
 import { exportFormulationPdf } from '../utils/pdfGenerator';
-import { Sparkles, Calculator, Layers, Database, TrendingUp, Download, } from 'lucide-react';
+import { Sparkles, Calculator, Layers, Database, Download } from 'lucide-react';
 
 interface FormulationPageProps {
   onSelectForTrial: (candidate: FormulaCandidate) => void;
@@ -26,6 +27,7 @@ export const FormulationPage: React.FC<FormulationPageProps> = ({
 
   return (
     <div className="module-page" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <ModuleHero key={activeSubTab === 'ingredients' ? 'coa' : 'formulasi'} module={activeSubTab === 'ingredients' ? 'coa' : 'formulasi'} />
       {/* Sub navigation bar with PDF download button */}
       <div style={{
         display: 'flex',
@@ -41,28 +43,28 @@ export const FormulationPage: React.FC<FormulationPageProps> = ({
             onClick={() => setActiveSubTab('candidates')}
             className="ui-tab"
            aria-pressed={activeSubTab === 'candidates'}>
-            <Sparkles size={14} /> 5 Prediksi & Metrik Model
+            <Sparkles size={14} /> Kandidat Formula
           </button>
 
           <button
             onClick={() => setActiveSubTab('hlb')}
             className="ui-tab"
            aria-pressed={activeSubTab === 'hlb'}>
-            <Calculator size={14} /> Kalkulator HLB & Emulsifier
+            <Calculator size={14} /> Kalkulator HLB
           </button>
 
           <button
             onClick={() => setActiveSubTab('editor')}
             className="ui-tab"
            aria-pressed={activeSubTab === 'editor'}>
-            <Layers size={14} /> Formulation Sheet (100% Massa)
+            <Layers size={14} /> Lembar Formulasi
           </button>
 
           <button
             onClick={() => setActiveSubTab('ingredients')}
             className="ui-tab"
            aria-pressed={activeSubTab === 'ingredients'}>
-            <Database size={14} /> Katalog Bahan & CoA atau MSDS
+            <Database size={14} /> Bahan & CoA / MSDS
           </button>
 
         </div>

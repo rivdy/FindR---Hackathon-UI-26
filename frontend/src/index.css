@@ -17,8 +17,8 @@
   Structural device philosophy:
     • Border thickness = confidence tier (1px light = pending, 2px = confirmed, left-accent = critical)
     • Color of border/bg = regulatory status (teal=clear, amber=review needed, red=violation)
-    • Motion ONLY on data interaction (slider → response surface update)
-    • No decorative gradients — every gradient encodes a distribution or range
+    • Contextual SVG motion illustrates each research module.
+    • Dark teal feature panels anchor the light analytical workspace.
 */
 
 :root {
@@ -27,7 +27,7 @@
   --font-data: 'IBM Plex Mono', 'JetBrains Mono', monospace;
 
   /* ── Surface Palette ── */
-  --surface-ground: #F5F6F9;     /* lab notebook paper — main bg */
+  --surface-ground: #F3F6F8;     /* lab notebook paper — main bg */
   --surface-panel: #FFFFFF;      /* lifted panel */
   --surface-raised: #FAFBFE;     /* slightly elevated */
   --surface-sidebar: #0F1C2E;   /* deep navy — sidebar bg */
@@ -364,7 +364,7 @@ input[type="number"] {
   border-radius: 4px;
 }
 
-/* ── Animations — ONLY for data interaction responses ── */
+/* ── Interaction transitions ── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to { opacity: 1; transform: translateY(0); }
@@ -390,12 +390,15 @@ input[type="number"] {
 
 /* Shared UI rules also cover legacy modules with inline presentation styles. */
 :root {
-  --action-color: #2563eb;
-  --action-hover: #1d4ed8;
+  --action-color: #147D73;
+  --action-hover: #10665F;
   --font-mono: var(--font-data);
   --brand-blue: #2563eb;
   --cyan-neon: #2563eb;
   --emerald-neon: #15803d;
+  --amber-warning: #b7791f;
+  --rose-danger: #be3455;
+  --shadow-card: var(--shadow-panel);
 }
 
 .module-page {
@@ -428,20 +431,18 @@ input[type="number"] {
 }
 
 button {
-  background: var(--action-color) !important;
-  color: #fff !important;
-  border: 0 !important;
-  border-radius: 8px !important;
+  background: var(--surface-panel);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
   font-family: var(--font-body);
   font-weight: 600;
   cursor: pointer;
-  transition: background 150ms ease, box-shadow 150ms ease;
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
-button:hover:not(:disabled) { background: var(--action-hover) !important; }
-button[aria-current="page"] { background: var(--action-hover) !important; }
+button:hover:not(:disabled) { box-shadow: 0 2px 8px rgba(15, 28, 46, 0.08); }
 button:disabled { opacity: 0.45; cursor: not-allowed; }
-button svg { color: currentColor !important; flex-shrink: 0; }
-button :is(span, div) { color: inherit !important; }
+button svg { flex-shrink: 0; }
 .btn-secondary, .btn-ghost, .ui-download {
   display: inline-flex;
   align-items: center;
@@ -485,8 +486,10 @@ button.ui-tab {
   position: relative;
 }
 button.ui-tab[aria-pressed="true"] {
-  background: var(--action-hover) !important;
-  box-shadow: 0 3px 0 var(--brand-navy);
+  background: #e5f3ef !important;
+  color: #11695e;
+  border-color: #c1e2d9;
+  box-shadow: none;
 }
 
 table {
@@ -534,20 +537,20 @@ table :is(input, select, textarea) {
   padding: 4px 10px !important;
   border: 0 !important;
   border-radius: 6px !important;
-  background: #475569 !important;
-  color: #fff !important;
+  background: #eaf0f4 !important;
+  color: #496173 !important;
   font-size: 0.72rem;
   font-weight: 600;
   line-height: 1.5;
   white-space: nowrap;
 }
-:is(.badge-clear, .badge-emerald) { background: #15803d !important; }
-:is(.badge-review, .badge-amber) { background: #b45309 !important; }
-:is(.badge-violation, .badge-rose) { background: #be123c !important; }
-:is(.badge-cyan, .badge-blue) { background: #2563eb !important; }
+:is(.badge-clear, .badge-emerald) { background: #e3f3eb !important; color: #176347 !important; }
+:is(.badge-review, .badge-amber) { background: #fcf0d9 !important; color: #8c5a12 !important; }
+:is(.badge-violation, .badge-rose) { background: #fbe7eb !important; color: #a22d4b !important; }
+:is(.badge-cyan, .badge-blue) { background: #e7effc !important; color: #2d5ba0 !important; }
 [class*="badge"] svg { color: currentColor !important; }
 [class*="badge"] :is(span, div) { color: inherit !important; }
-[data-status="true"] { background: var(--badge-color, #475569) !important; }
+[data-status="true"] { background: color-mix(in srgb, var(--badge-color, #475569) 10%, white) !important; color: var(--badge-color, #475569) !important; }
 
 @media (max-width: 640px) {
   .module-page { padding: 16px !important; }
@@ -637,7 +640,15 @@ table :is(input, select, textarea) {
   [data-mobile-grid="true"] { grid-template-columns: minmax(0, 1fr) !important; }
   [data-mobile-fluid="true"] { min-width: 0 !important; width: 100%; }
   [data-mobile-wrap="true"] { flex-wrap: wrap !important; }
+  [data-mobile-wrap="true"]:has(> input + span + input) { flex-wrap: nowrap !important; }
+  [data-mobile-wrap="true"]:has(> input + span + input) > input {
+    flex: 1;
+    width: 0 !important;
+    min-width: 0;
+  }
   [data-mobile-wrap="true"] > :is(div, button, label, span) { max-width: 100%; }
+  [data-mobile-wrap="true"]:has(> .ui-download) { width: 100%; }
+  [data-mobile-wrap="true"]:has(> svg) > div { flex: 1; }
   .module-page :is(h2, h3), .initial-input-page h1 { overflow-wrap: anywhere; }
   .module-page :is(.badge, .badge-pill) { white-space: normal; }
   .module-page button:not(.ui-tab), .initial-input-page button { min-height: 44px; }

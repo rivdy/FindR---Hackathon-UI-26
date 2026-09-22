@@ -10,6 +10,8 @@ import { InitialDataInputView } from './components/InitialDataInputView';
 import { RcaCapaPage } from './pages/RcaCapaPage';
 import { FormulaCandidate, QtppProfile } from './types';
 import { DEFAULT_QTPP } from './data/mockData';
+import { ModuleHero } from './components/ModuleHero';
+import type { VisualKind } from './components/ModuleVisual';
 
 export const App: React.FC = () => {
   const [isGenerated, setIsGenerated] = useState<boolean>(false);
@@ -19,6 +21,10 @@ export const App: React.FC = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentTab, isGenerated]);
 
   useEffect(() => {
     if (!mobileMenuOpen) return;
@@ -118,7 +124,9 @@ export const App: React.FC = () => {
           menuButtonRef={menuButtonRef}
         />
 
-        <main style={{ flex: 1, overflowY: 'auto' }}>
+        <main className="workspace-main" style={{ flex: 1 }}>
+          <div className="module-stage" key={currentTab}>
+          {currentTab !== 'formulasi' && <ModuleHero module={currentTab as VisualKind} />}
           {currentTab === 'formulasi' && (
             <FormulationPage
               onSelectForTrial={handleSelectCandidateForTrial}
@@ -133,6 +141,7 @@ export const App: React.FC = () => {
           )}
           {currentTab === 'cma' && <CmaPage />}
           {currentTab === 'rcaCapa' && <RcaCapaPage />}
+          </div>
         </main>
       </div>
     </div>

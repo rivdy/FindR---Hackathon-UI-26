@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { LaboratoryIntro } from './ModuleHero';
+import { ModuleVisual } from './ModuleVisual';
+import { MotionControl } from './MotionControl';
 import { QtppProfile, Ingredient } from '../types';
 import { DEFAULT_QTPP, MOCK_INGREDIENTS } from '../data/mockData';
 import {
@@ -194,6 +197,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
 
         {/* Actions */}
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }} data-mobile-wrap="true">
+          <MotionControl />
           <button
             onClick={handleResetAll}
             style={{
@@ -221,6 +225,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
 
       {/* Page body */}
       <div className="initial-input-body" style={{ padding: '24px 36px 32px', display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
+        <LaboratoryIntro />
 
         {/* Readiness bar - at top */}
         <div className="input-readiness" style={{
@@ -295,16 +300,16 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
 
         {/* Section heading */}
         <div>
-          <h1 style={{ fontSize: '1.375rem', fontWeight: 700, color: '#0F1C2E', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
+          <h2 style={{ fontSize: '1.375rem', fontWeight: 700, color: '#0F1C2E', letterSpacing: '-0.02em', lineHeight: 1.2 }}>
             Inisialisasi formulasi
-          </h1>
+          </h2>
           <p style={{ fontSize: '0.8125rem', color: '#94A3B8', marginTop: '4px' }}>
             Lengkapi ketiga bagian di bawah ini sebelum menjalankan simulasi.
           </p>
         </div>
 
         {/* 3-col grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', alignItems: 'start' }} data-mobile-grid="true">
+        <div className="setup-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', alignItems: 'start' }} data-mobile-grid="true">
 
           {/* CARD 1: QTPP */}
           <div style={cardSt(isSection1Valid)}>
@@ -768,7 +773,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
 
       {/* Generation overlay - modern AI shimmer */}
       {isGenerating && (
-        <div style={{
+        <div className="generation-overlay" role="dialog" aria-modal="true" aria-labelledby="generation-title" aria-busy="true" style={{
           position: 'fixed', inset: 0, zIndex: 1000,
           background: 'rgba(255,255,255,0.96)', backdropFilter: 'blur(24px)',
           display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '20px',
@@ -777,22 +782,11 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
             maxWidth: '440px', width: '100%',
             textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '32px',
           }}>
-            {/* Pulsing logo with ring */}
-            <div style={{ position: 'relative', width: '80px', height: '80px' }}>
-              <div className="gen-pulse-ring" />
-              <div style={{
-                position: 'absolute', inset: '12px',
-                borderRadius: '18px',
-                background: '#F0FAF7',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <img src="/rangkai-logo.png" alt="" style={{ height: '28px', width: 'auto', objectFit: 'contain' }} />
-              </div>
-            </div>
+            <ModuleVisual kind={generationStep === 1 ? 'regulation' : generationStep === 3 ? 'cpp' : 'formulasi'} />
 
             {/* Shimmer title */}
             <div>
-              <h3 className="gen-shimmer-text" style={{
+              <h3 id="generation-title" className="gen-shimmer-text" style={{
                 fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.02em',
                 lineHeight: 1.2,
               }}>
@@ -804,7 +798,7 @@ export const InitialDataInputView: React.FC<InitialDataInputViewProps> = ({ onGe
             <div style={{ minHeight: '48px', overflow: 'hidden', position: 'relative', maxWidth: '360px' }}>
               <p
                 key={generationStep}
-                className="gen-slide-up"
+                className="gen-slide-up" role="status" aria-live="polite"
                 style={{
                   fontSize: '0.8125rem', color: '#64748B', lineHeight: 1.6,
                 }}
