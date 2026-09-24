@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, type CSSProperties } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import { FlaskConical, Thermometer, Activity, Layers, ChevronLeft, ChevronRight, ShieldCheck, X, Atom, ArrowUpRight } from 'lucide-react';
 
 interface SidebarProps {
@@ -40,8 +40,11 @@ export function Sidebar({ currentTab, onSelectTab, collapsed, onToggleCollapse, 
 
   return <aside ref={sidebarRef} id="module-navigation" className={`module-sidebar${mobileOpen ? ' mobile-open' : ''}${compact ? ' is-compact' : ''}`} aria-label="Navigasi modul" style={{ width: compact ? 60 : 248 }}>
     <div className="sidebar-brand">
-      <div className="brand-symbol"><Atom size={24} /></div>
-      {!compact && <div className="brand-wordmark">rangk<span>AI</span><small>RESEARCH WORKSPACE</small></div>}
+      {!compact ? (
+        <img src="/logo.png" alt="rangkAI Logo" style={{ height: '30px', marginLeft: '6px' }} />
+      ) : (
+        <div className="brand-symbol"><img src="/logo.png" alt="Logo" style={{ height: '24px', objectFit: 'contain', objectPosition: 'left' }} /></div>
+      )}
       <button className="mobile-menu-close" onClick={onCloseMobile} aria-label="Tutup menu navigasi"><X size={19} /></button>
     </div>
     {!compact && <div className="sidebar-workspace"><span className="workspace-avatar">R</span><div><strong>Cosmetics R&D</strong><span>Ruang kerja formulasi</span></div><ArrowUpRight size={14} /></div>}

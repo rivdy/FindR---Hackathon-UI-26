@@ -151,46 +151,40 @@ export const CandidateComparison: React.FC<CandidateComparisonProps> = ({
               }} data-mobile-grid="true">
                 {/* BPOM Check */}
                 <div style={{
-                  padding: '6px 10px',
-                  borderRadius: '6px',
-                  background: cand.bpom_compliant ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.15)',
-                  border: cand.bpom_compliant ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(244, 63, 94, 0.4)',
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: '6px'
                 }} className={cand.bpom_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'} data-mobile-wrap="true">
                   {cand.bpom_compliant ? (
                     <>
-                      <CheckCircle2 size={14} color="var(--emerald-neon)" />
-                      <span style={{ fontWeight: 700, color: 'var(--emerald-neon)' }}>BPOM Sesuai</span>
+                      <CheckCircle2 size={14} />
+                      <span style={{ fontWeight: 600 }}>BPOM Sesuai</span>
                     </>
                   ) : (
                     <>
-                      <XCircle size={14} color="var(--rose-danger)" />
-                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>BPOM Tidak Lolos</span>
+                      <XCircle size={14} />
+                      <span style={{ fontWeight: 600 }}>BPOM Tidak Lolos</span>
                     </>
                   )}
                 </div>
 
                 {/* Halal Check */}
                 <div style={{
-                  padding: '6px 10px',
-                  borderRadius: '6px',
-                  background: cand.halal_compliant ? 'rgba(16, 185, 129, 0.1)' : 'rgba(244, 63, 94, 0.15)',
-                  border: cand.halal_compliant ? '1px solid rgba(16, 185, 129, 0.3)' : '1px solid rgba(244, 63, 94, 0.4)',
                   display: 'flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: '6px'
                 }} className={cand.halal_compliant ? 'badge-pill badge-clear' : 'badge-pill badge-violation'} data-mobile-wrap="true">
                   {cand.halal_compliant ? (
                     <>
-                      <CheckCircle2 size={14} color="var(--emerald-neon)" />
-                      <span style={{ fontWeight: 700, color: 'var(--emerald-neon)' }}>Halal Aman</span>
+                      <CheckCircle2 size={14} />
+                      <span style={{ fontWeight: 600 }}>Halal Aman</span>
                     </>
                   ) : (
                     <>
-                      <XCircle size={14} color="var(--rose-danger)" />
-                      <span style={{ fontWeight: 700, color: 'var(--rose-danger)' }}>Halal Tidak Lolos</span>
+                      <XCircle size={14} />
+                      <span style={{ fontWeight: 600 }}>Halal Tidak Lolos</span>
                     </>
                   )}
                 </div>

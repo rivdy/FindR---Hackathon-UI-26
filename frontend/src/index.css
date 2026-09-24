@@ -8,7 +8,7 @@
   Derived from the physical domain:
     • Lab notebook paper: #F5F6F9 (matte, slightly cool-gray)
     • Deep navy from logo/water: #0F1C2E
-    • Emulsion teal (leaf + molecule): #1A6B5A
+    • Emulsion teal (leaf + molecule): #144272
     • Spectroscopy cyan (water droplet highlight): #22D3EE
     • pH-indicator amber (warning): #E8A340
     • Iron oxide warm (error): #C55242
@@ -30,20 +30,20 @@
   --surface-ground: #F3F6F8;     /* lab notebook paper — main bg */
   --surface-panel: #FFFFFF;      /* lifted panel */
   --surface-raised: #FAFBFE;     /* slightly elevated */
-  --surface-sidebar: #0F1C2E;   /* deep navy — sidebar bg */
-  --surface-sidebar-hover: #172840;
-  --surface-sidebar-active: #1E3554;
+  --surface-sidebar: #0D2C54;   /* deep blue — sidebar bg */
+  --surface-sidebar-hover: #143E70;
+  --surface-sidebar-active: #1A4D8A;
 
   /* ── Brand / Domain Colors ── */
-  --brand-navy: #0F1C2E;
-  --brand-teal: #1A6B5A;        /* emulsion teal from leaves */
-  --brand-cyan: #22D3EE;        /* water droplet highlight */
-  --brand-teal-mid: #2A9D8F;    /* mid teal for accents */
+  --brand-navy: #0D2C54;
+  --brand-teal: #144272;        /* navy blue from logo text */
+  --brand-cyan: #00C9FF;        /* water droplet highlight */
+  --brand-teal-mid: #26D0CE;    /* mid cyan/teal for accents */
 
   /* ── Regulatory / Status (encode real meaning) ── */
-  --status-clear: #1A6B5A;      /* BPOM compliant, halal passed */
-  --status-clear-bg: #F0FAF7;
-  --status-clear-border: #A8DACC;
+  --status-clear: #144272;      /* BPOM compliant, halal passed */
+  --status-clear-bg: #E5F6FF;
+  --status-clear-border: #BDE4FF;
   --status-review: #E8A340;     /* needs review, limit concern */
   --status-review-bg: #FEFAF0;
   --status-review-border: #F0C978;
@@ -55,11 +55,11 @@
   --status-pending-border: #CBD5E1;
 
   /* ── Data Visualization ── */
-  --data-series-1: #1A6B5A;   /* teal — primary prediction */
+  --data-series-1: #00C9FF;   /* cyan — primary prediction */
   --data-series-2: #2A6B9D;   /* dusty blue — secondary */
   --data-series-3: #7B6FA0;   /* chromatogram purple */
   --data-series-4: #E8A340;   /* pH-indicator amber */
-  --data-uncertainty: rgba(26, 107, 90, 0.12); /* GPR confidence band */
+  --data-uncertainty: rgba(0, 201, 255, 0.12); /* GPR confidence band */
 
   /* ── Text ── */
   --text-primary: #0F1C2E;
@@ -72,7 +72,7 @@
   /* ── Borders — thickness encodes confidence tier ── */
   --border-subtle: #E4E8EF;     /* 1px — pending/neutral */
   --border-default: #C8D2DE;    /* standard separation */
-  --border-teal: #A8DACC;       /* 2px — confirmed/compliant */
+  --border-teal: #80E5D7;       /* 2px — confirmed/compliant */
   --border-amber: #F0C978;      /* review required */
   --border-red: #E5A89E;        /* violation */
 
@@ -199,7 +199,7 @@ input[type="search"]:focus,
 select:focus,
 textarea:focus {
   border-color: var(--brand-teal-mid);
-  box-shadow: 0 0 0 3px rgba(42, 157, 143, 0.12);
+  box-shadow: 0 0 0 3px rgba(0, 201, 255, 0.12);
 }
 
 input[type="number"] {
@@ -225,8 +225,8 @@ input[type="number"] {
   transition: background 0.15s;
 }
 
-.btn-primary:hover { background: #155A4B; }
-.btn-primary:active { background: #124D41; }
+.btn-primary:hover { background: #0C2D5C; }
+.btn-primary:active { background: #092241; }
 .btn-primary:disabled {
   background: var(--border-subtle);
   color: var(--text-muted);
@@ -390,12 +390,12 @@ input[type="number"] {
 
 /* Shared UI rules also cover legacy modules with inline presentation styles. */
 :root {
-  --action-color: #147D73;
-  --action-hover: #10665F;
+  --action-color: #144272;
+  --action-hover: #0C2D5C;
   --font-mono: var(--font-data);
   --brand-blue: #2563eb;
-  --cyan-neon: #2563eb;
-  --emerald-neon: #15803d;
+  --cyan-neon: #00C9FF;
+  --emerald-neon: #00C9FF;
   --amber-warning: #b7791f;
   --rose-danger: #be3455;
   --shadow-card: var(--shadow-panel);
@@ -486,9 +486,9 @@ button.ui-tab {
   position: relative;
 }
 button.ui-tab[aria-pressed="true"] {
-  background: #e5f3ef !important;
-  color: #11695e;
-  border-color: #c1e2d9;
+  background: #E5F6FF !important;
+  color: #144272;
+  border-color: #BDE4FF;
   box-shadow: none;
 }
 
@@ -544,9 +544,9 @@ table :is(input, select, textarea) {
   line-height: 1.5;
   white-space: nowrap;
 }
-:is(.badge-clear, .badge-emerald) { background: #e3f3eb !important; color: #176347 !important; }
+:is(.badge-clear, .badge-emerald) { background: #E5F6FF !important; color: #144272 !important; border: 1px solid #BDE4FF !important; }
 :is(.badge-review, .badge-amber) { background: #fcf0d9 !important; color: #8c5a12 !important; }
-:is(.badge-violation, .badge-rose) { background: #fbe7eb !important; color: #a22d4b !important; }
+:is(.badge-violation, .badge-rose) { background: #fbe7eb !important; color: #a22d4b !important; border: 1px solid #fecdd3 !important; }
 :is(.badge-cyan, .badge-blue) { background: #e7effc !important; color: #2d5ba0 !important; }
 [class*="badge"] svg { color: currentColor !important; }
 [class*="badge"] :is(span, div) { color: inherit !important; }
